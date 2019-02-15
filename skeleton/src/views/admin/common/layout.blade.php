@@ -23,8 +23,10 @@
     <link href="../vendor/betterfly/css/fontawesome.min.css" rel="stylesheet">
     <link href="../vendor/betterfly/css/simple-line-icons.css" rel="stylesheet">
     <!-- Icons-->
-
     <link href="../vendor/betterfly/css/style-min.css" rel="stylesheet">
+    <!--date and time -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
     @stack('css')
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
@@ -144,13 +146,24 @@
         <a target="_blank" href="https://betterfly.ge">Betterfly</a>
     </div>
 </footer>
-<script src="../vendor/betterfly/js/jquery-3.3.1.min.js"></script>
+<!-- <script src="../vendor/betterfly/js/jquery-3.3.1.min.js"></script> -->
 <script src="../vendor/betterfly/js/popper.min.js"></script>
 <script src="../vendor/betterfly/js/bootstrap.min.js"></script>
 <script src="../vendor/betterfly/js/pace.min.js"></script>
 <script src="../vendor/betterfly/js/perfect-scrollbar.min.js"></script>
 <script src="../vendor/betterfly/js/coreui.min.js"></script>
 <script src="../vendor/betterfly/js/Modal.js"></script>
+<script src="../public/vendor/betterfly/js/jquery-3.3.1.min.js"></script>
+<!--date and time -->
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" nitegrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+<script>
+  $( function() {
+   $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' }).val();
+   $('.datetimepicker').datetimepicker({ dateFormat:'yy-mm-dd' });
+} );
+
+</script>
 
 @stack('scripts')
 <script>
