@@ -65,14 +65,17 @@ class MakeViewCommand extends BaseCommand
         $this->createProgressbar();
 
         foreach ($files as $file) {
-            $indexPluginName = $config->indexPlugin[0]->pluginName . '.tpl';
             $pluginsBlade = false;
-            $viewNameSpace = $file == 'create' || $file == 'edit' ? 'betterfly::plugins.inner_base' : 'betterfly::plugins.' . $indexPluginName;
+            $viewNameSpace = $this->getViewNameSpace($file, $config);
+            if (!$viewNameSpace) continue;
+
             $routeType = $this->routeTypes[$file]['type'];
             $moduleRoute = strtolower(str_plural($this->moduleName)) . '.' . $routeType;
+
             $baseData = ['cfg' => $config, 'moduleName' => $this->moduleName, 'moduleRoute' => $moduleRoute, 'routeType' => $routeType];
             $baseBlade = $this->laravel->view->make($viewNameSpace)->with($baseData)->render();
-            if ($file == 'create' || $file == 'edit') {
+
+            if ($file != 'index') {
                 $pluginsBlade = $this->collectPlugins($config->fields);
             }
 
@@ -114,6 +117,18 @@ class MakeViewCommand extends BaseCommand
         return $files;
     }
 
+    public function getViewNameSpace($file, $config)
+    {
+        if ($file == 'index') {
+            if (!property_exists($config, 'indexPlugin') || !property_exists($config->indexPlugin[0], 'pluginName'))
+                return false;
+            return 'betterfly::plugins.' . $config->indexPlugin[0]->pluginName . '.tpl';
+        }
+
+        return 'betterfly::plugins.inner_base';
+
+    }
+
     public function collectPlugins($fields)
     {
         $pluginsBlade = '';
@@ -125,7 +140,6 @@ class MakeViewCommand extends BaseCommand
             $fieldData = ['properties' => $properties, 'fieldName' => $fieldName, 'plugin_id' => $properties->pluginName . '_' . $pluginIncrement];
 
             $pluginBlade = $this->laravel->view->make('betterfly::plugins.' . $properties->pluginName . '.tpl')->with($fieldData)->render();
-//            $pluginBlade = $this->replaceStrs($pluginBlade);
 
             $pluginsBlade .= $pluginBlade;
             $pluginIncrement++;

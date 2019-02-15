@@ -88,11 +88,12 @@ class MakeRequestCommand extends BaseCommand
     public function getValidations($field){
         $validations = [];
 
-        if(!property_exists($field, 'required') || !$field->required){
-            return null;
+        if(property_exists($field, 'required') && $field->required){
+            $validations[] = 'required';
+        }else{
+            $validations[] = 'nullable';
         }
 
-        $validations[] = 'required';
 
         if(property_exists($field, 'unique') && $field->unique){
             $validations[] = 'unique';
