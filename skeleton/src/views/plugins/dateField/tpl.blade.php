@@ -11,7 +11,7 @@ at_symbolendphp
     <div class="input-group date">
     <label class="col-md-3 col-form-label" for="date-input">{{ $properties->title }}</label>
     <div class="col-md-9">
-        <div class="input-group"><div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-calendar"></i></span></div><input type="text" class="form-control datepicker" value="print_start $value print_end" name="{{ $fieldName }}"></div>
+        <div class="input-group"><div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-calendar"></i></span></div><input autocomplete="off" type="text" class="form-control datepicker" value="print_start $value print_end" name="{{ $fieldName }}"></div>
         at_symbolif($errors->get('{{ $fieldName }}'))
             <br>
             <div class="alert alert-danger" role="alert">print_start $errors->first('{{ $fieldName }}') print_end</div>
@@ -19,4 +19,12 @@ at_symbolendphp
     </div>
     </div>
 </div>
+at_symbolpush('scripts')
+<script src="../vendor/betterfly/plugins/dateField/jquery-ui.min.js"></script>
 
+<script>
+  $( function() {
+    $('.datepicker').datepicker({dateFormat: 'yy-mm-dd'}).val();
+  });
+</script>
+at_symbolendpush

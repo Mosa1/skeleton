@@ -20,3 +20,14 @@ at_symbolendphp
     </div>
 </div>
 
+at_symbolpush('scripts')
+    <script src="../vendor/betterfly/plugins/dateField/jquery-ui.min.js"></script>
+    <script src="../vendor/betterfly/plugins/dateField/jquery-ui-timepicker-addon.min.js"></script>
+
+<script>
+  $( function() {
+    $('.datetimepicker').datetimepicker({ dateFormat:'yy-mm-dd' });
+  });
+</script>
+at_symbolendpush
+
