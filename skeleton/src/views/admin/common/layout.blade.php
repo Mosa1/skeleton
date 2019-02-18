@@ -153,6 +153,7 @@
 <script src="../vendor/betterfly/js/perfect-scrollbar.min.js"></script>
 <script src="../vendor/betterfly/js/coreui.min.js"></script>
 <script src="../vendor/betterfly/js/Modal.js"></script>
+<script src="../vendor/betterfly/js/ScriptsLoader.js"></script>
 
 @stack('scripts')
 <script>

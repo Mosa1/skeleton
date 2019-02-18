@@ -99,7 +99,12 @@ class MakeRequestCommand extends BaseCommand
             $validations[] = 'unique';
         }
 
-        $validations[] = $field->type;
+        if($field->type == 'datetime'){
+            $validations[] = 'date';
+        }else{
+            $validations[] = $field->type;
+        }
+
 
         return implode("|", $validations);
     }

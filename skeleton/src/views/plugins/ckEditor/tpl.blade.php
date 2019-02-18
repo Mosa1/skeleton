@@ -26,11 +26,13 @@ at_symbolendphp
 
 at_symbolpush('scripts')
 
-<script src="../vendor/betterfly/plugins/ckeditor/ckeditor.js"></script>
-<script src="../vendor/betterfly/plugins/ckeditor/adapters/jquery.js"></script>
 
 <script>
-  $( "textarea#{{ $plugin_id }}" ).ckeditor();
+    loadScript(['../vendor/betterfly/plugins/ckeditor/ckeditor.js'], onload);
+    function onload() {
+      loadScript(['../vendor/betterfly/plugins/ckeditor/adapters/jquery.js'], function(){
+        $( "textarea#{{ $plugin_id }}" ).ckeditor();
+      });
+    }
 </script>
-
 at_symbolendpush
