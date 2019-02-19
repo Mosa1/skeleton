@@ -1,14 +1,10 @@
-at_symbolpush('css')
-<link href="../vendor/betterfly/plugins/ckeditor/ckEditorSamples.css" rel="stylesheet">
-at_symbolendpush
-
 at_symbolphp
-    if(isset($data)){
-        $value = $data->{{$fieldName}};
-        $value = key_exists('{{$fieldName}}',old()) ? old('{{$fieldName}}') : $value;
-    } else{
-        $value = old('{{ $fieldName }}');
-    }
+if(isset($data)){
+$value = $data->{{$fieldName}};
+$value = key_exists('{{$fieldName}}',old()) ? old('{{$fieldName}}') : $value;
+} else{
+$value = old('{{ $fieldName }}');
+}
 at_symbolendphp
 
 <div class="form-group row">
@@ -28,11 +24,14 @@ at_symbolpush('scripts')
 
 
 <script>
-    loadScript(['../vendor/betterfly/plugins/ckeditor/ckeditor.js'], onload);
-    function onload() {
-      loadScript(['../vendor/betterfly/plugins/ckeditor/adapters/jquery.js'], function(){
-        $( "textarea#{{ $plugin_id }}" ).ckeditor();
-      });
-    }
+  loadCss('../vendor/betterfly/plugins/ckeditor/ckEditorSamples.css');
+
+  loadScript(['../vendor/betterfly/plugins/ckeditor/ckeditor.js'], onload);
+
+  function onload() {
+    loadScript(['../vendor/betterfly/plugins/ckeditor/adapters/jquery.js'], function () {
+      $("textarea#{{ $plugin_id }}").ckeditor();
+    });
+  }
 </script>
 at_symbolendpush

@@ -1,5 +1,24 @@
 var loadedContent = {};
 
+
+function loadCss(url) {
+  if(typeof url == 'string') url = [url];
+
+  for(var i = 0; i < url.length; i++) {
+    var src = url[i];
+    if(!loadedContent[src]) {
+      var l = document.createElement( 'link' );
+      l.rel = "stylesheet";
+      l.type = "text/css";
+      l.href = src;
+      l.className="ll";
+      document.body.appendChild(l)
+
+      loadedContent[src] = true;
+    }
+  }
+}
+
 function loadScript(url, callback) {
 
   if (typeof url == 'string') url = [url];

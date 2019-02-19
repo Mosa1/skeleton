@@ -24,9 +24,6 @@
     <link href="../vendor/betterfly/css/simple-line-icons.css" rel="stylesheet">
     <!-- Icons-->
     <link href="../vendor/betterfly/css/style-min.css" rel="stylesheet">
-    <!--date and time -->
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
     @stack('css')
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
