@@ -44,7 +44,6 @@ Route::group(['middleware' => 'web'], function () {
             'names' => [
                 'index' => 'file.index',
                 'store' => 'file.store',
-//            'update' => 'blogs.update',
                 'destroy' => 'file.delete'
             ]
         ]);
@@ -53,7 +52,7 @@ Route::group(['middleware' => 'web'], function () {
 
         Route::get('logout', 'BetterFly\Skeleton\App\Http\Controllers\API\UserController@logout')->name('betterfly.logout');
 
-        Route::get('/dashboard','BetterFly\Skeleton\App\Http\Controllers\Admin\DashboardController@index')->name('dashboard');
+        Route::get('dashboard','BetterFly\Skeleton\App\Http\Controllers\Admin\DashboardController@index')->name('dashboard');
     });
 
 });

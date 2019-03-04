@@ -32,12 +32,10 @@ class UserRolePermissionRoutes
     public function handle($request, Closure $next)
     {
         $currentAction = Route::currentRouteAction();
+
         //echo $currentAction;die();
-        if(Auth::check() && !Auth::user()->can($currentAction))
-            return $this->responseWithError('Permission is missing',403);
-
-
-
+//        if(Auth::check() && !Auth::user()->can($currentAction))
+//            return $this->responseWithError('Permission is missing',403);
         return $next($request);
     }
 }
