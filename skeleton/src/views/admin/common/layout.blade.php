@@ -12,11 +12,11 @@
     <title>Betterfly Admin</title>
     <base href="{{ URL::to('/') }}/">
     <!-- Icons-->
-    <link href="../vendor/betterfly/css/fontawesome.min.css" rel="stylesheet">
-    <link href="../vendor/betterfly/css/simple-line-icons.css" rel="stylesheet">
+    <link href="{{ asset('vendor/betterfly/css/fontawesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/betterfly/css/simple-line-icons.css') }}" rel="stylesheet">
     <!-- Icons-->
-    <link href="../vendor/betterfly/css/style-min.css" rel="stylesheet">
-    <link href="../vendor/betterfly/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset('vendor/betterfly/css/style-min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/betterfly/css/bootstrap.min.css') }}" rel="stylesheet">
     @stack('css')
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
@@ -46,7 +46,7 @@
         <li class="nav-item dropdown">
             <a class="nav-link px-4" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                aria-expanded="false">
-                <img class="img-avatar" src="../vendor/betterfly/img/avatar.png" alt="admin@bootstrapmaster.com">
+                <img class="img-avatar" src="{{ asset('vendor/betterfly/img/avatar.png') }}" alt="admin@bootstrapmaster.com">
                 {{ \Illuminate\Support\Facades\Auth::user()->email }}
             </a>
             <div class="dropdown-menu dropdown-menu-right">
@@ -136,15 +136,15 @@
         <a target="_blank" href="https://betterfly.ge">Betterfly</a>
     </div>
 </footer>
-<script src="../vendor/betterfly/js/jquery-3.3.1.min.js"></script>
-<script src="../vendor/betterfly/js/popper.min.js"></script>
-<script src="../vendor/betterfly/js/bootstrap.min.js"></script>
-<script src="../vendor/betterfly/js/pace.min.js"></script>
-<script src="../vendor/betterfly/js/perfect-scrollbar.min.js"></script>
-<script src="../vendor/betterfly/js/coreui.min.js"></script>
-<script src="../vendor/betterfly/js/Modal.js"></script>
-<script src="../vendor/betterfly/js/ScriptsLoader.js"></script>
-<script src="../vendor/betterfly/js/ajaxValidation.js"></script>
+<script src="{{ asset('vendor/betterfly/js/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ asset('vendor/betterfly/js/popper.min.js') }}"></script>
+<script src="{{ asset('vendor/betterfly/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('vendor/betterfly/js/pace.min.js') }}"></script>
+<script src="{{ asset('vendor/betterfly/js/perfect-scrollbar.min.js') }}"></script>
+<script src="{{ asset('vendor/betterfly/js/coreui.min.js') }}"></script>
+<script src="{{ asset('vendor/betterfly/js/Modal.js') }}"></script>
+<script src="{{ asset('vendor/betterfly/js/ScriptsLoader.js') }}"></script>
+<script src="{{ asset('vendor/betterfly/js/ajaxValidation.js') }}"></script>
 
 @stack('scripts')
 <script>
