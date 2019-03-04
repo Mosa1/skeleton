@@ -58,26 +58,18 @@
 
         el.parents('form').validate({
           onfocusout: false,
-          submitHandler: function (form, e) {
+          submitHandler: function (form) {
             setTimeout(function () {
-              if (!$(form).attr('validated')) return false;
+              if ($(form).attr('validated') === 'false') return false;
               var formData = new FormData(form);
-
               $.ajax({
                 url: filesRoute,
                 type: "POST",
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: function (data) {
-                  // var parentForm = $(form);
-                  // parentForm.find('.error-container').remove();
-                  //
-                  // if (data.success) return;
-                  //
-                  // $.each(data.message, function (key, value) {
-                  //   parentForm.find('input[name="' + key + '"]').after('<div class="error-container"><br><div class="alert alert-danger">' + value + '</div></div>')
-                  // });
+                success: function (response) {
+                  if(response.success) form.submit();
                 }
               });
             }, 200);
@@ -87,6 +79,7 @@
             element.parent().append(error.addClass('validation-error'));
           }
         });
+
         el.rules('add', rules);
       }
     };
