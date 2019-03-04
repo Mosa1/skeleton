@@ -60,6 +60,6 @@ class MakeBuildModuleCommand extends BaseCommand
             File::move(app_path($moduleName.'.php'), app_path('Modules/'.$moduleName.'/'.$moduleName.'.php'));
         }*/
 
-        $this->comment("\n \n Files Created. Please run betterfly:db_reset to reset/update db changes \n");
+        $this->comment("\n \n Files Created. Please run 'php artisan betterfly:db_reset' to reset/update db changes \n");
     }
 }

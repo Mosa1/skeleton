@@ -1,22 +1,14 @@
 <!DOCTYPE html>
-<!--
-* CoreUI - Free Bootstrap Admin Template
-* @version v2.1.9
-* @link https://coreui.io
-* Copyright (c) 2018 creativeLabs Łukasz Holeczek
-* Licensed under MIT (https://coreui.io/license)
--->
-
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
-    <meta name="author" content="Łukasz Holeczek">
+    <meta name="description" content="Betterfly">
+    <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
+    <meta name="keyword" content="">
     <title>Betterfly Admin</title>
     <base href="{{ URL::to('/') }}/">
     <!-- Icons-->
@@ -24,6 +16,7 @@
     <link href="../vendor/betterfly/css/simple-line-icons.css" rel="stylesheet">
     <!-- Icons-->
     <link href="../vendor/betterfly/css/style-min.css" rel="stylesheet">
+    <link href="../vendor/betterfly/css/bootstrap.min.css" rel="stylesheet">
     @stack('css')
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
@@ -151,10 +144,12 @@
 <script src="../vendor/betterfly/js/coreui.min.js"></script>
 <script src="../vendor/betterfly/js/Modal.js"></script>
 <script src="../vendor/betterfly/js/ScriptsLoader.js"></script>
+<script src="../vendor/betterfly/js/ajaxValidation.js"></script>
 
 @stack('scripts')
 <script>
-
+  var filesRoute = "{{ route('file.index') }}";
+  var ajaxValidation = "{{ route('ajax-validation') }}";
   $(function () {
     $('.remove-item').click(function () {
       var action = $(this).data().url;

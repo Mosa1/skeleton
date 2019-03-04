@@ -70,12 +70,7 @@ class BaseRepository
         if (!$item) response('Item Not found');
         $data = Transformer::transfromFilledData($data, $this->translatable, $this->translatableFields);
 
-//        if ($this->translatable) {
-//            foreach ($data as $locale => $request)
-//            $item->update($data);
-//        } else {
         $item->update($data);
-//        }
 
         if ($this->relations) $this->syncRelations($data, $item);
 
@@ -154,7 +149,7 @@ class BaseRepository
     public function getModelMethod($needle)
     {
         foreach ($this->relations as $relaion) {
-            similar_text($needle, $relaion,$percentage);
+            similar_text($needle, $relaion, $percentage);
             if ($percentage > 70) {
                 return $relaion;
             }

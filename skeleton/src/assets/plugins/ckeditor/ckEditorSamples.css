@@ -960,40 +960,40 @@ body input.navigation-b ul li a:hover:hover {
 .icon-toggler-collapsed:after {
   background-position: bottom left;
 }
-.modal {
-  padding: 20px;
-  border-radius: 3px;
-  background-color: white;
-  max-width: 700px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  width: 80% !important;
-  top: 50% !important;
-  -webkit-transform: translate(-50%, -50%) !important;
-  -moz-transform: translate(-50%, -50%) !important;
-  -ms-transform: translate(-50%, -50%) !important;
-  -o-transform: translate(-50%, -50%) !important;
-  transform: translate(-50%, -50%) !important;
-}
-.modal-close {
-  -webkit-border-radius: 100px;
-  -webkit-background-clip: padding-box;
-  -moz-border-radius: 100px;
-  -moz-background-clip: padding;
-  border-radius: 100px;
-  background-clip: padding-box;
-  cursor: pointer;
-  height: 18px;
-  width: 18px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 17px;
-  text-align: center;
-  line-height: 19px;
-  background: #cccccc;
-}
+/*.modal {*/
+  /*padding: 20px;*/
+  /*border-radius: 3px;*/
+  /*background-color: white;*/
+  /*max-width: 700px;*/
+  /*-webkit-box-sizing: border-box;*/
+  /*-moz-box-sizing: border-box;*/
+  /*box-sizing: border-box;*/
+  /*width: 80% !important;*/
+  /*top: 50% !important;*/
+  /*-webkit-transform: translate(-50%, -50%) !important;*/
+  /*-moz-transform: translate(-50%, -50%) !important;*/
+  /*-ms-transform: translate(-50%, -50%) !important;*/
+  /*-o-transform: translate(-50%, -50%) !important;*/
+  /*transform: translate(-50%, -50%) !important;*/
+/*}*/
+/*.modal-close {*/
+  /*-webkit-border-radius: 100px;*/
+  /*-webkit-background-clip: padding-box;*/
+  /*-moz-border-radius: 100px;*/
+  /*-moz-background-clip: padding;*/
+  /*border-radius: 100px;*/
+  /*background-clip: padding-box;*/
+  /*cursor: pointer;*/
+  /*height: 18px;*/
+  /*width: 18px;*/
+  /*position: absolute;*/
+  /*top: 10px;*/
+  /*right: 10px;*/
+  /*font-size: 17px;*/
+  /*text-align: center;*/
+  /*line-height: 19px;*/
+  /*background: #cccccc;*/
+/*}*/
 main .grid-container,
 header .grid-container,
 .navigation-a > div,

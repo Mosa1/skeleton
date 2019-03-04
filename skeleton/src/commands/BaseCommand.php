@@ -154,9 +154,7 @@ class BaseCommand extends Command
 
         $data = array_merge($data, $templateParams);
 
-
         $output = $this->laravel->view->make('betterfly::generators.' . $templateFile)->with($data)->render();
-
 
         if($this->createFileWithData($filePath,$output))
             return true;

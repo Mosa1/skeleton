@@ -8,16 +8,39 @@ at_symbolphp
 
 at_symbolendphp
 @php
-    $multiple = property_exists($properties,'maxCount') && $properties->maxCount > 1 ? true : false;
+    $defaultCfg = [
+        'folder' => 'files',
+        'title'=>'Image',
+        'mimeTypes' => ['jpg','jpeg','png','svg'],
+        'maxCount' => 1,
+        'required' => false,
+        'thumbs' => [],
+        'crop'   => false
+    ];
+    $cfg = (object)array_merge($defaultCfg,(array)$properties);
+    $multiple = $cfg->maxCount > 1;
 @endphp
 
 <div class="form-group row">
     <label class="col-md-3 col-form-label" for="{{$plugin_id}}">{{ $properties->title }}</label>
     <div class="col-md-9">
-        <input id="{{$plugin_id}}"  type="file" {{ $multiple ? 'multiple' : '' }} name="{{ $multiple ? $fieldName.'[]' : $fieldName }}">
-        at_symbolif($errors->get('{{ $fieldName }}'))
-            <br>
-            <div class="alert alert-danger" role="alert">print_start $errors->first('{{ $fieldName }}') print_end</div>
-        at_symbolendif
+        <input for="{{ $fieldName }}" name="{{ $plugin_id }}" id="{{$plugin_id}}" type="file">
+        <input type="hidden" name="{{ $fieldName }}" value="none">
+        <br>
+        <br>
     </div>
 </div>
+at_symbolpush('scripts')
+<script>
+  loadCss(['../vendor/betterfly/plugins/imagePlugin/imagePlugin.css']);
+  loadScript(['../vendor/betterfly/plugins/imagePlugin/imagePlugin.js'], onload);
+
+  function onload() {
+    $('input#{{$plugin_id}}').imagePlugin({
+      maxCount: {{ $cfg->maxCount }},
+      types: [@foreach($cfg->mimeTypes as $type)"{{ $type }}",@endforeach],
+      required: {{ $cfg->required ? 'true' : 'false' }}
+    });
+  }
+</script>
+at_symbolendpush

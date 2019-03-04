@@ -1,0 +1,27 @@
+.form-group .preview-container {
+    display: inline-block;
+    margin: 4px 2px;
+    position: relative;
+}
+
+.form-group .preview-container .remove-image {
+    padding: 5px;
+    border: 1px solid;
+    position: absolute;
+    top: -11px;
+    right: -7px;
+    line-height: 0;
+    color: #f85555;
+    background: #e9e8e896;
+}
+
+.form-group .new-file {
+    margin: 0 5px;
+}
+
+.form-group .validation-error {
+    display: block;
+    margin-top: 9px;
+    color: #d01d46;
+    font-size: 14px;
+}

@@ -21,6 +21,42 @@ class MakeMigrationCommand extends BaseCommand
     protected $description = 'Making Betterfly Migration';
 
     /**
+     * Supported Column Types.
+     *
+     * @var array
+     */
+    protected $columnTypes = [
+        'bigIncrements',
+        'bigInteger',
+        'binary',
+        'boolean',
+        'char',
+        'date',
+        'datetime',
+        'decimal',
+        'double',
+        'enum',
+        'float',
+        'increments',
+        'integer',
+        'longText',
+        'mediumInteger',
+        'mediumText',
+        'morphs',
+        'nullableTimestamps',
+        'smallInteger',
+        'tinyInteger',
+        'softDeletes',
+        'string',
+        'text',
+        'time',
+        'timestamp',
+        'timestamps',
+        'rememberToken',
+        'unsigned',
+    ];
+
+    /**
      * Create a new command instance.
      *
      * @return void
@@ -54,12 +90,12 @@ class MakeMigrationCommand extends BaseCommand
         $this->createProgressbar();
         $createdFile = $this->createFile($moduleName, $dirPath, 'Migration', '', $params);
 
-        if(!$createdFile)
+        if (!$createdFile)
             return $this->comment("\n \n Something Went Wrong \n \n");
 
         $this->finishProgressBar();
 
-        if($relations)
+        if ($relations)
             $this->createRelationDatabases($relations);
     }
 
@@ -73,7 +109,7 @@ class MakeMigrationCommand extends BaseCommand
             $progessParams = ['message' => 'Removing migration file'];
             $this->createProgressbar($progessParams);
 
-            if (!$this->confirm("\n I'm going to delete last migration file , Do you wish to continue ?",true))
+            if (!$this->confirm("\n I'm going to delete last migration file , Do you wish to continue ?", true))
                 return exit($this->finishProgressBar());
 
             File::delete($migrationFile->getPathname());
@@ -96,6 +132,8 @@ class MakeMigrationCommand extends BaseCommand
                 continue;
             }
 
+            $field->type = $this->checkAndGetColumnType($field->type);
+
             $fieldConfig = '$table->' . $field->type . '(\'' . $fieldName . '\')';
             if (property_exists($field, 'unique') && $field->unique) {
                 $fieldConfig .= '->unique()';
@@ -116,5 +154,12 @@ class MakeMigrationCommand extends BaseCommand
         $params['config'] = $config;
 
         return $params;
+    }
+
+    private function checkAndGetColumnType($type)
+    {
+        if (!in_array($type, $this->columnTypes))
+            return 'string';
+        return $type;
     }
 }

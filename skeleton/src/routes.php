@@ -40,6 +40,17 @@ Route::group(['middleware' => 'web'], function () {
 
 
     Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
+        Route::resource('file', 'BetterFly\Skeleton\App\Http\Controllers\Admin\FileController', [
+            'names' => [
+                'index' => 'file.index',
+                'store' => 'file.store',
+//            'update' => 'blogs.update',
+                'destroy' => 'file.delete'
+            ]
+        ]);
+
+        Route::post('validate-form', 'BetterFly\Skeleton\App\Http\Controllers\Admin\AjaxValidation@ajaxValidate')->name('ajax-validation');
+
         Route::get('logout', 'BetterFly\Skeleton\App\Http\Controllers\API\UserController@logout')->name('betterfly.logout');
 
         Route::get('/dashboard','BetterFly\Skeleton\App\Http\Controllers\Admin\DashboardController@index')->name('dashboard');

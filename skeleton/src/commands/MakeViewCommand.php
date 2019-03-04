@@ -61,6 +61,7 @@ class MakeViewCommand extends BaseCommand
 
     public function makeViews($config, $files)
     {
+        $this->requestNameSpace = '\\App\\Modules\\' . $this->moduleName. '\\'. $this->moduleName.'Request';
         $this->laravel->view->addNamespace('betterfly', substr(__DIR__, 0, -8) . 'views');
         $this->createProgressbar();
 
@@ -72,7 +73,7 @@ class MakeViewCommand extends BaseCommand
             $routeType = $this->routeTypes[$file]['type'];
             $moduleRoute = strtolower(str_plural($this->moduleName)) . '.' . $routeType;
 
-            $baseData = ['cfg' => $config, 'moduleName' => $this->moduleName, 'moduleRoute' => $moduleRoute, 'routeType' => $routeType];
+            $baseData = ['cfg' => $config, 'requestNameSpace'  => $this->requestNameSpace,'moduleName' => $this->moduleName, 'moduleRoute' => $moduleRoute, 'routeType' => $routeType];
             $baseBlade = $this->laravel->view->make($viewNameSpace)->with($baseData)->render();
 
             if ($file != 'index') {

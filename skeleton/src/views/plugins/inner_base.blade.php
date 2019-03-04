@@ -32,7 +32,7 @@ at_symbolsection('content')
                                     <strong>{{ $moduleName }}</strong>
                                 </div>
                                 <div class="card-body">
-                                    <form class="form-horizontal"
+                                    <form class="form-horizontal ajax-validation"
                                           action="print_start {!! $routeStr !!} print_end" method="post"
                                           enctype="multipart/form-data">
                                         @if($routeType == 'update')
@@ -40,6 +40,7 @@ at_symbolsection('content')
                                         @endif
                                         at_symbolcsrf
                                         {plugins}
+                                            <input type="hidden" value="{{$requestNameSpace}}" name="request_name_space">
                                         <div class=" text-right">
                                             <button class="btn btn-sm btn-success btn-primary" type="submit">
                                                 <i class="fa fa-dot-circle-o"></i> Submit
