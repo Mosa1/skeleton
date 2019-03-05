@@ -117,7 +117,7 @@
                 <li class="nav-item nav-dropdown">
                 <li class="nav-item">
                     <a class="nav-link" href="500.html" target="_top">
-                        <i class="nav-icon icon-star"></i> Texts</a>
+                        <i class="nav-icon icon-star"></i> textes</a>
                 </li>
             </ul>
         </nav>

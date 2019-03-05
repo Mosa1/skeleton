@@ -33,17 +33,17 @@ class Create{{ucfirst($tableName)}}Table extends Migration
             {{--@endforeach--}}
         });
         @if($config->translatable)
-            Schema::create('{{ str_singular($tableName) }}_translations', function (Blueprint $table) {
+            Schema::create('{{ $tableName }}_translations', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('{{ str_singular($tableName).'_'.$config->incrementField  }}')->unsigned();
+            $table->integer('{{ $tableName.'_'.$config->incrementField  }}')->unsigned();
             @foreach($translatableDbFields as $field)
                 {!! $field !!}
             @endforeach
             $table->string('locale')->index();
 
 
-            $table->unique(['{{ str_singular($tableName).'_'.$config->incrementField  }}','locale']);
-            $table->foreign('{{ str_singular($tableName).'_'.$config->incrementField  }}')->references('{{ $config->incrementField }}')->on('{{ $tableName }}')->onDelete('cascade');
+            $table->unique(['{{ $tableName.'_'.$config->incrementField  }}','locale']);
+            $table->foreign('{{ $tableName.'_'.$config->incrementField  }}')->references('{{ $config->incrementField }}')->on('{{ $tableName }}')->onDelete('cascade');
 
             });
         @endif
@@ -57,7 +57,7 @@ class Create{{ucfirst($tableName)}}Table extends Migration
     public function down()
     {
         @if($config->translatable)
-        Schema::dropIfExists('{{ str_singular($tableName) }}_translations');
+        Schema::dropIfExists('{{ $tableName }}_translations');
         @endif
         Schema::dropIfExists('{{ $tableName }}');
     }
