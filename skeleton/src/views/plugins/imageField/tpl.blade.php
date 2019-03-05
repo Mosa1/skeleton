@@ -1,9 +1,8 @@
 at_symbolphp
     if(isset($data)){
-        $value = $data->{{$fieldName}};
-        $value = key_exists('{{$fieldName}}',old()) ? old('{{$fieldName}}') : $value;
-    } else{
-        $value = old('{{ $fieldName }}');
+        $value =  json_decode($data->{{$fieldName}}) ? json_decode($data->{{$fieldName}}) : [$data->{{$fieldName}}];
+    }else{
+        $value = [];
     }
 
 at_symbolendphp
@@ -19,6 +18,7 @@ at_symbolendphp
     ];
     $cfg = (object)array_merge($defaultCfg,(array)$properties);
     $multiple = $cfg->maxCount > 1;
+
 @endphp
 
 <div class="form-group row">
@@ -28,6 +28,14 @@ at_symbolendphp
         <input type="hidden" name="{{ $fieldName }}" value="none">
         <br>
         <br>
+        at_symbolforeach($value as $key => $item)
+            <div class="preview-container">
+                <img class="old" src="print_start $item print_end" height="150">
+                <a data-index="print_start $key print_end" href="javascript:;" style="padding: 5px;border: 1px solid;position: absolute;top: -11px;right: -7px;line-height: 0;color: #f85555;background: #e9e8e896;" class="remove-image">
+                    <i class="fa fa-close"></i>
+                </a>
+            </div>
+        at_symbolendforeach
     </div>
 </div>
 at_symbolpush('scripts')
@@ -39,6 +47,8 @@ at_symbolpush('scripts')
     $('input#{{$plugin_id}}').imagePlugin({
       maxCount: {{ $cfg->maxCount }},
       types: [@foreach($cfg->mimeTypes as $type)"{{ $type }}",@endforeach],
+      folder: "{{ $cfg->folder }}",
+      thumbs: [@foreach($cfg->thumbs as $thumb){!! json_encode($thumb) !!},@endforeach],
       required: {{ $cfg->required ? 'true' : 'false' }}
     });
   }

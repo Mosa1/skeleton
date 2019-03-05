@@ -6,11 +6,13 @@
     var parentEl = el.parent();
     var cropDataInput;
     var previewEls;
+    var realInputName = el.attr('for');
     var cropperImg;
+    var realInput = $('input[name="'+realInputName+'"]');
     var cfg = $.extend({
       maxCount: 1,
-      types: ['png', 'jpg', 'jpeg', 'svg'],
-      crop: true,
+      mimeTypes: ['png', 'jpg', 'jpeg', 'svg'],
+      crop: false,
       required: false,
     }, cfg);
 
@@ -53,16 +55,19 @@
         loadScript(['../vendor/betterfly/js/additional-methods.min.js']);
 
         var inputName = el.attr('name');
-        var types = cfg.types.join(',');
-        var rules = {required: cfg.required, accept: types};
-        rules.messages = {'accept': 'File Types Must Be ["' + types + '"]'};
+        var mimeTypes = cfg.mimeTypes.join(',');
+        var rules = {required: cfg.required, accept: mimeTypes};
+        rules.messages = {'accept': 'File Types Must Be ["' + mimeTypes + '"]'};
 
         el.parents('form').addClass('ajax-validation').validate({
           onfocusout: false,
           submitHandler: function (form) {
             self.validateForm(form,function(validated){
               if(!validated) return;
+              $('main').addClass('loading-mask');
+
               var formData = new FormData(form);
+              formData.delete('_method');
               $.ajax({
                 url: filesRoute,
                 type: "POST",
@@ -70,7 +75,15 @@
                 contentType: false,
                 processData: false,
                 success: function (response) {
-                  // if (response.success) form.submit();
+                  $('main').removeClass('loading-mask');
+                  if (response.success){
+                    var value = response.files;
+                    if(response.files.length > 1){
+                      value = JSON.stringify(response.files);
+                    }
+                    realInput.val(value);
+                    form.submit();
+                  }
                 }
               });
             });
@@ -87,6 +100,8 @@
 
     this.validateForm = function (form,handle) {
       var formData = new FormData(form);
+      formData.delete('_method');
+
       $.ajax({
         url: ajaxValidation,
         type: "POST",
@@ -120,6 +135,7 @@
     };
 
     this.modifyInput = function () {
+      parentEl.append("<input type='hidden' name='"+el.attr('name')+"_cfg' value='"+JSON.stringify(cfg)+"'>");
       if (cfg.maxCount > 1) {
         el.attr('name', el.attr('name') + '[]');
         el.attr('multiple', true);

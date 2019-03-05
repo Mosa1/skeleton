@@ -17,6 +17,7 @@
     <!-- Icons-->
     <link href="{{ asset('vendor/betterfly/css/style-min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/betterfly/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/betterfly/css/general.css') }}" rel="stylesheet">
     @stack('css')
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
