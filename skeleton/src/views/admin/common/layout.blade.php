@@ -144,7 +144,6 @@
 <script src="{{ asset('vendor/betterfly/js/coreui.min.js') }}"></script>
 <script src="{{ asset('vendor/betterfly/js/Modal.js') }}"></script>
 <script src="{{ asset('vendor/betterfly/js/ScriptsLoader.js') }}"></script>
-<script src="{{ asset('vendor/betterfly/js/ajaxValidation.js') }}"></script>
 
 @stack('scripts')
 <script>

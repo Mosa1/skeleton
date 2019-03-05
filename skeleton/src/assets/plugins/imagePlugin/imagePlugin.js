@@ -46,6 +46,7 @@
     };
 
     this.addValidation = function () {
+
       loadScript(['../vendor/betterfly/js/jquery.validate.min.js'], loaded);
 
       function loaded() {
@@ -56,11 +57,11 @@
         var rules = {required: cfg.required, accept: types};
         rules.messages = {'accept': 'File Types Must Be ["' + types + '"]'};
 
-        el.parents('form').validate({
+        el.parents('form').addClass('ajax-validation').validate({
           onfocusout: false,
           submitHandler: function (form) {
-            setTimeout(function () {
-              if ($(form).attr('validated') === 'false') return false;
+            self.validateForm(form,function(validated){
+              if(!validated) return;
               var formData = new FormData(form);
               $.ajax({
                 url: filesRoute,
@@ -69,12 +70,12 @@
                 contentType: false,
                 processData: false,
                 success: function (response) {
-                  if(response.success) form.submit();
+                  // if (response.success) form.submit();
                 }
               });
-            }, 200);
-
+            });
           },
+
           errorPlacement: function (error, element) {
             element.parent().append(error.addClass('validation-error'));
           }
@@ -82,6 +83,32 @@
 
         el.rules('add', rules);
       }
+    };
+
+    this.validateForm = function (form,handle) {
+      var formData = new FormData(form);
+      $.ajax({
+        url: ajaxValidation,
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+          $(form).attr('validated', false);
+          $(form).find('.error-container').remove();
+
+          if (response.success) {
+            handle(true);
+          } else {
+            $.each(response.message, function (key, value) {
+              $(form).find('input[name="' + key + '"]').after('<div class="error-container"><br><div class="alert alert-danger">' + value + '</div></div>')
+            });
+
+            handle(false);
+          }
+        }
+      });
+
     };
 
     this.initilizeEvents = function () {

@@ -32,7 +32,7 @@ at_symbolsection('content')
                                     <strong>{{ $moduleName }}</strong>
                                 </div>
                                 <div class="card-body">
-                                    <form class="form-horizontal ajax-validation"
+                                    <form class="form-horizontal"
                                           action="print_start {!! $routeStr !!} print_end" method="post"
                                           enctype="multipart/form-data">
                                         @if($routeType == 'update')
