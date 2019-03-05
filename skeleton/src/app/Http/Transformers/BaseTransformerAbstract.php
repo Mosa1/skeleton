@@ -28,7 +28,7 @@ abstract class BaseTransformerAbstract extends TransformerAbstract
                 }
             }
         } else {
-            $filledData[] = $data;
+            $filledData = $data;
         }
 
         return $filledData;
