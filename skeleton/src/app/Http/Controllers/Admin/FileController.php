@@ -15,7 +15,7 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->file());
+        return response(['success' => true]);
 //        $requestNameSpace = $request->input('request_name_space');
 //        $requestInstance = new $requestNameSpace();
 //        $requestInstance->setMethod($request->method());
