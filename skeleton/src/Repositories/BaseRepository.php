@@ -66,7 +66,7 @@ class BaseRepository
     //requested item update
     public function update($data)
     {
-        $item = $this->model::findOrFail($data['id']);        
+        $item = $this->model::findOrFail($data['id']);
         if (!$item) response('Item Not found');
         $data = Transformer::transfromFilledData($data, $this->translatable, $this->translatableFields);
 

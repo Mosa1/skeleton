@@ -8,7 +8,7 @@
     var previewEls;
     var realInputName = el.attr('for');
     var cropperImg;
-    var realInput = $('input[name="'+realInputName+'"]');
+    var realInput = $('input[name="' + realInputName + '"]');
     var cfg = $.extend({
       maxCount: 1,
       mimeTypes: ['png', 'jpg', 'jpeg', 'svg'],
@@ -58,16 +58,19 @@
         var mimeTypes = cfg.mimeTypes.join(',');
         var rules = {required: cfg.required, accept: mimeTypes};
         rules.messages = {'accept': 'File Types Must Be ["' + mimeTypes + '"]'};
-
         el.parents('form').addClass('ajax-validation').validate({
           onfocusout: false,
           submitHandler: function (form) {
-            self.validateForm(form,function(validated){
-              if(!validated) return;
+            self.validateForm(form, function (validated) {
+              if (!validated) return;
               $('main').addClass('loading-mask');
 
               var formData = new FormData(form);
               formData.delete('_method');
+              if (formData.get(inputName).size < 1) {
+                form.submit();
+                return false;
+              }
               $.ajax({
                 url: filesRoute,
                 type: "POST",
@@ -76,12 +79,9 @@
                 processData: false,
                 success: function (response) {
                   $('main').removeClass('loading-mask');
-                  if (response.success){
-                    var value = response.files;
-                    if(response.files.length > 1){
-                      value = JSON.stringify(response.files);
-                    }
-                    realInput.val(value);
+                  if (response.success) {
+                    var inputValue = self.generateInputValue(response.files);
+                    realInput.val(inputValue);
                     form.submit();
                   }
                 }
@@ -98,7 +98,7 @@
       }
     };
 
-    this.validateForm = function (form,handle) {
+    this.validateForm = function (form, handle) {
       var formData = new FormData(form);
       formData.delete('_method');
 
@@ -126,6 +126,21 @@
 
     };
 
+    this.generateInputValue = function (responseFiles) {
+      if (cfg.maxCount < 1)
+        return responseFiles.length > 1 ? responseFiles[0] : responseFiles;
+
+      var value = realInput.val() !== 'none' ? JSON.parse(realInput.val()) : false;
+
+      if (value) {
+        $.merge(value, responseFiles)
+      }else{
+        value = responseFiles;
+      }
+
+      return JSON.stringify(value);
+    };
+
     this.initilizeEvents = function () {
       this.setPreviewElements();
       this.retriggerEvents();
@@ -135,7 +150,7 @@
     };
 
     this.modifyInput = function () {
-      parentEl.append("<input type='hidden' name='"+el.attr('name')+"_cfg' value='"+JSON.stringify(cfg)+"'>");
+      parentEl.append("<input type='hidden' name='" + el.attr('name') + "_cfg' value='" + JSON.stringify(cfg) + "'>");
       if (cfg.maxCount > 1) {
         el.attr('name', el.attr('name') + '[]');
         el.attr('multiple', true);
