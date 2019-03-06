@@ -130,7 +130,7 @@
       if (cfg.maxCount < 2)
         return responseFiles.length > 1 ? responseFiles[0] : responseFiles;
 
-      var value = realInput.val() !== 'none' ? JSON.parse(realInput.val()) : false;
+      var value = realInput.val() === 'none' || !realInput.val() ? false: JSON.parse(realInput.val());
 
       if (value) {
         $.merge(value, responseFiles)
@@ -154,9 +154,13 @@
       $('.remove-image').click(function(){
         if(cfg.maxCount < 2)
           realInput.val(null);
-        var imageIndex = $(this).data('index');
-        var inputValue = JSON.parse(realInput.val())
-        inputValue.splice(imageIndex,1);
+        var imageSrc = $(this).parent().find('img').attr('src');
+        var inputValue = JSON.parse(realInput.val());
+        for (var i = 0; i < inputValue.length;i++){
+          if(inputValue[i] === imageSrc)
+            inputValue.splice(i,1);
+        }
+
         inputValue = !inputValue.length ? null : JSON.stringify(inputValue);
         realInput.val(inputValue);
         $(this).parent('.preview-container').remove();
@@ -222,8 +226,7 @@
 
       if (this.files) {
         var filesLength = this.files.length;
-
-        if (filesLength > cfg.maxCount) {
+        if (filesLength > cfg.maxCount || parentEl.find('.file-preview').length >= cfg.maxCount) {
           $(this).val('');
           alert('You Can Choose Only ' + cfg.maxCount + ' Photos');
           return false;
@@ -232,6 +235,8 @@
         for (var i = 0; i < filesLength; i++) {
           var reader = new FileReader();
           reader.onload = function (e) {
+
+
             previewTag = $('<img>').addClass('new-file file-preview').attr('src', e.target.result).attr('height', '150').data('src', e.target.result);
             parentEl.append(
                 previewTag
