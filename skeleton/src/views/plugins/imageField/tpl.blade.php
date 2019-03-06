@@ -32,7 +32,7 @@ at_symbolendphp
         <br>
         at_symbolforeach($images as $key => $image)
             <div class="preview-container">
-                <img class="old file-preview" src="print_start $image print_end" height="150">
+                <img class="old file-preview" data-src="print_start $image print_end" src="print_start $image print_end" height="150">
                 <a data-index="print_start $key print_end" href="javascript:;" class="remove-image">
                     <i class="fa fa-close"></i>
                 </a>

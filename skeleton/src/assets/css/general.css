@@ -14,3 +14,8 @@
     background-size: 32px;
     z-index: 500000;
 }
+
+.datatable-image{
+    max-width: 150px;
+    max-height: 80px;
+}

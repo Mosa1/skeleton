@@ -69,7 +69,16 @@ at_symbolsection('content')
                                             class="print_start ($key + 1 % 2) == 0 ? 'odd' : 'even' print_end">
 
                                             @foreach($cfg->indexPlugin[0]->cols as $col)
-                                                <td class="">print_start strip_tags($item->{{$col->value}}) print_end</td>
+
+                                                @if(property_exists($col,'renderer'))
+                                                    @if($col->renderer == 'photo')
+                                                        <td class="">
+                                                            <img class="datatable-image" src="print_start $item->{{$col->value}} print_end">
+                                                        </td>
+                                                    @endif
+                                                @else
+                                                    <td class="">print_start strip_tags($item->{{$col->value}}) print_end</td>
+                                                @endif
                                             @endforeach
 
 

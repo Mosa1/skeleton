@@ -152,8 +152,11 @@
 
     this.triggerRemoveEvenet = function(){
       $('.remove-image').click(function(){
-        if(cfg.maxCount < 2)
+        if(cfg.maxCount < 2){
           realInput.val(null);
+          $(this).parent('.preview-container').remove();
+          return true;
+        }
         var imageSrc = $(this).parent().find('img').attr('src');
         var inputValue = JSON.parse(realInput.val());
         for (var i = 0; i < inputValue.length;i++){
@@ -235,8 +238,6 @@
         for (var i = 0; i < filesLength; i++) {
           var reader = new FileReader();
           reader.onload = function (e) {
-
-
             previewTag = $('<img>').addClass('new-file file-preview').attr('src', e.target.result).attr('height', '150').data('src', e.target.result);
             parentEl.append(
                 previewTag
