@@ -72,18 +72,18 @@ at_symbolsection('content')
 
                                                 @if(property_exists($col,'renderer'))
                                                     @if($col->renderer == 'photo')
-                                                        <td class="">
+                                                        <td class="align-middle">
                                                             <img class="datatable-image" src="print_start $item->{{$col->value}} print_end">
                                                         </td>
                                                     @endif
                                                 @else
-                                                    <td class="">print_start strip_tags($item->{{$col->value}}) print_end</td>
+                                                    <td class="align-middle">print_start strip_tags($item->{{$col->value}}) print_end</td>
                                                 @endif
                                             @endforeach
 
 
                                             @if(property_exists($cfg->indexPlugin[0],'setStatus') && $cfg->indexPlugin[0]->setStatus)
-                                                <td class="text-center">
+                                                <td class="text-center align-middle">
                                                     <label class="switch switch-label switch-success">
                                                         <input class="switch-input" type="checkbox" checked="">
                                                         <span class="switch-slider" data-checked="On"
@@ -92,7 +92,7 @@ at_symbolsection('content')
                                                 </td>
                                             @endif
 
-                                            <td class="text-right">
+                                            <td class="text-right align-middle">
                                                 <a class="btn btn-info"
                                                    href="print_start route('{{ str_plural(strtolower($moduleName)) }}.edit',$item->id) print_end">
                                                     <i class="fa fa-edit"></i>

@@ -14,7 +14,6 @@ at_symbolendphp
         'title'=>'Image',
         'mimeTypes' => ['jpg','jpeg','png','svg'],
         'maxCount' => 1,
-        'required' => false,
         'thumbs' => [],
         'crop'   => false
     ];
@@ -50,8 +49,7 @@ at_symbolpush('scripts')
       maxCount: {{ $cfg->maxCount }},
       types: [@foreach($cfg->mimeTypes as $type)"{{ $type }}",@endforeach],
       folder: "{{ $cfg->folder }}",
-      thumbs: [@foreach($cfg->thumbs as $thumb){!! json_encode($thumb) !!},@endforeach],
-      required: {{ $cfg->required ? 'true' : 'false' }}
+      thumbs: [@foreach($cfg->thumbs as $thumb){!! json_encode($thumb) !!},@endforeach]
     });
   }
 </script>

@@ -31,7 +31,7 @@ class FileController extends Controller
             foreach ($filesArray as $file) {
                 $response = $this->uploadFile($file, $imageCfg);
                 if ($response['success']) {
-                    $uploadedFiles['paths'][] = $response['filePath'];
+                    $uploadedFiles['paths'][$inputName][] = $response['filePath'];
                 } else {
                     if (!empty($uploadedFiles['paths']))
                         File::delete($uploadedFiles['paths']);
