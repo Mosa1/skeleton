@@ -127,7 +127,7 @@
     };
 
     this.generateInputValue = function (responseFiles) {
-      if (cfg.maxCount < 1)
+      if (cfg.maxCount < 2)
         return responseFiles.length > 1 ? responseFiles[0] : responseFiles;
 
       var value = realInput.val() !== 'none' ? JSON.parse(realInput.val()) : false;
@@ -146,7 +146,21 @@
       this.retriggerEvents();
       this.modifyInput();
       this.addValidation();
+      this.triggerRemoveEvenet();
       el.change(self.drawPreview)
+    };
+
+    this.triggerRemoveEvenet = function(){
+      $('.remove-image').click(function(){
+        if(cfg.maxCount < 2)
+          realInput.val(null);
+        var imageIndex = $(this).data('index');
+        var inputValue = JSON.parse(realInput.val())
+        inputValue.splice(imageIndex,1);
+        inputValue = !inputValue.length ? null : JSON.stringify(inputValue);
+        realInput.val(inputValue);
+        $(this).parent('.preview-container').remove();
+      })
     };
 
     this.modifyInput = function () {
