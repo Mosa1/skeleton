@@ -103,10 +103,10 @@ class FileController extends Controller
 
     public function createDirIfNeeded($dirName)
     {
-        $dir = public_path('storage/uploads/' . $dirName);
+        $dir = base_path('storage/uploads/' . $dirName);
 
-        if (!File::isDirectory(public_path("storage/uploads"))) {
-            File::makeDirectory(public_path("storage/uploads"));
+        if (!File::isDirectory(base_path("storage/uploads"))) {
+            File::makeDirectory(base_path("storage/uploads"));
         }
 
         if (File::isDirectory($dir)) return ['success' => true, 'dir' => 'storage/uploads/' . $dirName, 'message' => 'existed'];
