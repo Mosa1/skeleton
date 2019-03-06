@@ -3,7 +3,7 @@ at_symbolphp
         $images =  json_decode($data->{{$fieldName}}) ? json_decode($data->{{$fieldName}}) : ($data->{{$fieldName}} ?  [$data->{{$fieldName}}]: []);
         $value =  $data->{{$fieldName}};
     }else{
-        $value = 'none';
+        $value = null;
         $images = [];
     }
 
@@ -27,7 +27,7 @@ at_symbolendphp
     <label class="col-md-3 col-form-label" for="{{$plugin_id}}">{{ $properties->title }}</label>
     <div class="col-md-9">
         <input for="{{ $fieldName }}" name="{{ $plugin_id }}" id="{{$plugin_id}}" type="file">
-        <input type="hidden" name="{{ $fieldName }}" value="print_start $value print_end">
+        <input type="hidden" name="{{ $fieldName }}" print_start $value ? "value=".$value : '' print_end>
         <br>
         <br>
         at_symbolforeach($images as $key => $image)
