@@ -116,7 +116,7 @@
             handle(true);
           } else {
             $.each(response.message, function (key, value) {
-              $(form).find('input[name="' + key + '"]').after('<div class="error-container"><br><div class="alert alert-danger">' + value + '</div></div>')
+              $(form).find('[name="' + key + '"]').after('<div class="error-container"><br><div class="alert alert-danger">' + value + '</div></div>')
             });
 
             handle(false);
