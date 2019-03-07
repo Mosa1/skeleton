@@ -47,15 +47,23 @@
       previewEls = el.parent().find('.filetype-image');
     };
 
+    this.setRequired = function () {
+      if (cfg.required && realInput.val() === 'none')
+        this.required = true;
+      else
+        this.required = false;
+
+      this.addValidation()
+    };
+
     this.addValidation = function () {
 
       loadScript(['../vendor/betterfly/js/jquery.validate.min.js'], loaded);
-
       function loaded() {
         loadScript(['../vendor/betterfly/js/additional-methods.min.js']);
 
         var mimeTypes = cfg.mimeTypes.join(',');
-        var rules = {required: cfg.required, accept: mimeTypes};
+        var rules = {required: self.required, accept: mimeTypes};
         rules.messages = {'accept': 'File Types Must Be ["' + mimeTypes + '"]'};
         el.parents('form').addClass('ajax-validation').validate({
           onfocusout: false,
@@ -66,10 +74,10 @@
 
               var formData = new FormData(form);
               formData.delete('_method');
-              // if (formData.get(inputName).size < 1) {
-              //   form.submit();
-              //   return false;
-              // }
+              if (formData.get(realInputName).size < 1) {
+                form.submit();
+                return false;
+              }
               $.ajax({
                 url: filesRoute,
                 type: "POST",
@@ -79,9 +87,9 @@
                 success: function (response) {
                   $('main').removeClass('loading-mask');
                   if (response.success) {
-                    $.each(response.files,function(inputId,files){
-                      var input = $('input[name="'+$('#'+inputId).attr('for')+'"]');
-                      var inputValue = self.generateInputValue(input,files);
+                    $.each(response.files, function (inputId, files) {
+                      var input = $('input[name="' + $('#' + inputId).attr('for') + '"]');
+                      var inputValue = self.generateInputValue(input, files);
                       input.val(inputValue);
                     });
                     form.submit();
@@ -128,15 +136,15 @@
 
     };
 
-    this.generateInputValue = function (input,responseFiles) {
+    this.generateInputValue = function (input, responseFiles) {
       if (cfg.maxCount < 2)
         return responseFiles.length > 1 ? responseFiles[0] : responseFiles;
 
-      var value = input.val() === 'none' || !input.val() ? false: JSON.parse(input.val());
+      var value = input.val() === 'none' || !input.val() ? false : JSON.parse(input.val());
 
       if (value) {
         $.merge(value, responseFiles)
-      }else{
+      } else {
         value = responseFiles;
       }
 
@@ -149,32 +157,36 @@
       this.setPreviewElements();
       this.retriggerEvents();
       this.modifyInput();
-      this.addValidation();
+      // this.addValidation();
       this.triggerRemoveEvenet();
+      this.setRequired();
       el.change(self.drawPreview)
     };
 
     this.modifyPreview = function () {
-      parentEl.find('.filetype-file').attr('src','../vendor/betterfly/img/document_icon.png')
+      parentEl.find('.filetype-file').attr('src', '../vendor/betterfly/img/document_icon.png')
     };
 
-    this.triggerRemoveEvenet = function(){
-      $('.remove-image').click(function(){
-        if(cfg.maxCount < 2){
-          realInput.val(null);
+    this.triggerRemoveEvenet = function () {
+      parentEl.find('.remove-image').click(function () {
+        if (cfg.maxCount < 2) {
+          var value = cfg.required ? 'none' : null;
+          realInput.val(value);
           $(this).parent('.preview-container').remove();
-          return true;
-        }
-        var imageSrc = $(this).parent().find('img').attr('src');
-        var inputValue = JSON.parse(realInput.val());
-        for (var i = 0; i < inputValue.length;i++){
-          if(inputValue[i] === imageSrc)
-            inputValue.splice(i,1);
+        }else{
+          var imageSrc = $(this).parent().find('img').attr('src');
+          var inputValue = JSON.parse(realInput.val());
+          for (var i = 0; i < inputValue.length; i++) {
+            if (inputValue[i] === imageSrc)
+              inputValue.splice(i, 1);
+          }
+
+          inputValue = !inputValue.length ? null : JSON.stringify(inputValue);
+          realInput.val(inputValue);
+          $(this).parent('.preview-container').remove();
         }
 
-        inputValue = !inputValue.length ? null : JSON.stringify(inputValue);
-        realInput.val(inputValue);
-        $(this).parent('.preview-container').remove();
+        self.setRequired();
       })
     };
 
@@ -245,12 +257,12 @@
 
         for (var i = 0; i < filesLength; i++) {
           var f = this.files[i];
-          if(!f.type.match('image.*')) {
+          if (!f.type.match('image.*')) {
             previewTag = $('<img>').addClass('new-file file-preview').attr('src', '../vendor/betterfly/img/document_icon.png').attr('height', '120');
             parentEl.append(
                 previewTag
             );
-          }else{
+          } else {
             var reader = new FileReader();
             reader.onload = function (e) {
               previewTag = $('<img>').addClass('new-file file-preview').attr('src', e.target.result).attr('height', '150').data('src', e.target.result);
