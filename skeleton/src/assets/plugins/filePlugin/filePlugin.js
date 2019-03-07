@@ -80,8 +80,11 @@
                 success: function (response) {
                   $('main').removeClass('loading-mask');
                   if (response.success) {
-                    var inputValue = self.generateInputValue(response.files);
-                    realInput.val(inputValue);
+                    $.each(response.files,function(inputName,files){
+                      var input = $('input[name="'+$(inputName).attr('form')+'"]');
+                      var inputValue = self.generateInputValue(input,files);
+                      input.val(inputValue);
+                    });
                     form.submit();
                   }
                 }
@@ -126,11 +129,11 @@
 
     };
 
-    this.generateInputValue = function (responseFiles) {
+    this.generateInputValue = function (input,responseFiles) {
       if (cfg.maxCount < 2)
         return responseFiles.length > 1 ? responseFiles[0] : responseFiles;
 
-      var value = realInput.val() === 'none' || !realInput.val() ? false: JSON.parse(realInput.val());
+      var value = input.val() === 'none' || !input.val() ? false: JSON.parse(input.val());
 
       if (value) {
         $.merge(value, responseFiles)
