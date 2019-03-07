@@ -92,7 +92,7 @@
                     <i class="fa fa-lock"></i> Logout</a>
             </div>
         </li>
-        @if(config('translatable'))
+        @if(config('translatable') && config('translatable.locales'))
         <li class="nav-item row">
             @foreach(config('translatable.locales') as $locale)
             <a class="nav-link mr-2" href="{{ route('setLocale',$locale) }}">

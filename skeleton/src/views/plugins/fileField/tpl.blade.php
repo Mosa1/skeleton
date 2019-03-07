@@ -41,13 +41,13 @@ at_symbolendphp
 </div>
 at_symbolpush('scripts')
 <script>
-  loadCss(['../vendor/betterfly/plugins/imagePlugin/imagePlugin.css']);
-  loadScript(['../vendor/betterfly/plugins/imagePlugin/imagePlugin.js'], onload);
+  loadCss(['../vendor/betterfly/plugins/filePlugin/filePlugin.css']);
+  loadScript(['../vendor/betterfly/plugins/filePlugin/filePlugin.js'], onload);
 
   function onload() {
-    $('input#{{$plugin_id}}').imagePlugin({
+    $('input#{{$plugin_id}}').filePlugin({
       maxCount: {{ $cfg->maxCount }},
-      types: [@foreach($cfg->mimeTypes as $type)"{{ $type }}",@endforeach],
+      mimeTypes: [@foreach($cfg->mimeTypes as $type)"{{ $type }}",@endforeach],
       folder: "{{ $cfg->folder }}",
       thumbs: [@foreach($cfg->thumbs as $thumb){!! json_encode($thumb) !!},@endforeach]
     });

@@ -1,5 +1,5 @@
 (function ($) {
-  $.fn.imagePlugin = function (cfg) {
+  $.fn.filePlugin = function (cfg) {
     var self = this;
     var el = $(this);
     var cropData = {detail: {x: 300, y: 200, width: 300, height: 400}};
