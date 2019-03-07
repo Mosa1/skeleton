@@ -38,6 +38,7 @@ class SkeletonServiceProvider extends ServiceProvider
 
         $router->pushMiddlewareToGroup('web', '\BetterFly\Skeleton\App\Http\Middleware\LocalizeWebRoutes');
         $router->pushMiddlewareToGroup('web', '\BetterFly\Skeleton\App\Http\Middleware\UserRolePermissionRoutes');
+        $router->pushMiddlewareToGroup('web', '\BetterFly\Skeleton\App\Http\Middleware\Localization');
 
 
 

@@ -92,6 +92,17 @@
                     <i class="fa fa-lock"></i> Logout</a>
             </div>
         </li>
+        @if(config('translatable'))
+        <li class="nav-item row">
+            @foreach(config('translatable.locales') as $locale)
+            <a class="nav-link mr-2" href="{{ route('setLocale',$locale) }}">
+                <button class="btn btn-sm btn-pill btn-primary {{ \App::getLocale() == $locale ? "btn-success" : ''}}">
+                    <img src="{{ asset('vendor/betterfly/img/lang_'.$locale.'.png') }}">
+                </button>
+            </a>
+            @endforeach
+        </li>
+        @endif
     </ul>
     {{--<button class="navbar-toggler aside-menu-toggler d-md-down-none" type="button" data-toggle="aside-menu-lg-show">--}}
     {{--<span class="navbar-toggler-icon"></span>--}}

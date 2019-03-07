@@ -45,7 +45,7 @@ class BaseRepository
         $data = Transformer::transfromFilledData($data, $this->translatable, $this->translatableFields);
 
         if ($this->translatable) $item = $this->model->create($data);
-        else $item = new $this->model($data[0]);
+        else $item = new $this->model($data);
 
         $item->save();
         if ($this->relations) $this->syncRelations($data, $item);

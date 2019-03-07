@@ -40,6 +40,12 @@ Route::group(['middleware' => 'web'], function () {
 
 
     Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
+
+        Route::get('/locale/{locale}', function ($locale) {
+            \Session::put('locale', $locale);
+            return redirect()->back();
+        })->name('setLocale');
+
         Route::resource('file', 'BetterFly\Skeleton\App\Http\Controllers\Admin\FileController', [
             'names' => [
                 'index' => 'file.index',
@@ -52,7 +58,7 @@ Route::group(['middleware' => 'web'], function () {
 
         Route::get('logout', 'BetterFly\Skeleton\App\Http\Controllers\API\UserController@logout')->name('betterfly.logout');
 
-        Route::get('dashboard','BetterFly\Skeleton\App\Http\Controllers\Admin\DashboardController@index')->name('dashboard');
+        Route::get('dashboard', 'BetterFly\Skeleton\App\Http\Controllers\Admin\DashboardController@index')->name('dashboard');
     });
 
 });
