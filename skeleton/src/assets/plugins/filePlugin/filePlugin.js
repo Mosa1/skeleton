@@ -80,8 +80,8 @@
                 success: function (response) {
                   $('main').removeClass('loading-mask');
                   if (response.success) {
-                    $.each(response.files,function(inputName,files){
-                      var input = $('input[name="'+$(inputName).attr('form')+'"]');
+                    $.each(response.files,function(inputId,files){
+                      var input = $('input[name="'+$('#'+inputId).attr('for')+'"]');
                       var inputValue = self.generateInputValue(input,files);
                       input.val(inputValue);
                     });
@@ -143,6 +143,7 @@
 
       return JSON.stringify(value);
     };
+
 
     this.initilizeEvents = function () {
       this.setPreviewElements();
@@ -234,20 +235,24 @@
         var filesLength = this.files.length;
         if (filesLength > cfg.maxCount || parentEl.find('.file-preview').length >= cfg.maxCount) {
           $(this).val('');
-          alert('You Can Choose Only ' + cfg.maxCount + ' Photos');
+          alert('You Can Choose Only ' + cfg.maxCount + ' Files');
           return false;
         }
 
         for (var i = 0; i < filesLength; i++) {
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            previewTag = $('<img>').addClass('new-file file-preview').attr('src', e.target.result).attr('height', '150').data('src', e.target.result);
-            parentEl.append(
-                previewTag
-            );
-          };
+          var f = this.files[i];
+          if(!f.type.match('image.*')) {
 
-          reader.readAsDataURL(this.files[i]);
+          }else{
+            var reader = new FileReader();
+            reader.onload = function (e) {
+              previewTag = $('<img>').addClass('new-file file-preview').attr('src', e.target.result).attr('height', '150').data('src', e.target.result);
+              parentEl.append(
+                  previewTag
+              );
+            };
+            reader.readAsDataURL(this.files[i]);
+          }
         }
       }
       setTimeout(function () {
