@@ -1,17 +1,17 @@
 at_symbolphp
     if(isset($data)){
-        $images =  json_decode($data->{{$fieldName}}) ? json_decode($data->{{$fieldName}}) : ($data->{{$fieldName}} ?  [$data->{{$fieldName}}]: []);
+        $files =  json_decode($data->{{$fieldName}}) ? json_decode($data->{{$fieldName}}) : ($data->{{$fieldName}} ?  [$data->{{$fieldName}}]: []);
         $value =  $data->{{$fieldName}};
     }else{
         $value = null;
-        $images = [];
+        $files = [];
     }
 
 at_symbolendphp
 @php
     $defaultCfg = [
         'folder' => 'files',
-        'title'=>'Image',
+        'title'=>'File',
         'mimeTypes' => ['jpg','jpeg','png','svg'],
         'maxCount' => 1,
         'thumbs' => [],
@@ -29,9 +29,9 @@ at_symbolendphp
         <input type="hidden" name="{{ $fieldName }}" print_start $value ? "value=".$value : '' print_end>
         <br>
         <br>
-        at_symbolforeach($images as $key => $image)
+        at_symbolforeach($files as $key => $file)
             <div class="preview-container">
-                <img class="old file-preview" data-src="print_start $image print_end" src="print_start $image print_end" height="150">
+                <img class="old file-preview print_start !strpos(mime_content_type($file),'image') ? 'filetype-file' : 'filetype-image' print_end" data-src="print_start $file print_end" src="print_start $file print_end" height="150">
                 <a data-index="print_start $key print_end" href="javascript:;" class="remove-image">
                     <i class="fa fa-close"></i>
                 </a>

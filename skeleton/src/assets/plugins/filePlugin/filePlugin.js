@@ -44,7 +44,7 @@
     }
 
     this.setPreviewElements = function () {
-      previewEls = el.parent().find('.file-preview');
+      previewEls = el.parent().find('.filetype-image');
     };
 
     this.addValidation = function () {
@@ -54,7 +54,6 @@
       function loaded() {
         loadScript(['../vendor/betterfly/js/additional-methods.min.js']);
 
-        var inputName = el.attr('name');
         var mimeTypes = cfg.mimeTypes.join(',');
         var rules = {required: cfg.required, accept: mimeTypes};
         rules.messages = {'accept': 'File Types Must Be ["' + mimeTypes + '"]'};
@@ -67,10 +66,10 @@
 
               var formData = new FormData(form);
               formData.delete('_method');
-              if (formData.get(inputName).size < 1) {
-                form.submit();
-                return false;
-              }
+              // if (formData.get(inputName).size < 1) {
+              //   form.submit();
+              //   return false;
+              // }
               $.ajax({
                 url: filesRoute,
                 type: "POST",
@@ -146,12 +145,17 @@
 
 
     this.initilizeEvents = function () {
+      this.modifyPreview();
       this.setPreviewElements();
       this.retriggerEvents();
       this.modifyInput();
       this.addValidation();
       this.triggerRemoveEvenet();
       el.change(self.drawPreview)
+    };
+
+    this.modifyPreview = function () {
+      parentEl.find('.filetype-file').attr('src','../vendor/betterfly/img/document_icon.png')
     };
 
     this.triggerRemoveEvenet = function(){
@@ -242,7 +246,10 @@
         for (var i = 0; i < filesLength; i++) {
           var f = this.files[i];
           if(!f.type.match('image.*')) {
-
+            previewTag = $('<img>').addClass('new-file file-preview').attr('src', '../vendor/betterfly/img/document_icon.png').attr('height', '120');
+            parentEl.append(
+                previewTag
+            );
           }else{
             var reader = new FileReader();
             reader.onload = function (e) {
