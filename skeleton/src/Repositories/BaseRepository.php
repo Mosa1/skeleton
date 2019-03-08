@@ -105,7 +105,7 @@ class BaseRepository
         } else {
             $allMethods = get_class_methods($this->model);
             foreach ($allMethods as $method) {
-                if ($method == '__construct') break;
+                if ($method == '__construct' || strpos($method, 'scope') === 0) break;
                 $relations[] = $method;
             }
         }
