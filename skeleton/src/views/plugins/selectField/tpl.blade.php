@@ -12,7 +12,9 @@ at_symbolendphp
     $defaultCfg = [
         'title'=>'Select Option',
         'multiple' => false,
-        'required' => false
+        'required' => false,
+        'options'  => [],
+        'dataLoaderMethod' => false
     ];
     $cfg = (object)array_merge($defaultCfg,(array)$properties);
 
@@ -26,9 +28,12 @@ at_symbolendphp
             @if(!$cfg->multiple)
                 <option value="" class="default" selected>Select Option</option>
             @endif
-            @foreach($properties->options as $option)
-                <option print_start $value == {{ $option->{$properties->optionValue} }} ? 'selected' : '' print_end value="{{ $option->{$properties->optionValue} }}">{{ $option->{$properties->optionName} }}</option>
-            @endforeach
+            at_symbolphp
+                $options = {{ $cfg->dataLoaderMethod ? $cfg->dataLoaderMethod.'()' : '[]' }}
+            at_symbolendphp
+            at_symbolforeach($options as $option)
+                <option print_start $value == $option->{{$properties->optionValue }} ? 'selected' : '' print_end value="print_start $option->{{$properties->optionValue }} print_end">print_start $option->{{$properties->optionName }} print_end</option>
+            at_symbolendforeach
         </select>
         at_symbolif($errors->get('{{ $fieldName }}'))
             <br>
