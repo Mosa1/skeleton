@@ -42,7 +42,7 @@ class MakeModuleCommand extends BaseCommand
         $this->validateDirPath($dirPath);
 
         $this->createFile($modelName, $dirPath, 'Config', null);
-        $this->info("Config File Created, please configure it and then run: \"php artisan betterfly:build_module " . $modelName . "\" ");
+        $this->info("\n Config File Created, please configure it and then run: \"php artisan betterfly:build_module " . $modelName . "\" ");
 
         $this->finishProgressBar();
     }

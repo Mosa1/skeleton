@@ -3,6 +3,7 @@
 namespace BetterFly\Skeleton\Repositories;
 
 use BetterFly\Skeleton\App\Http\Transformers\BaseTransformerAbstract as Transformer;
+use Illuminate\Support\Facades\File;
 
 class BaseRepository
 {
@@ -19,6 +20,7 @@ class BaseRepository
         if ($this->translatable)
             $this->translatableFields = $modelInfo['fields'];
         $this->relations = $this->getModelRelations();
+        $this->moduleCfg = $this->getModuleCfg();
     }
 
     public function getList($query = null)
@@ -42,7 +44,7 @@ class BaseRepository
 
     public function create($data)
     {
-        $data = Transformer::transfromFilledData($data, $this->translatable, $this->translatableFields);
+        $data = Transformer::transfromFilledData($data, $this->translatable,$this->moduleCfg, $this->translatableFields);
 
         if ($this->translatable) $item = $this->model->create($data);
         else $item = new $this->model($data);
@@ -155,5 +157,27 @@ class BaseRepository
             }
         }
         return false;
+    }
+
+    public function getModuleCfg(){
+        $moduleName = (new \ReflectionClass($this->model))->getShortName();
+
+        $cfgPath = base_path('/app/Modules/'.$moduleName) . '/' . strtolower($moduleName) . '.config.json';
+
+        if (File::exists($cfgPath)) {
+            $json = File::get($cfgPath);
+            $json = preg_replace('!/\*.*?\*/!s', '', $json);
+            $json = json_decode($json);
+
+            if (!$json) {
+                exit($this->error('Invalid Config file! Please validate "' . $moduleName . '" file '));
+            } else if (!$json->fields) {
+                exit($this->error('Missing fields in Config file'));
+            }
+
+            return $json;
+        }else{
+            return [];
+        }
     }
 }

@@ -9,7 +9,7 @@ abstract class BaseTransformerAbstract extends TransformerAbstract
 {
     // Ability to override Transformer functions
 
-    public static function transfromFilledData($data, $translatable, $translatableFields = [])
+    public static function transfromFilledData($data, $translatable,$moduleCfg, $translatableFields = [])
     {
         $locale = App::getLocale();
         $locales = config('translatable.locales');
@@ -18,6 +18,7 @@ abstract class BaseTransformerAbstract extends TransformerAbstract
         unset($data['multilang']);
         unset($data['_token']);
         unset($data['_method']);
+        unset($data['request_name_space']);
 
         if ($translatable) {
             if (!$multiLang) {
