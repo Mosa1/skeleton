@@ -1,5 +1,7 @@
+cfgByInput = {};
+
 (function ($) {
-  $.fn.filePlugin = function (cfg) {
+  $.fn.filePlugin = function (options) {
     var self = this;
     var el = $(this);
     var cropData = {detail: {x: 300, y: 200, width: 300, height: 400}};
@@ -14,7 +16,7 @@
       mimeTypes: ['png', 'jpg', 'jpeg', 'svg'],
       crop: false,
       required: false,
-    }, cfg);
+    }, options);
 
     var crop = cfg.crop && cfg.maxCount < 2;
 
@@ -61,9 +63,10 @@
       loadScript(['../vendor/betterfly/js/jquery.validate.min.js'], loaded);
       function loaded() {
         loadScript(['../vendor/betterfly/js/additional-methods.min.js']);
-
         var mimeTypes = cfg.mimeTypes.join(',');
         var rules = {required: self.required, accept: mimeTypes};
+        cfgByInput[el.attr('id')] = cfg;
+
         rules.messages = {'accept': 'File Types Must Be ["' + mimeTypes + '"]'};
         el.parents('form').addClass('ajax-validation').validate({
           onfocusout: false,
@@ -89,7 +92,8 @@
                   if (response.success) {
                     $.each(response.files, function (inputId, files) {
                       var input = $('input[name="' + $('#' + inputId).attr('for') + '"]');
-                      var inputValue = self.generateInputValue(input, files);
+                      var cfg = cfgByInput[inputId];
+                      var inputValue = self.generateInputValue(input, files,cfg);
                       input.val(inputValue);
                     });
                     form.submit();
@@ -136,7 +140,7 @@
 
     };
 
-    this.generateInputValue = function (input, responseFiles) {
+    this.generateInputValue = function (input, responseFiles,cfg) {
       if (cfg.maxCount < 2)
         return responseFiles.length > 1 ? responseFiles[0] : responseFiles;
 
