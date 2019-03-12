@@ -149,6 +149,14 @@ class MakeMigrationCommand extends BaseCommand
             }
         }
 
+        if(property_exists($config,'setVisibility') && $config->setVisibility){
+            if($config->translatable)
+                $translatableDbFields[] = '$table->tinyInteger("visibility")->default(1);';
+            else
+                $dbFields[] = '$table->tinyInteger("visibility")->default(1);';
+
+        }
+
         $params['dbFields'] = $dbFields;
         $params['translatableDbFields'] = $translatableDbFields;
         $params['config'] = $config;

@@ -57,8 +57,8 @@ at_symbolsection('content')
                                             @foreach($cfg->indexPlugin[0]->cols as $col)
                                                 <th>{{ $col->name }}</th>
                                             @endforeach
-                                            @if(property_exists($cfg->indexPlugin[0],'setStatus') && $cfg->indexPlugin[0]->setStatus)
-                                                <th>Status</th>
+                                            @if(property_exists($cfg,'setVisibility') && $cfg->setVisibility)
+                                                <th>Visibility</th>
                                             @endif
                                             <th>Actions</th>
                                         </tr>
@@ -82,10 +82,10 @@ at_symbolsection('content')
                                             @endforeach
 
 
-                                            @if(property_exists($cfg->indexPlugin[0],'setStatus') && $cfg->indexPlugin[0]->setStatus)
+                                                @if(property_exists($cfg,'setVisibility') && $cfg->setVisibility)
                                                 <td class="text-center align-middle">
                                                     <label class="switch switch-label switch-success">
-                                                        <input class="switch-input" type="checkbox" checked="">
+                                                        <input data-url="print_start route('set-visibility',['{{ str_plural($moduleName) }}',$item->id]) print_end" class="switch-input visibility" type="checkbox" print_start $item->visibility ? 'checked' : '' print_end>
                                                         <span class="switch-slider" data-checked="On"
                                                               data-unchecked="Off"></span>
                                                     </label>

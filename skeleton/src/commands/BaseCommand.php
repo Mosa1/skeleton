@@ -186,6 +186,14 @@ class BaseCommand extends Command
             }
         }
 
+
+        if(property_exists($cfg, 'setVisibility')){
+            if ($cfg->translatable)
+                $cfg->translatedAttributes .= '"visibility",';
+            else
+                $cfg->fillable[] = "visibility";
+        }
+
         $cfg->fillable = '"' . implode('" ,"', $cfg->fillable) . '"';
 
         return $cfg;

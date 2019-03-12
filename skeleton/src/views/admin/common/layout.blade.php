@@ -190,6 +190,27 @@
         }
       });
     });
+
+
+
+
+    $('.visibility').change(function () {
+      var action = $(this).data().url;
+      var csrf = $('meta[name="csrf-token"]').attr('content');
+      $.ajax({
+        url: action,
+        type: 'PATCH',
+        data: {visibility: $(this).is(':checked') ? 1 : 0 },
+        headers: {
+          'X-CSRF-TOKEN': csrf
+        },
+        success: function (result) {
+          if (result.message === 'Successfully deleted') {
+            table.row(row).remove().draw();
+          }
+        }
+      });
+    });
   });
 </script>
 </body>

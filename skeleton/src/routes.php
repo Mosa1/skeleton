@@ -56,6 +56,8 @@ Route::group(['middleware' => 'web'], function () {
 
         Route::post('validate-form', 'BetterFly\Skeleton\App\Http\Controllers\Admin\AjaxValidation@ajaxValidate')->name('ajax-validation');
 
+        Route::patch('set-visibility/{Model}/{id}', 'BetterFly\Skeleton\App\Http\Controllers\Controller@setStatus')->name('set-visibility');
+
         Route::get('logout', 'BetterFly\Skeleton\App\Http\Controllers\API\UserController@logout')->name('betterfly.logout');
 
         Route::get('dashboard', 'BetterFly\Skeleton\App\Http\Controllers\Admin\DashboardController@index')->name('dashboard');
