@@ -191,6 +191,11 @@
       });
     });
 
+    $('.checkbox-plugin').change(function(){
+      var val = $(this).is(':checked') ? 1 : 0;
+      var checkbox = $('input[name="'+$(this).attr('for')+'"]');
+      checkbox.val(val)
+    });
 
 
 
