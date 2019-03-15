@@ -51,12 +51,25 @@ class MakeViewCommand extends BaseCommand
     public function handle()
     {
         $this->moduleName = trim($this->argument('moduleName'));
-        $files = $this->checkFileTypes($this->option('file'));
-        $config = $this->getConfigFile($this->moduleName, true, false);
+        $config = $this->getMergedConfig();
+        $files = $this->checkFileTypes($this->option('file'),$config);
         $files = in_array('all', $files) ? $this->supportedFilesTypes : $files;
 
         $this->makeViews($config, $files);
 
+    }
+
+    public function getMergedConfig(){
+        $defaultCfg = [
+            'editModeOnly' => false,
+            'excelExport'  => false,
+        ];
+
+        $cfg = $this->getConfigFile($this->moduleName, true, false);
+
+        $cfg = (object)array_merge($defaultCfg,(array)$cfg);
+
+        return $cfg;
     }
 
     public function makeViews($config, $files)
@@ -77,7 +90,7 @@ class MakeViewCommand extends BaseCommand
             $baseBlade = $this->laravel->view->make($viewNameSpace)->with($baseData)->render();
 
             if ($file != 'index') {
-                $pluginsBlade = $this->collectPlugins($config->fields);
+                $pluginsBlade = $this->collectPlugins($config->fields,$file);
             }
 
             $baseBlade = $this->replaceStrs($baseBlade, $pluginsBlade);
@@ -102,6 +115,8 @@ class MakeViewCommand extends BaseCommand
     public function replaceStrs($str, $pluginsBlade = false)
     {
         if ($pluginsBlade) $str = str_replace('{plugins}', $pluginsBlade, $str);
+        $str = str_replace('print_start_allow_chars', '{!!', $str);
+        $str = str_replace('print_end_allow_chars', '!!}', $str);
         $str = str_replace('print_start', '{{', $str);
         $str = str_replace('print_end', '}}', $str);
         $str = str_replace('at_symbol', '@', $str);
@@ -109,8 +124,10 @@ class MakeViewCommand extends BaseCommand
         return $str;
     }
 
-    public function checkFileTypes($files)
+    public function checkFileTypes($files,$cfg)
     {
+        $files = $cfg->editModeOnly ? ['edit'] : (empty($files) ? ['all'] : $files);
+
         foreach ($files as $key => $fileType) {
             if ($fileType != 'all' && !in_array($fileType, $this->supportedFilesTypes)) unset($files[$key]);
         }
@@ -130,7 +147,7 @@ class MakeViewCommand extends BaseCommand
 
     }
 
-    public function collectPlugins($fields)
+    public function collectPlugins($fields,$mode)
     {
         $pluginsBlade = '';
         $pluginIncrement = 0;
@@ -138,7 +155,7 @@ class MakeViewCommand extends BaseCommand
         foreach ($fields as $fieldName => $properties) {
             if (!property_exists($properties, 'pluginName')) continue;
 
-            $fieldData = ['properties' => $properties, 'fieldName' => $fieldName, 'plugin_id' => $properties->pluginName . '_' . $pluginIncrement];
+            $fieldData = ['properties' => $properties, 'fieldName' => $fieldName,'mode' => $mode, 'plugin_id' => $properties->pluginName . '_' . $pluginIncrement];
 
             $pluginBlade = $this->laravel->view->make('betterfly::plugins.' . $properties->pluginName . '.tpl')->with($fieldData)->render();
 

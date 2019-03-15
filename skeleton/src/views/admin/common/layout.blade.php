@@ -95,7 +95,7 @@
         @if(config('translatable') && config('translatable.locales'))
         <li class="nav-item row">
             @foreach(config('translatable.locales') as $locale)
-            <a class="nav-link mr-2" href="{{ route('setLocale',$locale) }}">
+            <a class="nav-link mr-2" href="{{ route('admin.setLocale',$locale) }}">
                 <button class="btn btn-sm btn-pill btn-primary {{ \App::getLocale() == $locale ? "btn-success" : ''}}">
                     <img src="{{ asset('vendor/betterfly/img/lang_'.$locale.'.png') }}">
                 </button>
@@ -161,10 +161,10 @@
 <script>
   var filesRoute = "{{ route('file.index') }}";
   var ajaxValidation = "{{ route('ajax-validation') }}";
+  var csrf = $('meta[name="csrf-token"]').attr('content');
   $(function () {
     $('.remove-item').click(function () {
       var action = $(this).data().url;
-      var csrf = $('meta[name="csrf-token"]').attr('content');
       var row = $(this).parents('tr');
       Modal.show({
         yesClass: 'btn-danger',

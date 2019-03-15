@@ -2,7 +2,6 @@ at_symbolextends('betterfly::admin.common.layout')
 
 
 at_symbolpush('css')
-<link href="../vendor/betterfly/plugins/dataTable/dataTables.bootstrap4.min.css" rel="stylesheet">
 at_symbolendpush
 
 at_symbolsection('content')
@@ -33,9 +32,19 @@ at_symbolsection('content')
                         <div class="card-header">
                             <i class="fa fa-edit"></i> {{ $moduleName }}
                             <div class="card-header-actions">
-                                <a class="card-header-action" href="https://datatables.net" target="_blank">
-                                    <small class="text-muted">docs</small>
-                                </a>
+                                @if($cfg->excelExport)
+                                    <form method="POST" action="{{ route('excel-export') }}">
+                                        <input type="hidden"  name="data" value='print_start_allow_chars json_encode($data) print_end_allow_chars'>
+                                        at_symbolcsrf
+                                        <button type="submit"
+                                                class="btn btn-warning btn-ladda-progress excel-export ladda-button"
+                                                data-style="expand-right"><span
+                                                    class="ladda-label">Generate Excel</span><span
+                                                    class="ladda-spinner"></span>
+                                            <div class="ladda-progress" style="width: 114px;"></div>
+                                        </button>
+                                    </form>
+                                @endif
                             </div>
                         </div>
                         <div class="card-body">
@@ -73,26 +82,31 @@ at_symbolsection('content')
                                                 @if(property_exists($col,'renderer'))
                                                     @if($col->renderer == 'photo')
                                                         <td class="align-middle">
-                                                            <img class="datatable-image" src="print_start $item->{{$col->value}} print_end">
+                                                            <img class="datatable-image"
+                                                                 src="print_start $item->{{$col->value}} print_end">
                                                         </td>
                                                     @endif
                                                 @else
-                                                    <td class="align-middle">print_start strip_tags($item->{{$col->value}}) print_end</td>
+                                                    <td class="align-middle">print_start
+                                                        strip_tags($item->{{$col->value}}) print_end
+                                                    </td>
                                                 @endif
                                             @endforeach
 
 
-                                                @if(property_exists($cfg,'setVisibility') && $cfg->setVisibility)
+                                            @if(property_exists($cfg,'setVisibility') && $cfg->setVisibility)
                                                 <td class="text-center align-middle">
                                                     <label class="switch switch-label switch-success">
-                                                        <input data-url="print_start route('set-visibility',['{{ str_plural($moduleName) }}',$item->id]) print_end" class="switch-input visibility" type="checkbox" print_start $item->visibility ? 'checked' : '' print_end>
+                                                        <input data-url="print_start route('set-visibility',['{{ str_plural($moduleName) }}',$item->id]) print_end"
+                                                               class="switch-input visibility" type="checkbox"
+                                                               print_start $item->visibility ? 'checked' : '' print_end>
                                                         <span class="switch-slider" data-checked="On"
                                                               data-unchecked="Off"></span>
                                                     </label>
                                                 </td>
                                             @endif
 
-                                            <td class="text-right align-middle">
+                                            <td class="text-center align-middle">
                                                 <a class="btn btn-info"
                                                    href="print_start route('{{ str_plural(strtolower($moduleName)) }}.edit',$item->id) print_end">
                                                     <i class="fa fa-edit"></i>
@@ -120,20 +134,54 @@ at_symbolsection('content')
 </main>
 at_symbolendsection
 
+
 at_symbolpush('scripts')
-<script src="../vendor/betterfly/plugins/dataTable/jquery.dataTables.js"></script>
-<script src="../vendor/betterfly/plugins/dataTable/dataTables.bootstrap4.js"></script>
 <script>
-  var table = $('#datatable').DataTable({
-    "columnDefs": [
-        <?php foreach($cfg->indexPlugin[0]->cols as $key => $col){ ?>
-            {
-                "searchable": <?= property_exists($col,'searchable') && $col->searchable  ? 'true' : 'false' ?> ,
-                "targets": <?= $key ?>,
-                "sortable": <?= property_exists($col,'sortable') && $col->sortable  ? 'true' : 'false'  ?>
-            },
-        <?php } ?>
-    ]
-  });
+  loadCss('../vendor/betterfly/plugins/dataTable/dataTables.bootstrap4.min.css');
+  @if($cfg->excelExport)
+  loadCss('../vendor/betterfly/css/lada.css');
+  loadScript(
+      [
+        '../vendor/betterfly/js/spin.min.js',
+        '../vendor/betterfly/js/ladda.min.js',
+      ], ladaLoaded
+  );
+
+  function ladaLoaded() {
+    Ladda.bind('.btn-ladda-progress', {
+      callback: function callback(instance) {
+        var progress = 0;
+        var interval = setInterval(function () {
+          progress = Math.min(progress + Math.random() * 0.1, 1);
+          instance.setProgress(progress);
+          if (progress === 1) {
+            instance.stop();
+            clearInterval(interval);
+          }
+        }, 50);
+      }
+    });
+  }
+  @endif
+
+  loadScript('../vendor/betterfly/plugins/dataTable/jquery.dataTables.js', dataTableLoaded);
+
+  function dataTableLoaded() {
+    loadScript('../vendor/betterfly/plugins/dataTable/dataTables.bootstrap4.js', bootstrapLoaded);
+
+    function bootstrapLoaded() {
+      var table = $('#datatable').DataTable({
+        "columnDefs": [
+                <?php foreach($cfg->indexPlugin[0]->cols as $key => $col){ ?>
+          {
+            "searchable": <?= property_exists($col, 'searchable') && $col->searchable ? 'true' : 'false' ?> ,
+            "targets": <?= $key ?>,
+            "sortable": <?= property_exists($col, 'sortable') && $col->sortable ? 'true' : 'false'  ?>
+          },
+            <?php } ?>
+        ]
+      });
+    }
+  }
 </script>
 at_symbolendpush

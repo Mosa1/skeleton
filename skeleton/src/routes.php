@@ -34,7 +34,6 @@ Route::group(['middleware' => ['auth:api', 'auth'], 'prefix' => 'api'], function
 });
 
 Route::group(['middleware' => 'web'], function () {
-
     Route::get('admin', 'BetterFly\Skeleton\App\Http\Controllers\Admin\LoginController@index')->name('betterfly.admin');
     Route::post('login', 'BetterFly\Skeleton\App\Http\Controllers\API\UserController@login')->name('betterfly.login');
 
@@ -44,7 +43,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('/locale/{locale}', function ($locale) {
             \Session::put('locale', $locale);
             return redirect()->back();
-        })->name('setLocale');
+        })->name('admin.setLocale');
 
         Route::resource('file', 'BetterFly\Skeleton\App\Http\Controllers\Admin\FileController', [
             'names' => [
@@ -53,6 +52,8 @@ Route::group(['middleware' => 'web'], function () {
                 'destroy' => 'file.delete'
             ]
         ]);
+
+        Route::post('excel-export','BetterFly\Skeleton\App\Http\Controllers\Controller@excelExport')->name('excel-export');
 
         Route::post('validate-form', 'BetterFly\Skeleton\App\Http\Controllers\Admin\AjaxValidation@ajaxValidate')->name('ajax-validation');
 

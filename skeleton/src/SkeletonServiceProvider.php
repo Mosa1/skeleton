@@ -64,6 +64,8 @@ class SkeletonServiceProvider extends ServiceProvider
                 DatabaseReset::class
             ]);
         }
+
+        $this->registerHelpers();
     }
 
     /**
@@ -73,9 +75,22 @@ class SkeletonServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
         $this->app->register(
             'BetterFly\Skeleton\Providers\RouteServiceProvider'
         );
+
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $loader->alias('Excel', 'Maatwebsite\Excel\Facades\Excel');
+    }
+    /**
+     * Register helpers file
+     */
+    public function registerHelpers()
+    {
+        // Load the helpers in app/Http/helpers.php
+        if (file_exists($file = app_path('app/Helpers/helpers.php')))
+        {
+            require $file;
+        }
     }
 }

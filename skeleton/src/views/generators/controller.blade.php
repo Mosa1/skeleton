@@ -21,7 +21,7 @@ class {{ $moduleName }}Controller extends Controller
     */
     public function index(Request $request)
     {
-        $data = $this->{{strtolower($moduleName)}}Service->getList(['paginate' => 5]);
+        $data = {{ $dataLoaderMethod ? $dataLoaderMethod."();" : '$this->'.strtolower($moduleName)."Service->getList(['paginate' => 5]);" }}
         if($request->ajax())
             return $data;
         else
