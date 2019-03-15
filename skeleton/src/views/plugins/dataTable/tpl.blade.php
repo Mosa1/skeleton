@@ -33,7 +33,7 @@ at_symbolsection('content')
                             <i class="fa fa-edit"></i> {{ $moduleName }}
                             <div class="card-header-actions">
                                 @if($cfg->excelExport)
-                                    <form method="POST" action="{{ route('excel-export') }}">
+                                    <form method="POST" action="print_start route('excel-export') print_end">
                                         <input type="hidden"  name="data" value='print_start_allow_chars json_encode($data) print_end_allow_chars'>
                                         at_symbolcsrf
                                         <button type="submit"
