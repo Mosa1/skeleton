@@ -35,6 +35,8 @@ at_symbolsection('content')
                                 @if($cfg->excelExport)
                                     <form method="POST" action="print_start route('excel-export') print_end">
                                         <input type="hidden"  name="data" value='print_start_allow_chars json_encode($data) print_end_allow_chars'>
+                                        <input type="hidden"  name="name" value='{{ property_exists($cfg->excelExport,'name') ? $cfg->excelExport->name : 'file' }}'>
+                                        <input type="hidden"  name="format" value='{{ property_exists($cfg->excelExport,'format') ? $cfg->excelExport->format : 'xlsx' }}'>
                                         at_symbolcsrf
                                         <button type="submit"
                                                 class="btn btn-warning btn-ladda-progress excel-export ladda-button"

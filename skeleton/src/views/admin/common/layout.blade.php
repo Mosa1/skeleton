@@ -36,11 +36,13 @@
         <li class="nav-item px-3">
             <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
         </li>
+        @if(Auth()->user()->type !== 2)
         <li class="nav-item px-3">
-            <a class="nav-link" href="#">Users</a>
+            <a class="nav-link" href="{{ route('users.index') }}">Users</a>
         </li>
+        @endif
         <li class="nav-item px-3">
-            <a class="nav-link" href="#">Settings</a>
+            <a class="nav-link" href="{{ route('users.edit',Auth()->user()->id) }}">Settings</a>
         </li>
     </ul>
     <ul class="nav navbar-nav ml-auto">
@@ -124,13 +126,13 @@
 
                 @include('admin.common.menu')
 
-                <li class="divider"></li>
-                <li class="nav-title">Extras</li>
-                <li class="nav-item nav-dropdown">
-                <li class="nav-item">
-                    <a class="nav-link" href="500.html" target="_top">
-                        <i class="nav-icon icon-star"></i> textes</a>
-                </li>
+                {{--<li class="divider"></li>--}}
+                {{--<li class="nav-title">Extras</li>--}}
+                {{--<li class="nav-item nav-dropdown">--}}
+                {{--<li class="nav-item">--}}
+                    {{--<a class="nav-link" href="500.html" target="_top">--}}
+                        {{--<i class="nav-icon icon-star"></i> textes</a>--}}
+                {{--</li>--}}
             </ul>
         </nav>
         <button class="sidebar-minimizer brand-minimizer" type="button"></button>

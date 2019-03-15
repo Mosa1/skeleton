@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use BetterFly\Skeleton\App\Http\Responses\APIResponseTrait;
+use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use BetterFly\Skeleton\App\Exports\BladeExport;
 
@@ -25,7 +26,11 @@ class Controller extends BaseController
     public function excelEXport(Request $request)
     {
         $data = json_decode($request->input('data'));
+        $name = $request->input('name').' - '.Carbon::now()->format('m.d.Y');
+        $format = $request->input('format');
 
-        return Excel::download(new BladeExport($data), 'export.xlsx');
+        $fullName = $name.'.'.$format;
+
+        return Excel::download(new BladeExport($data), $fullName);
     }
 }
