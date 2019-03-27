@@ -50,8 +50,10 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes($request)
     {
-        if ($this->app->config->get('translatable.locales')) {
-            Route::prefix($request->segment(1))
+        $locales = $this->app->config->get('translatable.locales');
+        $requestedLocale = $request->segment(1);
+        if ($locales && in_array($requestedLocale,$locales)) {
+            Route::prefix($requestedLocale)
                 ->middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));

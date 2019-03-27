@@ -34,12 +34,17 @@ Route::group(['middleware' => ['auth:api', 'auth'], 'prefix' => 'api'], function
 });
 
 Route::group(['middleware' => 'web'], function () {
-
     Route::get('admin', 'BetterFly\Skeleton\App\Http\Controllers\Admin\LoginController@index')->name('betterfly.admin');
     Route::post('login', 'BetterFly\Skeleton\App\Http\Controllers\API\UserController@login')->name('betterfly.login');
 
 
     Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
+
+        Route::get('/locale/{locale}', function ($locale) {
+            \Session::put('locale', $locale);
+            return redirect()->back();
+        })->name('admin.setLocale');
+
         Route::resource('file', 'BetterFly\Skeleton\App\Http\Controllers\Admin\FileController', [
             'names' => [
                 'index' => 'file.index',
@@ -48,11 +53,15 @@ Route::group(['middleware' => 'web'], function () {
             ]
         ]);
 
+        Route::post('excel-export','BetterFly\Skeleton\App\Http\Controllers\Controller@excelExport')->name('excel-export');
+
         Route::post('validate-form', 'BetterFly\Skeleton\App\Http\Controllers\Admin\AjaxValidation@ajaxValidate')->name('ajax-validation');
+
+        Route::patch('set-visibility/{Model}/{id}', 'BetterFly\Skeleton\App\Http\Controllers\Controller@setStatus')->name('set-visibility');
 
         Route::get('logout', 'BetterFly\Skeleton\App\Http\Controllers\API\UserController@logout')->name('betterfly.logout');
 
-        Route::get('dashboard','BetterFly\Skeleton\App\Http\Controllers\Admin\DashboardController@index')->name('dashboard');
+        Route::get('dashboard', 'BetterFly\Skeleton\App\Http\Controllers\Admin\DashboardController@index')->name('dashboard');
     });
 
 });

@@ -11,7 +11,12 @@ at_symbolsection('content')
         <li class="breadcrumb-item">
             <a href="print_start route('dashboard') print_end">Dashboard</a>
         </li>
-        <li class="breadcrumb-item active">{{ $moduleName }}</li>
+        @if(!$cfg->editModeOnly)
+        <li class="breadcrumb-item">
+            <a href="print_start {!! 'route("'.strtolower($moduleName).'.index")' !!} print_end">{{ $moduleName }}</a>
+        </li>
+        @endif
+        <li class="breadcrumb-item active">{{ str_singular($moduleName ) }}</li>
     </ol>
 
     at_symbolif(\Session::get('status'))

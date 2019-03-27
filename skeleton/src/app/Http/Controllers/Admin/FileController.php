@@ -21,17 +21,17 @@ class FileController extends Controller
 
         foreach ($request->file() as $inputName => $files) {
             $filesArray = !is_array($files) ? [$files] : $files;
-            $imageCfg = $request->input($inputName . '_cfg');
+            $fileCfg = $request->input($inputName . '_cfg');
 
-            if (!$imageCfg)
+            if (!$fileCfg)
                 return response(['success' => false, 'message' => 'Image Config Not Found']);
 
-            $imageCfg = json_decode($imageCfg);
+            $fileCfg = json_decode($fileCfg);
 
             foreach ($filesArray as $file) {
-                $response = $this->uploadFile($file, $imageCfg);
+                $response = $this->uploadFile($file, $fileCfg);
                 if ($response['success']) {
-                    $uploadedFiles['paths'][] = $response['filePath'];
+                    $uploadedFiles['paths'][$inputName][] = $response['filePath'];
                 } else {
                     if (!empty($uploadedFiles['paths']))
                         File::delete($uploadedFiles['paths']);
@@ -44,7 +44,7 @@ class FileController extends Controller
 
     }
 
-    public function uploadFile($file, $cfg = false)
+    public function uploadFile($file, $cfg)
     {
         if ($cfg && property_exists($cfg, 'mimeTypes')) {
             $mimesValidation = $this->validateMimes($file, $cfg->mimeTypes);
@@ -66,7 +66,7 @@ class FileController extends Controller
         }
 
 
-        if ($cfg && $cfg->thumbs) {
+        if ($cfg->thumbs) {
             if ($this->isImage($file))
                 $this->createThumbs($filePath, $fileDir, $fileName, $cfg->thumbs);
         }

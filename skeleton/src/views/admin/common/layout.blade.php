@@ -36,11 +36,13 @@
         <li class="nav-item px-3">
             <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
         </li>
+        @if(Auth()->user()->type !== 2)
         <li class="nav-item px-3">
-            <a class="nav-link" href="#">Users</a>
+            <a class="nav-link" href="{{ route('users.index') }}">Users</a>
         </li>
+        @endif
         <li class="nav-item px-3">
-            <a class="nav-link" href="#">Settings</a>
+            <a class="nav-link" href="{{ route('users.edit',Auth()->user()->id) }}">Settings</a>
         </li>
     </ul>
     <ul class="nav navbar-nav ml-auto">
@@ -92,6 +94,17 @@
                     <i class="fa fa-lock"></i> Logout</a>
             </div>
         </li>
+        @if(config('translatable') && config('translatable.locales'))
+        <li class="nav-item row">
+            @foreach(config('translatable.locales') as $locale)
+            <a class="nav-link mr-2" href="{{ route('admin.setLocale',$locale) }}">
+                <button class="btn btn-sm btn-pill btn-primary {{ \App::getLocale() == $locale ? "btn-success" : ''}}">
+                    <img src="{{ asset('vendor/betterfly/img/lang_'.$locale.'.png') }}">
+                </button>
+            </a>
+            @endforeach
+        </li>
+        @endif
     </ul>
     {{--<button class="navbar-toggler aside-menu-toggler d-md-down-none" type="button" data-toggle="aside-menu-lg-show">--}}
     {{--<span class="navbar-toggler-icon"></span>--}}
@@ -113,13 +126,13 @@
 
                 @include('admin.common.menu')
 
-                <li class="divider"></li>
-                <li class="nav-title">Extras</li>
-                <li class="nav-item nav-dropdown">
-                <li class="nav-item">
-                    <a class="nav-link" href="500.html" target="_top">
-                        <i class="nav-icon icon-star"></i> textes</a>
-                </li>
+                {{--<li class="divider"></li>--}}
+                {{--<li class="nav-title">Extras</li>--}}
+                {{--<li class="nav-item nav-dropdown">--}}
+                {{--<li class="nav-item">--}}
+                    {{--<a class="nav-link" href="500.html" target="_top">--}}
+                        {{--<i class="nav-icon icon-star"></i> textes</a>--}}
+                {{--</li>--}}
             </ul>
         </nav>
         <button class="sidebar-minimizer brand-minimizer" type="button"></button>
@@ -150,10 +163,10 @@
 <script>
   var filesRoute = "{{ route('file.index') }}";
   var ajaxValidation = "{{ route('ajax-validation') }}";
+  var csrf = $('meta[name="csrf-token"]').attr('content');
   $(function () {
     $('.remove-item').click(function () {
       var action = $(this).data().url;
-      var csrf = $('meta[name="csrf-token"]').attr('content');
       var row = $(this).parents('tr');
       Modal.show({
         yesClass: 'btn-danger',
@@ -175,6 +188,32 @@
                 }
               }
             });
+          }
+        }
+      });
+    });
+
+    $('.checkbox-plugin').change(function(){
+      var val = $(this).is(':checked') ? 1 : 0;
+      var checkbox = $('input[name="'+$(this).attr('for')+'"]');
+      checkbox.val(val)
+    });
+
+
+
+    $('.visibility').change(function () {
+      var action = $(this).data().url;
+      var csrf = $('meta[name="csrf-token"]').attr('content');
+      $.ajax({
+        url: action,
+        type: 'PATCH',
+        data: {visibility: $(this).is(':checked') ? 1 : 0 },
+        headers: {
+          'X-CSRF-TOKEN': csrf
+        },
+        success: function (result) {
+          if (result.message === 'Successfully deleted') {
+            table.row(row).remove().draw();
           }
         }
       });
