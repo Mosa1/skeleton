@@ -31,6 +31,10 @@ class SkeletonServiceProvider extends ServiceProvider
             __DIR__ . '/assets' => public_path('vendor/betterfly'),
         ]);
 
+        $this->publishes([
+            __DIR__ . '/config/config.php' => config_path('skeleton.php'),
+        ], 'config');
+
         $this->loadViewsFrom(__DIR__ . '/views', 'betterfly');
         include __DIR__ . '/routes.php';
 
@@ -65,7 +69,7 @@ class SkeletonServiceProvider extends ServiceProvider
             ]);
         }
 
-        $this->registerHelpers();
+//        $this->registerHelpers();
     }
 
     /**
@@ -81,16 +85,20 @@ class SkeletonServiceProvider extends ServiceProvider
 
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
         $loader->alias('Excel', 'Maatwebsite\Excel\Facades\Excel');
+
+        $this->mergeConfigFrom(
+            __DIR__ . '/config/config.php', 'skeleton'
+        );
     }
-    /**
-     * Register helpers file
-     */
-    public function registerHelpers()
-    {
-        // Load the helpers in app/Http/helpers.php
-        if (file_exists($file = app_path('app/Helpers/helpers.php')))
-        {
-            require $file;
-        }
-    }
+//    /**
+//     * Register helpers file
+//     */
+//    public function registerHelpers()
+//    {
+//        // Load the helpers in app/Http/helpers.php
+//        if (file_exists($file = app_path('app/Helpers/helpers.php')))
+//        {
+//            require $file;
+//        }
+//    }
 }

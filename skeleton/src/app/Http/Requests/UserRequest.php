@@ -111,38 +111,4 @@ class UserRequest extends BaseFormRequest
             default:break;
         }
     }
-
-    /*public function customRules()
-    {
-        $user = User::find($this->users);
-
-        switch($this->method())
-        {
-            case 'GET':
-            case 'DELETE':
-                {
-                    return [];
-                }
-            case 'POST':
-                {
-                    return [
-                        'user.name.first' => 'required',
-                        'user.name.last'  => 'required',
-                        'user.email'      => 'required|email|unique:users,email',
-                        'user.password'   => 'required|confirmed',
-                    ];
-                }
-            case 'PUT':
-            case 'PATCH':
-                {
-                    return [
-                        'user.name.first' => 'required',
-                        'user.name.last'  => 'required',
-                        'user.email'      => 'required|email|unique:users,email,'.$user->id,
-                        'user.password'   => 'required|confirmed',
-                    ];
-                }
-            default:break;
-        }
-    }*/
 }

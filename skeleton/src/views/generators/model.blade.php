@@ -5,6 +5,10 @@ namespace {{$namespace}};
 @if($config->translatable && !$config->translatableModel)
 use Dimsav\Translatable\Translatable;
 @endif
+
+@if($config->sortable && !$config->translatableModel)
+    use Kalnoy\Nestedset\NodeTrait;
+@endif
 use Illuminate\Database\Eloquent\Model;
 
 class {{ $moduleName }} extends Model
@@ -12,6 +16,14 @@ class {{ $moduleName }} extends Model
 
 @if($config->translatable && !$config->translatableModel)
     use Translatable;
+
+    @if($config->sortable)
+        use NodeTrait;
+    @endif
+
+    @if(property_exists($config,'useLaravelTimestamps') && !$config->useLaravelTimestamps)
+        public $timestamps = false;
+    @endif
 
     protected $table = '{!! $config->tableName !!}';
     public $translationModel = '{!! $namespace.'\\'.$moduleName.'Translation' !!}';

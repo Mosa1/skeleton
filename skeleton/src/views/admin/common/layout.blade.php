@@ -36,7 +36,7 @@
         <li class="nav-item px-3">
             <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
         </li>
-        @if(Auth()->user()->type !== 2)
+        @if(Auth::user()->hasRole('super-admin'))
         <li class="nav-item px-3">
             <a class="nav-link" href="{{ route('users.index') }}">Users</a>
         </li>
@@ -49,7 +49,7 @@
         <li class="nav-item dropdown">
             <a class="nav-link px-4" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                aria-expanded="false">
-                <img class="img-avatar" src="{{ asset('vendor/betterfly/img/avatar.png') }}" alt="admin@bootstrapmaster.com">
+                <img class="img-avatar" src="{{ asset('vendor/betterfly/img/avatar.png') }}" alt="">
                 {{ \Illuminate\Support\Facades\Auth::user()->email }}
             </a>
             <div class="dropdown-menu dropdown-menu-right">
@@ -97,6 +97,7 @@
         @if(config('translatable') && config('translatable.locales'))
         <li class="nav-item row">
             @foreach(config('translatable.locales') as $locale)
+                @if(is_array($locale)) @continue @endif
             <a class="nav-link mr-2" href="{{ route('admin.setLocale',$locale) }}">
                 <button class="btn btn-sm btn-pill btn-primary {{ \App::getLocale() == $locale ? "btn-success" : ''}}">
                     <img src="{{ asset('vendor/betterfly/img/lang_'.$locale.'.png') }}">
@@ -126,13 +127,13 @@
 
                 @include('admin.common.menu')
 
-                {{--<li class="divider"></li>--}}
-                {{--<li class="nav-title">Extras</li>--}}
-                {{--<li class="nav-item nav-dropdown">--}}
-                {{--<li class="nav-item">--}}
-                    {{--<a class="nav-link" href="500.html" target="_top">--}}
-                        {{--<i class="nav-icon icon-star"></i> textes</a>--}}
-                {{--</li>--}}
+                <li class="divider"></li>
+                <li class="nav-title">Extras</li>
+                <li class="nav-item nav-dropdown">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('translatable.index') }}" target="_top">
+                        <i class="nav-icon icon-star"></i> Texts</a>
+                </li>
             </ul>
         </nav>
         <button class="sidebar-minimizer brand-minimizer" type="button"></button>
@@ -168,6 +169,7 @@
     $('.remove-item').click(function () {
       var action = $(this).data().url;
       var row = $(this).parents('tr');
+      var self = $(this);
       Modal.show({
         yesClass: 'btn-danger',
         body: 'You are going to delete this Item, do you want to continue?',
@@ -184,7 +186,11 @@
               },
               success: function (result) {
                 if (result.message === 'Successfully deleted') {
-                  table.row(row).remove().draw();
+                  if(self.parents('li').length){
+                    self.closest('li').remove();
+                  }else{
+                    table.row(row).remove().draw();
+                  }
                 }
               }
             });
@@ -212,9 +218,7 @@
           'X-CSRF-TOKEN': csrf
         },
         success: function (result) {
-          if (result.message === 'Successfully deleted') {
-            table.row(row).remove().draw();
-          }
+
         }
       });
     });

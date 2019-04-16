@@ -36,7 +36,8 @@ class MakeControllerCommand extends BaseCommand
     public function handle()
     {
         $className = trim($this->argument('moduleName'));
-        $config = $this->getConfigFile($className, true, false);
+        $config = $this->getConfigFile($className, true, true);
+
         $params = [];
         $this->createProgressbar();
 
@@ -44,6 +45,7 @@ class MakeControllerCommand extends BaseCommand
         $nameSpace = 'App\\Modules\\'.$className;
 
         $params['dataLoaderMethod'] = property_exists($config,'dataLoaderMethod') ? $config->dataLoaderMethod : false;
+        $params['sortable'] = $config->sortable;
 
         $this->validateDirPath($dirPath);
 

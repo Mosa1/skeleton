@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -34,17 +35,54 @@ Route::group(['middleware' => ['auth:api', 'auth'], 'prefix' => 'api'], function
 });
 
 Route::group(['middleware' => 'web'], function () {
-    Route::get('admin', 'BetterFly\Skeleton\App\Http\Controllers\Admin\LoginController@index')->name('betterfly.admin');
+
+    //Admin Path Variable
+    $admin_path = config('skeleton.admin_path');
+
+    //Login Blade Route
+    Route::get($admin_path, 'BetterFly\Skeleton\App\Http\Controllers\Admin\LoginController@index')->name('login');
+
+    //Login Request Route
     Route::post('login', 'BetterFly\Skeleton\App\Http\Controllers\API\UserController@login')->name('betterfly.login');
 
+    Route::group(['middleware' => 'auth', 'prefix' => $admin_path], function () {
 
-    Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
+        //Excel export route
+        Route::post('excel-export', 'BetterFly\Skeleton\App\Http\Controllers\Controller@excelExport')->name('excel-export');
 
+        Route::patch('set-visibility/{Model}/{id}', 'BetterFly\Skeleton\App\Http\Controllers\Controller@setStatus')->name('set-visibility');
+        Route::post('update-order/{Model}', 'BetterFly\Skeleton\App\Http\Controllers\Controller@updateOrder')->name('update-order');
+        Route::get('logout', 'BetterFly\Skeleton\App\Http\Controllers\API\UserController@logout')->name('betterfly.logout');
+
+
+        //Set Application control panel language
         Route::get('/locale/{locale}', function ($locale) {
             \Session::put('locale', $locale);
             return redirect()->back();
         })->name('admin.setLocale');
 
+
+
+        //Translatable Texts route
+        Route::resource('texts', 'BetterFly\Skeleton\App\Http\Controllers\Admin\TranslatableController', [
+            'names' => [
+                'index' => 'translatable.index',
+                'store' => 'translatable.store',
+                'destroy' => 'translatable.delete'
+            ]
+        ]);
+        Route::get('texts-auto-translate', 'BetterFly\Skeleton\App\Http\Controllers\Admin\TranslatableController@autoTranslate')->name('excel-export');
+
+        //User's route
+        Route::resource('users', 'BetterFly\Skeleton\App\Http\Controllers\API\UserController', [
+            'names' => [
+                'index' => 'users.index',
+                'store' => 'users.store',
+                'destroy' => 'users.delete'
+            ]
+        ]);
+
+        //Files and images route
         Route::resource('file', 'BetterFly\Skeleton\App\Http\Controllers\Admin\FileController', [
             'names' => [
                 'index' => 'file.index',
@@ -53,26 +91,23 @@ Route::group(['middleware' => 'web'], function () {
             ]
         ]);
 
-        Route::post('excel-export','BetterFly\Skeleton\App\Http\Controllers\Controller@excelExport')->name('excel-export');
-
+        //Form Validation Route For Files and images
         Route::post('validate-form', 'BetterFly\Skeleton\App\Http\Controllers\Admin\AjaxValidation@ajaxValidate')->name('ajax-validation');
 
-        Route::patch('set-visibility/{Model}/{id}', 'BetterFly\Skeleton\App\Http\Controllers\Controller@setStatus')->name('set-visibility');
 
-        Route::get('logout', 'BetterFly\Skeleton\App\Http\Controllers\API\UserController@logout')->name('betterfly.logout');
+        //Aplication control panel Module routes
+        $dirPath = app_path('Modules');
+        if (File::isDirectory($dirPath)) {
+            $files = File::allFiles($dirPath);
+            foreach ($files as $file) {
+                if (strpos($file->getFilename(), '.route.php') !== false) {
+                    require_once $file->getPathName();
+                }
+            }
+        }
 
-        Route::get('dashboard', 'BetterFly\Skeleton\App\Http\Controllers\Admin\DashboardController@index')->name('dashboard');
+
     });
 
 });
 
-
-$dirPath = app_path('Modules');
-if (File::isDirectory($dirPath)) {
-    $files = File::allFiles($dirPath);
-    foreach ($files as $file) {
-        if (strpos($file->getFilename(), '.route.php') !== false) {
-            require_once $file->getPathName();
-        }
-    }
-}

@@ -111,7 +111,7 @@ class BaseCommand extends Command
                 return base_path($dirPath) . '/' . strtolower($moduleName) . '.route.php';
                 break;
             case "Migration":
-                return base_path("/database/migrations") . "/" . date('Y_m_d_His') . "_create_" . strtolower(str_plural($moduleName)) . "_table.php";
+                return base_path("/database/migrations") . "/" . date('Y_m_d_His') . "_create_" . strtolower($moduleName) . "_table.php";
                 break;
             case "Model":
                 return base_path($dirPath) . '/' . ucfirst($moduleName) . '.php';
@@ -130,11 +130,6 @@ class BaseCommand extends Command
                 return strtolower($fileType);
                 break;
         }
-    }
-
-    protected function addStandardData()
-    {
-
     }
 
     /*
@@ -186,6 +181,8 @@ class BaseCommand extends Command
             }
         }
 
+
+        $cfg->sortable = property_exists($cfg, 'indexPlugin') && $cfg->indexPlugin[0]->pluginName == 'sortableList';
 
         if(property_exists($cfg, 'setVisibility')){
             if ($cfg->translatable)

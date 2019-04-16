@@ -1,8 +1,8 @@
 <?php
 
-namespace BetterFly\Skeleton\App\Http\Controllers\Admin;
+namespace App\Modules\Dashboard;
 
-use BetterFly\Skeleton\App\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {

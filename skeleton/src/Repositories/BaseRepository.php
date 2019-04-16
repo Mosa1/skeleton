@@ -26,7 +26,7 @@ class BaseRepository
     public function getList($query = null)
     {
         $with = [];
-        $query = $query ?? ['paginate' => 5];
+        $query = $query ?? ['paginate' => 10];
         $data = $this->model;
         $paginate = isset($query['paginate']) ? $query['paginate'] : null;
 

@@ -39,13 +39,15 @@ class LocalizeWebRoutes
 
         // Make sure current locale exists.
         $locale = $request->segment(1);
+        $admin_path = config('skeleton.admin_path');
 
         if (!in_array($locale, $this->locales)) {
 
             $locale = \Session('locale') !== null ? \Session('locale') : $this->app->config->get('translatable.fallback_locale');
-            $url = $locale . $request->getRequestUri();
 
-            if(strpos($url,'login') || strpos($url,'admin') || strpos($url,'logout')) return $next($request);
+            $url = $locale . $request->getRequestUri();
+            if(strpos($url,'login') || strpos($url, $admin_path) || strpos($url,'logout')) return $next($request);
+
 
 
             return $this->redirector->to($url);

@@ -42,6 +42,7 @@ class MakeModelCommand extends BaseCommand
         $this->validateDirPath($dirPath);
 
         $config = $this->getConfigFile($className, true);
+
         if(!property_exists($config,'fillable'))
             die($this->error("\n \n Can't create model missing fillable in ".$className.'.config.json'));
 

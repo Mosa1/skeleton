@@ -101,7 +101,7 @@ class MakeMigrationCommand extends BaseCommand
 
     public function removeOldMigrationFile($moduleName)
     {
-        $possibleFileName = 'create_' . strtolower(str_plural($moduleName)) . '_table.php';
+        $possibleFileName = 'create_' . strtolower($moduleName) . '_table.php';
 
         $migrationFile = $this->getMigrationFile($possibleFileName);
 
@@ -149,13 +149,17 @@ class MakeMigrationCommand extends BaseCommand
             }
         }
 
-        if(property_exists($config,'setVisibility') && $config->setVisibility){
-            if($config->translatable)
+        if (property_exists($config, 'setVisibility') && $config->setVisibility) {
+            if ($config->translatable)
                 $translatableDbFields[] = '$table->tinyInteger("visibility")->default(1);';
             else
                 $dbFields[] = '$table->tinyInteger("visibility")->default(1);';
-
         }
+
+        if ($config->sortable) {
+            $dbFields[] = '$table->nestedSet();';
+        }
+
 
         $params['dbFields'] = $dbFields;
         $params['translatableDbFields'] = $translatableDbFields;

@@ -6,8 +6,10 @@ use BetterFly\Skeleton\App\Http\Controllers\Controller;
 use BetterFly\Skeleton\App\Http\Requests\UserRequest;
 use BetterFly\Skeleton\App\Http\Transformers\UserTransformer;
 use BetterFly\Skeleton\Services\UserService;
-use Illuminate\Support\Facades\Session;
+use BetterFly\Skeleton\Models\User;
+use Illuminate\Http\Request;
 use League\Fractal\Manager;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -27,6 +29,48 @@ class UserController extends Controller
         $this->userTransformer = $userTransformer;
         $this->userService = $userService;
     }
+
+
+    public function index(){
+        $users = User::all();
+
+        return view('betterfly::admin.users.index',['data' => $users]);
+    }
+
+    public function create(){
+        return view('betterfly::admin.users.create');
+    }
+
+    public function edit(User $user){
+        return view('betterfly::admin.users.edit',['data' => $user]);
+    }
+
+
+    public function update(Request $request,$id){
+        $user = User::find($id);
+
+        if(!$user){
+            \Session::flash('error','User Not Found');
+            return redirect()->back();
+        }
+
+        if($request->input('password') && !Hash::check($request->input('old_password'), $user->password)){
+            \Session::flash('error','old Password is incorrect');
+            return redirect()->back();
+        }
+
+        $data = $request->input();
+        $data['id'] = $id;
+        $data['password'] = bcrypt($data['password']);
+
+        $this->userService->update($data);
+
+
+        \Session::flash('success','Successfully updated');
+        return redirect()->back();
+    }
+
+
 
 
     public function login(UserRequest $request){

@@ -13,7 +13,7 @@ at_symbolsection('content')
         </li>
         @if(!$cfg->editModeOnly)
         <li class="breadcrumb-item">
-            <a href="print_start {!! 'route("'.strtolower($moduleName).'.index")' !!} print_end">{{ $moduleName }}</a>
+            <a href="print_start {!! 'route("'.str_plural(strtolower($moduleName)).'.index")' !!} print_end">{{ $moduleName }}</a>
         </li>
         @endif
         <li class="breadcrumb-item active">{{ str_singular($moduleName ) }}</li>

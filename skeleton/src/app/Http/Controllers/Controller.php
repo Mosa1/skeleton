@@ -23,6 +23,17 @@ class Controller extends BaseController
         return response(['success' => $response]);
     }
 
+    public function updateOrder($model, Request $request)
+    {
+        $model = 'App\\Modules\\' . $model . '\\' . $model;
+        $data = $request->input('data');
+
+        $data = $model::rebuildTree($data);
+
+//        $response = $model::find($id)->update(['visibility' => $request->input('visibility')]);
+        return response(['success' => 'true']);
+    }
+
     public function excelEXport(Request $request)
     {
         $data = json_decode($request->input('data'));

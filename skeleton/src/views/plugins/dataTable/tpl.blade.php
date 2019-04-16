@@ -125,6 +125,9 @@ at_symbolsection('content')
                                         at_symbolendforeach
                                         </tbody>
                                     </table>
+                                    <div class="text-right">
+                                        <div class="d-inline-block">print_start method_exists($data,'links') ? $data->links() : '' print_end</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -172,7 +175,8 @@ at_symbolpush('scripts')
     loadScript('../vendor/betterfly/plugins/dataTable/dataTables.bootstrap4.js', bootstrapLoaded);
 
     function bootstrapLoaded() {
-      var table = $('#datatable').DataTable({
+      table = $('#datatable').DataTable({
+        "paging": print_start method_exists($data,'links') ? 'false,' : 'true,' print_end
         "columnDefs": [
                 <?php foreach($cfg->indexPlugin[0]->cols as $key => $col){ ?>
           {
