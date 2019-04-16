@@ -151,7 +151,7 @@ class BaseCommand extends Command
 
         $output = $this->laravel->view->make('betterfly::generators.' . $templateFile)->with($data)->render();
 
-        if($this->createFileWithData($filePath,$output))
+        if ($this->createFileWithData($filePath, $output))
             return true;
 
         return false;
@@ -167,28 +167,26 @@ class BaseCommand extends Command
 
         $cfg->translatable = property_exists($cfg, 'translatable') ? $cfg->translatable : false;
         $cfg->translatableModel = false;
+        $cfg->sortable = property_exists($cfg, 'indexPlugin') && $cfg->indexPlugin[0]->pluginName == 'sortableList';
         $cfg->translatedAttributes = '';
-        $cfg->modelFillable = '';
 
-        if ($cfg->translatable) {
-            foreach ($cfg->fillable as $field) {
-                if (!property_exists($cfg->fields, $field)) die($this->error('Missing Field (' . $field . ') in fields list'));
-                if (property_exists($cfg->fields->{$field}, 'translatable') && $cfg->fields->{$field}->translatable) {
-                    $cfg->translatedAttributes .= '"' . $field . '",';
-                } else {
-                    $cfg->modelFillable .= '"' . $field . '",';
-                }
+        foreach ($cfg->fillable as $key => $field) {
+            if (!property_exists($cfg->fields, $field)) die($this->error('Missing Field (' . $field . ') in fields list'));
+            if (property_exists($cfg->fields->{$field}, 'translatable') && $cfg->fields->{$field}->translatable) {
+                $cfg->translatedAttributes .= '"' . $field . '",';
+                unset($cfg->fillable[$key]);
             }
         }
 
-
-        $cfg->sortable = property_exists($cfg, 'indexPlugin') && $cfg->indexPlugin[0]->pluginName == 'sortableList';
-
-        if(property_exists($cfg, 'setVisibility')){
+        if (property_exists($cfg, 'setVisibility')) {
             if ($cfg->translatable)
                 $cfg->translatedAttributes .= '"visibility",';
             else
                 $cfg->fillable[] = "visibility";
+        }
+
+        if ($cfg->sortable) {
+            $cfg->fillable[] = "id";
         }
 
         $cfg->fillable = '"' . implode('" ,"', $cfg->fillable) . '"';
@@ -361,7 +359,8 @@ class BaseCommand extends Command
         }
     }
 
-    public function createFileWithData($filePath,$data){
+    public function createFileWithData($filePath, $data)
+    {
         if (!file_exists($filePath) && $fs = fopen($filePath, 'x')) {
             fwrite($fs, $data);
             fclose($fs);

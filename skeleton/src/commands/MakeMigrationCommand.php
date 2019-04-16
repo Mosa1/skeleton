@@ -126,7 +126,6 @@ class MakeMigrationCommand extends BaseCommand
         $dbFields = [];
         $translatableDbFields = [];
 
-        $config->translatable = property_exists($config, 'translatable') ? $config->translatable : false;
         foreach ($config->fields as $fieldName => $field) {
             if (property_exists($field, 'primaryKey') && $field->primaryKey) {
                 continue;
@@ -142,7 +141,7 @@ class MakeMigrationCommand extends BaseCommand
                 $fieldConfig .= '->nullable()';
             }
 
-            if (property_exists($field, 'translatable') && $field->translatable) {
+            if (property_exists($field, 'translatable') && $field->translatable && $config->translatable) {
                 $translatableDbFields[] = $fieldConfig . ';';
             } else {
                 $dbFields[] = $fieldConfig . ';';
