@@ -36,11 +36,11 @@
         <li class="nav-item px-3">
             <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
         </li>
-        @if(Auth::user()->hasRole('super-admin'))
+        {{--@if(Auth::user()->hasRole('super-admin'))--}}
         <li class="nav-item px-3">
             <a class="nav-link" href="{{ route('users.index') }}">Users</a>
         </li>
-        @endif
+        {{--@endif--}}
         <li class="nav-item px-3">
             <a class="nav-link" href="{{ route('users.edit',Auth()->user()->id) }}">Settings</a>
         </li>

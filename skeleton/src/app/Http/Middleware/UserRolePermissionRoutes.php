@@ -33,8 +33,7 @@ class UserRolePermissionRoutes
     {
         $currentAction = Route::currentRouteAction();
 
-        //echo $currentAction;die();
-        if(Auth::check() && !Auth::user()->can($currentAction))
+        if(Auth::check() && !Auth::user()->can($currentAction) && !Auth::user()->is_super)
             return $this->responseWithError('Permission is missing',403);
         return $next($request);
     }
