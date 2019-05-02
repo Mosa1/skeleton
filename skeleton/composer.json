@@ -17,6 +17,7 @@
     "league/fractal": "^0.17.0",
     "waavi/sanitizer": "~1.0",
     "zizaco/entrust": "5.2.x-dev",
+    "intervention/image": "dev-master",
     "maatwebsite/excel": "3.2.x-dev"
   },
   "autoload": {
