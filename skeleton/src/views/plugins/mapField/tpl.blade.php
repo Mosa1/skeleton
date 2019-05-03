@@ -11,7 +11,7 @@ at_symbolendphp
     <label class="col-md-3 col-form-label" for="text-input">{{ $properties->title }}</label>
     <div class="col-md-9">
         <div id="{{$plugin_id}}" style="min-height: 400px;"></div>
-        <input type="hidden" value="print_start_allow_chars $coords print_end_allow_chars" name="{{ $fieldName }}">
+        <input type="hidden" value='print_start_allow_chars $coords print_end_allow_chars' name="{{ $fieldName }}">
     </div>
     at_symbolif($errors->get('{{ $fieldName }}'))
     <br>
