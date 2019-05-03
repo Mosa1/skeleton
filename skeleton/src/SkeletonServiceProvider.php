@@ -69,7 +69,6 @@ class SkeletonServiceProvider extends ServiceProvider
             ]);
         }
 
-        Schema::defaultStringLength(191);
 //        $this->registerHelpers();
     }
 
