@@ -19,6 +19,7 @@
     "waavi/sanitizer": "~1.0",
     "firebase/php-jwt": "^5.0",
     "zizaco/entrust": "5.2.x-dev",
+    "intervention/image": "dev-master",
     "maatwebsite/excel": "3.2.x-dev"
   },
   "autoload": {

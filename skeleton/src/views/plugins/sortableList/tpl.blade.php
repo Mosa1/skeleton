@@ -94,7 +94,7 @@ at_symbolsection('content')
                                 @endif
                             </div>
                             <div class="card-body">
-                                <ol class="sortable p-0 text" data-url="{{ route('update-order',$moduleName) }}">
+                                <ol class="sortable p-0 text" data-url="print_start route('update-order','{{ $moduleName }}') print_end">
                                     at_symbolphp
                                         $traverse = function ($data) use (&$traverse){
                                             $tpl = '';
