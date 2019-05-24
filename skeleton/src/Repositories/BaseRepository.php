@@ -44,7 +44,7 @@ class BaseRepository
 
     public function create($data)
     {
-        $data = Transformer::transfromFilledData($data, $this->translatable,$this->moduleCfg, $this->translatableFields);
+        $data = Transformer::transfromFilledData($data, $this->translatable, $this->moduleCfg, $this->translatableFields);
 
         if ($this->translatable) $item = $this->model->create($data);
         else $item = new $this->model($data);
@@ -62,7 +62,7 @@ class BaseRepository
 
         if ($this->relations) $item = $item->with($this->relations);
 
-        return $item->find($itemId) ?? response('Item Not Found');
+        return $item->find($itemId) ?? response(__('Item Not Found'));
     }
 
     //requested item update
@@ -125,7 +125,7 @@ class BaseRepository
 
             if ($relationshipType == 'BelongsToMany') {
                 $item->{$relationMethodName}()->sync($value);
-            } else {
+            }  else {
                 $item->{$relationMethodName}()->associate($value);
             }
         }
@@ -159,10 +159,11 @@ class BaseRepository
         return false;
     }
 
-    public function getModuleCfg(){
+    public function getModuleCfg()
+    {
         $moduleName = (new \ReflectionClass($this->model))->getShortName();
 
-        $cfgPath = base_path('/app/Modules/'.$moduleName) . '/' . strtolower($moduleName) . '.config.json';
+        $cfgPath = base_path('/app/Modules/' . $moduleName) . '/' . strtolower($moduleName) . '.config.json';
 
         if (File::exists($cfgPath)) {
             $json = File::get($cfgPath);
@@ -176,7 +177,7 @@ class BaseRepository
             }
 
             return $json;
-        }else{
+        } else {
             return [];
         }
     }

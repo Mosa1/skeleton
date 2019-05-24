@@ -53,7 +53,7 @@ at_symbolsection('content')
                             @if(!property_exists($cfg->indexPlugin[0],'addBtn') || $cfg->indexPlugin[0]->addBtn)
                                 <div class="col-xl-12 text-right">
                                     <a href="print_start route('{{ str_plural(strtolower($moduleName)) }}.create') print_end"
-                                       class="btn btn-square btn-success active col-xl-1 mb-3"
+                                       class="btn btn-square btn-success active mb-3"
                                        type="button"
                                        aria-pressed="true">{{ $addBtnText }}
                                     </a>

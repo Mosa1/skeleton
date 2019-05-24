@@ -52,29 +52,31 @@ class MakeViewCommand extends BaseCommand
     {
         $this->moduleName = trim($this->argument('moduleName'));
         $config = $this->getMergedConfig();
-        $files = $this->checkFileTypes($this->option('file'),$config);
+
+        $files = $this->checkFileTypes($this->option('file'), $config);
         $files = in_array('all', $files) ? $this->supportedFilesTypes : $files;
 
         $this->makeViews($config, $files);
 
     }
 
-    public function getMergedConfig(){
+    public function getMergedConfig()
+    {
         $defaultCfg = [
             'editModeOnly' => false,
-            'excelExport'  => false,
+            'excelExport' => false,
         ];
 
-        $cfg = $this->getConfigFile($this->moduleName, true, false);
+        $cfg = $this->getConfigFile($this->moduleName, true, true);
 
-        $cfg = (object)array_merge($defaultCfg,(array)$cfg);
+        $cfg = (object)array_merge($defaultCfg, (array)$cfg);
 
         return $cfg;
     }
 
     public function makeViews($config, $files)
     {
-        $this->requestNameSpace = '\\App\\Modules\\' . $this->moduleName. '\\'. $this->moduleName.'Request';
+        $this->requestNameSpace = '\\App\\Modules\\' . $this->moduleName . '\\' . $this->moduleName . 'Request';
         $this->laravel->view->addNamespace('betterfly', substr(__DIR__, 0, -8) . 'views');
         $this->createProgressbar();
 
@@ -86,11 +88,11 @@ class MakeViewCommand extends BaseCommand
             $routeType = $this->routeTypes[$file]['type'];
             $moduleRoute = strtolower(str_plural($this->moduleName)) . '.' . $routeType;
 
-            $baseData = ['cfg' => $config, 'requestNameSpace'  => $this->requestNameSpace,'moduleName' => $this->moduleName, 'moduleRoute' => $moduleRoute, 'routeType' => $routeType];
+            $baseData = ['cfg' => $config, 'requestNameSpace' => $this->requestNameSpace, 'moduleName' => $this->moduleName, 'moduleRoute' => $moduleRoute, 'routeType' => $routeType];
             $baseBlade = $this->laravel->view->make($viewNameSpace)->with($baseData)->render();
 
             if ($file != 'index') {
-                $pluginsBlade = $this->collectPlugins($config->fields,$file);
+                $pluginsBlade = $this->collectPlugins($config->fields, $file);
             }
 
             $baseBlade = $this->replaceStrs($baseBlade, $pluginsBlade);
@@ -124,7 +126,7 @@ class MakeViewCommand extends BaseCommand
         return $str;
     }
 
-    public function checkFileTypes($files,$cfg)
+    public function checkFileTypes($files, $cfg)
     {
         $files = $cfg->editModeOnly ? ['edit'] : (empty($files) ? ['all'] : $files);
 
@@ -147,7 +149,7 @@ class MakeViewCommand extends BaseCommand
 
     }
 
-    public function collectPlugins($fields,$mode)
+    public function collectPlugins($fields, $mode)
     {
         $pluginsBlade = '';
         $pluginIncrement = 0;
@@ -155,7 +157,13 @@ class MakeViewCommand extends BaseCommand
         foreach ($fields as $fieldName => $properties) {
             if (!property_exists($properties, 'pluginName')) continue;
 
-            $fieldData = ['properties' => $properties, 'fieldName' => $fieldName,'mode' => $mode, 'plugin_id' => $properties->pluginName . '_' . $pluginIncrement];
+            if ($properties->pluginName == 'multiField') {
+                require_once('../views/plugins/multiField/MultiField.php');
+                $pluginTpl = New MultiField($properties);
+                dd($pluginTpl);
+            }
+
+            $fieldData = ['properties' => $properties, 'fieldName' => $fieldName, 'mode' => $mode, 'plugin_id' => $properties->pluginName . '_' . $pluginIncrement];
 
             $pluginBlade = $this->laravel->view->make('betterfly::plugins.' . $properties->pluginName . '.tpl')->with($fieldData)->render();
 

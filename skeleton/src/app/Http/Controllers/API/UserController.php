@@ -127,6 +127,6 @@ class UserController extends Controller
     {
         if(Auth::user()) Auth::logout();
 
-        return redirect(route('betterfly.admin'));
+        return redirect(route('login'));
     }
 }

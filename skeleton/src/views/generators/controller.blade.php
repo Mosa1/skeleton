@@ -4,6 +4,9 @@ namespace {{$namespace}};
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+@foreach($relations as $relation)
+use {{ $relation->relativeModel }};
+@endforeach
 
 class {{ $moduleName }}Controller extends Controller
 {
@@ -35,7 +38,14 @@ class {{ $moduleName }}Controller extends Controller
     */
     public function create()
     {
-        return view('admin.{{strtolower($moduleName)}}.create');
+    @foreach($relations as $key => $relation)
+    ${{ $key }} = {{ $relation->relativeModelShortName }}::all();
+    @endforeach
+    return view('admin.{{strtolower($moduleName)}}.create')->with([
+    @foreach($relations as $key => $relation)
+        '{{ $key }}' => ${{ $key }}
+    @endforeach
+    ]);
     }
 
     /**
@@ -72,11 +82,19 @@ class {{ $moduleName }}Controller extends Controller
     * @return \Illuminate\Http\Response
     */
     public function edit(Request $request,$id){
-        $data = $this->{{strtolower($moduleName)}}Service->getById($id);
+    @foreach($relations as $key => $relation)
+    ${{ $key }} = {{ $relation->relativeModelShortName }}::all();
+    @endforeach
+    $data = $this->{{strtolower($moduleName)}}Service->getById($id);
         if($request->ajax())
             return $data;
         else
-            return view('admin.{{strtolower($moduleName)}}.edit')->with(['data' => $data]);
+            return view('admin.{{strtolower($moduleName)}}.edit')->with([
+                'data' => $data,
+    @foreach($relations as $key => $relation)
+            '{{ $key }}' => ${{ $key }}
+    @endforeach
+        ]);
     }
 
     /**

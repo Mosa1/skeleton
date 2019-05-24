@@ -13,9 +13,11 @@
     "dimsav/laravel-translatable": "^9.2",
     "laravel/passport": "^7.0",
     "google/cloud-translate": "^1.2",
+    "ckfinder/ckfinder-laravel-package": "v3.4.5.1",
     "kalnoy/nestedset": "^4.3",
     "league/fractal": "^0.17.0",
     "waavi/sanitizer": "~1.0",
+    "firebase/php-jwt": "^5.0",
     "zizaco/entrust": "5.2.x-dev",
     "maatwebsite/excel": "3.2.x-dev"
   },

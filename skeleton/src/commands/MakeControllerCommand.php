@@ -36,7 +36,11 @@ class MakeControllerCommand extends BaseCommand
     public function handle()
     {
         $className = trim($this->argument('moduleName'));
-        $config = $this->getConfigFile($className, true, true);
+        $config = $this->getConfigFile  ($className, true, true);
+        foreach ($config->relations as $key => $relation){
+            if(!property_exists($relation,'pluginName') || !$relation->pluginName)
+                unset($config->relations[$key]);
+        }
 
         $params = [];
         $this->createProgressbar();
@@ -46,6 +50,7 @@ class MakeControllerCommand extends BaseCommand
 
         $params['dataLoaderMethod'] = property_exists($config,'dataLoaderMethod') ? $config->dataLoaderMethod : false;
         $params['sortable'] = $config->sortable;
+        $params['relations'] = $config->relations;
 
         $this->validateDirPath($dirPath);
 

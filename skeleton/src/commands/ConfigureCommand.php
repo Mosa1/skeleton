@@ -47,11 +47,17 @@ class ConfigureCommand extends BaseCommand
         Artisan::call('vendor:publish', ['--tag' => 'translatable']);
         $this->finishProgressBar();
 
+
+        $this->createProgressbar(['message' => 'Running storage:link']);
+        Artisan::call('storage:link');
+        $this->finishProgressBar();
+
         $this->createProgressbar(['message' => 'Checking and creating required directories']);
         if (!File::isDirectory(resource_path('views/admin'))) {
             try {
                 File::makeDirectory(resource_path('views/admin'));
                 File::makeDirectory(resource_path('views/admin/common'));
+                File::makeDirectory(public_path('userfiles'), 0777, true);
             } catch (\Exception $e) {
                 $this->info($e->getMessage());
             }

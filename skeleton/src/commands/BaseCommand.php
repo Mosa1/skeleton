@@ -76,17 +76,6 @@ class BaseCommand extends Command
                 break;
         }
 
-        /*$fileTypePlural = str_plural($fileType);
-
-        $moduleName = $this->getModuleName($className);
-
-        $dirPath = '/app/Modules/'.$moduleName;
-        $defaultDirPath = '/app/'.$fileTypePlural;
-
-        if (!$this->confirm("Create in package '".$dirPath."'? [Yes|no], No - to default ".$fileType."(".$defaultDirPath.") ", "Yes")) {
-            $dirPath = $defaultDirPath;
-        }*/
-
         return $dirPath;
     }
 
@@ -160,15 +149,16 @@ class BaseCommand extends Command
 
     public function refactorJson($cfg, $withRelation)
     {
-        if (property_exists($cfg, 'relations') && $withRelation)
-            $cfg->relations = $this->getRelationsByCFG($cfg);
-        else
-            $cfg->relations = [];
-
         $cfg->translatable = property_exists($cfg, 'translatable') ? $cfg->translatable : false;
         $cfg->translatableModel = false;
         $cfg->sortable = property_exists($cfg, 'indexPlugin') && $cfg->indexPlugin[0]->pluginName == 'sortableList';
         $cfg->translatedAttributes = '';
+        $cfg->tableName = property_exists($cfg, 'tableName') ? $cfg->tableName : strtolower(trim($cfg->title));
+
+        if (property_exists($cfg, 'relations') && $withRelation)
+            $cfg->relations = $this->getRelationsByCFG($cfg);
+        else
+            $cfg->relations = [];
 
         foreach ($cfg->fillable as $key => $field) {
             if (!property_exists($cfg->fields, $field)) die($this->error('Missing Field (' . $field . ') in fields list'));
@@ -205,10 +195,13 @@ class BaseCommand extends Command
             }
 
             $relativeModelCFG = $this->getConfigFile($cfgRelation->relativeModel, true, false);
+
             $this->validateRelation($cfgRelation, $relativeModelCFG);
 
             $relation = $this->setRelationVariables($cfg, $cfgRelation, $relativeModelCFG);
-            $relations[$relation->foreignKey] = $relation;
+            if(property_exists($relation,'pluginName'))
+                $cfg->fields->{$relation->relationMethodName} = $relation;
+            $relations[$relation->relationMethodName] = $relation;
         }
 
         return $relations;
@@ -228,7 +221,6 @@ class BaseCommand extends Command
 
     public function setRelationVariables($cfg, $properties, $relativeModelCFG)
     {
-
         if (!property_exists($properties, 'tableName')) {
             $tables[] = $relativeModelCFG->tableName;
             $tables[] = $cfg->tableName;
@@ -245,9 +237,10 @@ class BaseCommand extends Command
         $properties->relativeModelIncrementField = $relativeModelCFG->incrementField;
         $properties->currentModelIncrementField = $cfg->incrementField;
         $properties->currentModelTableName = $cfg->tableName;
+        $properties->relativeModelShortName = $properties->relativeModel;
         $properties->relativeModel = "App\Modules\\" . $properties->relativeModel . '\\' . $properties->relativeModel;
         $properties->relativeModelTableName = $relativeModelCFG->tableName;
-        $properties->relativeMigrationName = 'create_' . strtolower(str_plural($properties->relativeModelTableName)) . '_table.php';
+        $properties->relativeMigrationName = 'create_' . strtolower($properties->relativeModelTableName) . '_table.php';
 
         return $properties;
     }

@@ -1,6 +1,6 @@
 at_symbolphp
     if(isset($data)){
-        $value = $data->{{$fieldName}};
+        $value = is_a($data->{{$fieldName}},'Illuminate\Database\Eloquent\Collection') ? $data->{{$fieldName}}->pluck('id')->toArray() : $data->{{$fieldName}};
         $value = key_exists('{{$fieldName}}',old()) ? old('{{$fieldName}}') : $value;
     } else{
         $value = old('{{ $fieldName }}');
@@ -29,15 +29,15 @@ at_symbolendphp
                 <option value="" class="default" selected>Select Option</option>
             @endif
             at_symbolphp
-                $options = {{ $cfg->dataLoaderMethod ? $cfg->dataLoaderMethod.'()' : '[]' }}
+                ${{$fieldName}} = {{ $cfg->dataLoaderMethod ? $cfg->dataLoaderMethod.'()' : ('$'.$fieldName ? '$'.$fieldName : '[]') }}
             at_symbolendphp
                 @if($cfg->options)
                     @foreach($properties->options as $option)
                         <option print_start $value == {{ $option->{$properties->optionValue} }} ? 'selected' : '' print_end value="{{ $option->{$properties->optionValue} }}">{{ $option->{$properties->optionName} }}</option>
                     @endforeach
                 @else
-                    at_symbolforeach($options as $option)
-                        <option print_start $value == $option->{{$properties->optionValue }} ? 'selected' : '' print_end value="print_start $option->{{$properties->optionValue }} print_end">print_start $option->{{$properties->optionName }} print_end</option>
+                    at_symbolforeach(${{$fieldName}} as $option)
+                        <option print_start is_array($value) ? (in_array($option->{{$properties->optionValue }},$value) ? 'selected' : '' ) : ($value == $option->{{$properties->optionValue }} ? 'selected' : '' )  print_end value="print_start $option->{{$properties->optionValue }} print_end">print_start $option->{{$properties->optionName }} print_end</option>
                     at_symbolendforeach
                 @endif
         </select>

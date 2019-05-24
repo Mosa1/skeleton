@@ -85,18 +85,19 @@ class MakeMigrationCommand extends BaseCommand
             $relations = $this->checkRelationsDatabases($params['config']->relations);
         }
 
-        $this->removeOldMigrationFile($moduleName);
+        if ($this->removeOldMigrationFile($moduleName)) {
+            $this->createProgressbar();
+            $createdFile = $this->createFile($moduleName, $dirPath, 'Migration', '', $params);
 
-        $this->createProgressbar();
-        $createdFile = $this->createFile($moduleName, $dirPath, 'Migration', '', $params);
+            if (!$createdFile)
+                return $this->comment("\n \n Something Went Wrong \n \n");
 
-        if (!$createdFile)
-            return $this->comment("\n \n Something Went Wrong \n \n");
+            if ($relations)
+                $this->createRelationDatabases($relations);
 
-        $this->finishProgressBar();
+            $this->finishProgressBar();
+        }
 
-        if ($relations)
-            $this->createRelationDatabases($relations);
     }
 
     public function removeOldMigrationFile($moduleName)
@@ -109,11 +110,16 @@ class MakeMigrationCommand extends BaseCommand
             $progessParams = ['message' => 'Removing migration file'];
             $this->createProgressbar($progessParams);
 
-            if (!$this->confirm("\n I'm going to delete last migration file , Do you wish to continue ?", true))
-                return exit($this->finishProgressBar());
+            if (!$this->confirm("\n I'm going to delete last migration file , Do you wish to continue ?", true)) {
+                $this->finishProgressBar();
+                return false;
+            }
 
             File::delete($migrationFile->getPathname());
             $this->finishProgressBar();
+            return true;
+        } else {
+            return true;
         }
     }
 
@@ -121,13 +127,11 @@ class MakeMigrationCommand extends BaseCommand
     {
         $config = $this->getConfigFile($moduleName, true);
 
-        $tableName = property_exists($config, 'tableName') ? $config->tableName : strtolower(str_plural($moduleName));
-        $params['tableName'] = $tableName;
+        $params['tableName'] = $config->tableName;
         $dbFields = [];
         $translatableDbFields = [];
-
         foreach ($config->fields as $fieldName => $field) {
-            if (property_exists($field, 'primaryKey') && $field->primaryKey) {
+            if (property_exists($field, 'primaryKey') && $field->primaryKey || key_exists('relationType',$field)) {
                 continue;
             }
 

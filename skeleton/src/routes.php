@@ -62,7 +62,6 @@ Route::group(['middleware' => 'web'], function () {
         })->name('admin.setLocale');
 
 
-
         //Translatable Texts route
         Route::resource('texts', 'BetterFly\Skeleton\App\Http\Controllers\Admin\TranslatableController', [
             'names' => [
@@ -94,6 +93,11 @@ Route::group(['middleware' => 'web'], function () {
         //Form Validation Route For Files and images
         Route::post('validate-form', 'BetterFly\Skeleton\App\Http\Controllers\Admin\AjaxValidation@ajaxValidate')->name('ajax-validation');
 
+        Route::any('/ckfinder/browser', 'CKSource\CKFinderBridge\Controller\CKFinderController@browserAction')
+            ->name('ckfinder_browser');
+
+        Route::any('/ckfinder/connector', 'CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')
+            ->name('ckfinder_connector');
 
         //Aplication control panel Module routes
         $dirPath = app_path('Modules');

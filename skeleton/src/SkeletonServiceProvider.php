@@ -35,6 +35,10 @@ class SkeletonServiceProvider extends ServiceProvider
             __DIR__ . '/config/config.php' => config_path('skeleton.php'),
         ], 'config');
 
+        $this->publishes([
+            __DIR__ . '/config/ckfinder.php' => config_path('ckfinder.php'),
+        ], 'config');
+
         $this->loadViewsFrom(__DIR__ . '/views', 'betterfly');
         include __DIR__ . '/routes.php';
 
@@ -89,6 +93,7 @@ class SkeletonServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__ . '/config/config.php', 'skeleton'
         );
+
     }
 //    /**
 //     * Register helpers file
