@@ -107,7 +107,8 @@ class ConfigureCommand extends BaseCommand
         $this->finishProgressBar();
 
         $this->createProgressbar(['message' => 'Running betterfly:db_reset']);
-        Artisan::call('betterfly:db_reset');
+        if (!$this->confirm("All Data in Database will be removed,Do you wish to continue ?", false))
+            Artisan::call('betterfly:db_reset');
         $this->finishProgressBar();
 
     }

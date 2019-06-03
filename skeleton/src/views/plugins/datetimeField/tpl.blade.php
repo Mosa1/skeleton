@@ -27,9 +27,9 @@ at_symbolendphp
 at_symbolpush('scripts')
 <script>
   loadCss(['../vendor/betterfly/plugins/dateField/jquery-ui.css', '../vendor/betterfly/plugins/dateField/jquery-ui-timepicker-addon.min.css']);
-  loadScript(['../vendor/betterfly/plugins/dateField/jquery-ui.min.js'], onload);
+  loadScript(['../vendor/betterfly/plugins/dateField/jquery-ui.min.js'], load{{$plugin_id}});
 
-  function onload() {
+  function load{{$plugin_id}}() {
     loadScript(['../vendor/betterfly/plugins/dateField/jquery-ui-timepicker-addon.min.js'], function () {
       $("input#{{$plugin_id}}").datetimepicker({dateFormat: 'yy-mm-dd'});
     })

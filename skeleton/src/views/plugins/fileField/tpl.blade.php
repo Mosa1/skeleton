@@ -32,7 +32,7 @@ at_symbolendphp
         <br>
         at_symbolforeach($files as $key => $file)
             <div class="preview-container">
-                <img class="old file-preview print_start @!strpos(mime_content_type($file),'image') === false ? 'filetype-file' : 'filetype-image' print_end" data-src="print_start $file print_end" src="print_start $file print_end" height="150">
+                <img class="old file-preview print_start @strpos(mime_content_type($file),'image') !== 0 ? 'filetype-file' : 'filetype-image' print_end" data-src="print_start $file print_end" src="print_start $file print_end" height="150">
                 <a data-index="print_start $key print_end" href="javascript:;" class="remove-image">
                     <i class="fa fa-close"></i>
                 </a>
@@ -43,9 +43,9 @@ at_symbolendphp
 at_symbolpush('scripts')
 <script>
   loadCss(['../vendor/betterfly/plugins/filePlugin/filePlugin.css']);
-  loadScript(['../vendor/betterfly/plugins/filePlugin/filePlugin.js'], onload);
+  loadScript(['../vendor/betterfly/plugins/filePlugin/filePlugin.js'], load{{$plugin_id}});
 
-  function onload() {
+  function load{{$plugin_id}}() {
     $('input#{{$plugin_id}}').filePlugin({
       maxCount: {{ $cfg->maxCount }},
       mimeTypes: [@foreach($cfg->mimeTypes as $type)"{{ $type }}",@endforeach],

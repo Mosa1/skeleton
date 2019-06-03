@@ -26,11 +26,15 @@ at_symbolpush('scripts')
 <script>
   loadCss('../vendor/betterfly/plugins/ckeditor/ckEditorSamples.css');
 
-  loadScript(['../vendor/betterfly/plugins/ckeditor/ckeditor.js'], onload);
+  loadScript(['../vendor/betterfly/plugins/ckeditor/ckeditor.js'], load{{$plugin_id}});
 
-  function onload() {
+  function load{{$plugin_id}}() {
     loadScript(['../vendor/betterfly/plugins/ckeditor/adapters/jquery.js'], function () {
-      $("textarea#{{ $plugin_id }}").ckeditor();
+      $("textarea#{{ $plugin_id }}").ckeditor({
+        extraPlugins: "image2",
+        filebrowserBrowseUrl: "print_start route('ckfinder_browser') print_end",
+        filebrowserUploadUrl: "print_start route('ckfinder_connector') print_end?command=QuickUpload&type=Files"
+      });
     });
   }
 </script>
