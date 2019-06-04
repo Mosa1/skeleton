@@ -32,7 +32,7 @@ at_symbolendphp
         <br>
         at_symbolforeach($files as $key => $file)
             <div class="preview-container">
-                <img class="old file-preview print_start @strpos(mime_content_type($file),'image') !== 0 ? 'filetype-file' : 'filetype-image' print_end" data-src="print_start $file print_end" src="print_start $file print_end" height="150">
+                <img class="old file-preview print_start @strpos(mime_content_type('storage/uploads/{{ $cfg->folder }}/'.$file),'image') !== 0 ? 'filetype-file' : 'filetype-image' print_end" data-src="print_start 'storage/uploads/{{ $cfg->folder }}/'.$file print_end" src="print_start 'storage/uploads/{{ $cfg->folder }}/'.$file print_end" height="150">
                 <a data-index="print_start $key print_end" href="javascript:;" class="remove-image">
                     <i class="fa fa-close"></i>
                 </a>

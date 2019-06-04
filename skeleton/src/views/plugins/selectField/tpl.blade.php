@@ -55,9 +55,9 @@ at_symbolpush('scripts')
 <script>
 
   loadCss(['../vendor/betterfly/plugins/selectPlugin/select2.min.css']);
-  loadScript(['../vendor/betterfly/plugins/selectPlugin/select2.min.js'], onload);
+  loadScript(['../vendor/betterfly/plugins/selectPlugin/select2.min.js'], load{{$plugin_id}});
 
-  function onload() {
+  function load{{$plugin_id}}() {
     $("select#{{$plugin_id}}").select2();
   }
 

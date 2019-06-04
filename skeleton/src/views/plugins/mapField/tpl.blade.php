@@ -25,9 +25,9 @@ at_symbolpush('scripts')
 <script>
   loadCss('../vendor/betterfly/plugins/mapPlugin/leaflet.css');
 
-  loadScript(['../vendor/betterfly/plugins/mapPlugin/leaflet.js'], onload);
+  loadScript(['../vendor/betterfly/plugins/mapPlugin/leaflet.js'], load{{$plugin_id}});
 
-  function onload() {
+  function load{{$plugin_id}}() {
     var coords = JSON.parse('print_start_allow_chars $coords print_end_allow_chars');
     var lat = coords.lat;
     var lng = coords.lng;

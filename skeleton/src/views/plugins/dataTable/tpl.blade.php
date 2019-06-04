@@ -85,7 +85,7 @@ at_symbolsection('content')
                                                     @if($col->renderer == 'photo')
                                                         <td class="align-middle">
                                                             <img class="datatable-image"
-                                                                 src="print_start $item->{{$col->value}} print_end">
+                                                                 src="print_start 'storage/uploads/{{ @$cfg->folder }}/'.$item->{{$col->value}} print_end">
                                                         </td>
                                                     @endif
                                                 @else

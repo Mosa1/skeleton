@@ -71,7 +71,7 @@ class FileController extends Controller
                 $this->createThumbs($filePath, $fileDir, $fileName, $cfg->thumbs);
         }
 
-        return ['success' => true, 'filePath' => $filePath];
+        return ['success' => true, 'filePath' => $fileName];
     }
 
     public function validateMimes($file, $mimes)

@@ -84,7 +84,8 @@ class SkeletonServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(
-            'BetterFly\Skeleton\Providers\RouteServiceProvider'
+            'BetterFly\Skeleton\Providers\RouteServiceProvider',
+            'Intervention\Image\ImageServiceProvider'
         );
 
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
