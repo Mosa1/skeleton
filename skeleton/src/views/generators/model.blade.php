@@ -2,12 +2,21 @@
 
 namespace {{$namespace}};
 
-@if($config->translatable && !$config->translatableModel)
-use Dimsav\Translatable\Translatable;
-@endif
-
-@if($config->sortable && !$config->translatableModel)
-use Kalnoy\Nestedset\NodeTrait;
+@if(!$config->translatableModel)
+    @if($config->translatable)
+    use Dimsav\Translatable\Translatable;
+    @else
+        @if(property_exists($config,'slugSource'))
+        use Cviebrock\EloquentSluggable\Sluggable;
+        @endif
+    @endif
+    @if($config->sortable)
+    use Kalnoy\Nestedset\NodeTrait;
+    @endif
+@else
+    @if(property_exists($config,'slugSource'))
+    use Cviebrock\EloquentSluggable\Sluggable;
+    @endif
 @endif
 
 use Illuminate\Database\Eloquent\Model;
@@ -42,9 +51,38 @@ class {{ $moduleName }} extends Model
     public $translatedAttributes = [{!! $config->translatedAttributes !!} ];
 @endif
 
+@if(property_exists($config,'slugSource'))
+
+    @if($config->translatable)
+        @if($config->translatableModel)
+        use Sluggable;
+
+        public function sluggable()
+        {
+            return [
+                'slug' => [
+                        'source' => '{{ $config->slugSource }}'
+                ]
+            ];
+        }
+        @endif
+    @else
+        use Sluggable;
+
+        public function sluggable()
+        {
+            return [
+                'slug' => [
+                    'source' => '{{ $config->slugSource }}'
+                ]
+            ];
+        }
+    @endif
+@endif
 @if($config->translatableModel)
     public $timestamps = false;
     protected $fillable = [{!! $config->translatedAttributes !!}];
+
 @endif
 
 }

@@ -28,16 +28,20 @@ at_symbolendphp
             @if(!$cfg->multiple)
                 <option value="" class="default" selected>Select Option</option>
             @endif
-            at_symbolphp
-                ${{$fieldName}} = {{ $cfg->dataLoaderMethod ? $cfg->dataLoaderMethod.'()' : ('$'.$fieldName ? '$'.$fieldName : '[]') }}
-            at_symbolendphp
+            @if($cfg->dataLoaderMethod)
+                at_symbolphp
+                    ${{$fieldName}} = {{ $cfg->dataLoaderMethod.'()'  }}
+                at_symbolendphp
+                @endif
                 @if($cfg->options)
                     @foreach($properties->options as $option)
                         <option print_start $value == {{ $option->{$properties->optionValue} }} ? 'selected' : '' print_end value="{{ $option->{$properties->optionValue} }}">{{ $option->{$properties->optionName} }}</option>
                     @endforeach
                 @else
                     at_symbolforeach(${{$fieldName}} as $option)
-                        <option print_start is_array($value) ? (in_array($option->{{$properties->optionValue }},$value) ? 'selected' : '' ) : ($value == $option->{{$properties->optionValue }} ? 'selected' : '' )  print_end value="print_start $option->{{$properties->optionValue }} print_end">print_start $option->{{$properties->optionName }} print_end</option>
+                        <option print_start is_array($value) ? (in_array($option->{{$properties->optionValue }},$value) ? 'selected' : '' ) : ($value == $option->{{$properties->optionValue }} ? 'selected' : '' )  print_end value="print_start $option->{{$properties->optionValue }} print_end">
+                            print_start $option->{{$properties->optionName }} print_end
+                        </option>
                     at_symbolendforeach
                 @endif
         </select>

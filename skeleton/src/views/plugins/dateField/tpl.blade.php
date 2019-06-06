@@ -27,7 +27,7 @@ at_symbolpush('scripts')
 <script>
   loadCss('../vendor/betterfly/plugins/dateField/jquery-ui.css');
   loadScript(['../vendor/betterfly/plugins/dateField/jquery-ui.min.js'], function () {
-    $('input#{{$plugin_id}}').datepicker({ {!! property_exists($properties,'format') ? "dateFormat: '".$properties->format."' " : "dateFormat: 'yy-mm-dd'" !!} }).val();
+    $('input#{{$plugin_id}}').datepicker({ "dateFormat": 'yy-mm-dd' }).val();
   });
 </script>
 at_symbolendpush
