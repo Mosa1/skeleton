@@ -22,13 +22,21 @@ class {{ $moduleName }}Controller extends Controller
     *
     * @return \Illuminate\Http\Response
     */
-    public function index(Request $request)
+    public function index(Request $request{{ $parentModule ? ','.ucfirst($parentModule).' $'.str_singular($parentModule): '' }})
     {
+
+        @if($parentModule)
+        $data = {{ '$'.str_singular($parentModule) }}->{{ $moduleName }};
+        @else
         $data = {!! $dataLoaderMethod ? $dataLoaderMethod."();" : '$this->'.strtolower($moduleName)."Service->getList(['paginate' => 10])".($sortable ? '->toTree();': ';') !!}
+        @endif
         if($request->ajax())
             return $data;
         else
-            return view('admin.{{strtolower($moduleName)}}.index')->with(['data' => $data]);
+            return view('admin.{{ strtolower($moduleName) }}.index')->with([
+                'data' => $data,
+                {!! $parentModule ? "'".str_singular($parentModule)."' => ".'$'.str_singular($parentModule) : '' !!}
+]);
     }
 
     /**
@@ -36,15 +44,19 @@ class {{ $moduleName }}Controller extends Controller
     *
     * @return \Illuminate\Http\Response
     */
-    public function create()
+    public function create({{ $parentModule ? ucfirst($parentModule).' $'.str_singular($parentModule) : '' }})
     {
     @foreach($relations as $key => $relation)
-    ${{ $key }} = {{ $relation->relativeModelShortName }}::all();
+        @if($key == str_singular($parentModule)) @continue @endif
+
+        ${{ $key }} = {{ $relation->relativeModelShortName }}::all();
     @endforeach
-    return view('admin.{{strtolower($moduleName)}}.create')->with([
+    return view('admin.{{ strtolower($moduleName) }}.create')->with([
     @foreach($relations as $key => $relation)
-        '{{ $key }}' => ${{ $key }}
+        @if($key == str_singular($parentModule)) @continue @endif
+        '{{ $key }}' => ${{ $key }},
     @endforeach
+    {!! $parentModule ? "'".str_singular($parentModule)."' => ".'$'.str_singular($parentModule) : '' !!}
     ]);
     }
 
@@ -54,13 +66,17 @@ class {{ $moduleName }}Controller extends Controller
     * @param  \Illuminate\Http\Request $request
     * @return \Illuminate\Http\Response
     */
-    public function store({{$moduleName}}Request $request){
-        $item = $this->{{strtolower($moduleName)}}Service->create($request->input());
+    public function store({{$moduleName}}Request $request,{{ $parentModule ? ucfirst($parentModule).' $'.str_singular($parentModule) : '' }}){
+
+        @if($parentModule)
+        $request->merge(['{{ str_singular($parentModule) }}' => ${{ str_singular($parentModule) }}->id]);
+        @endif
+        $item = $this->{{ strtolower($moduleName) }}Service->create($request->input());
         if($request->ajax()){
             return $item;
         }else{
             \Session::flash('status','Successfully created');
-            return redirect()->route('{{str_plural(strtolower($moduleName))}}.index');
+            return redirect()->route('{{ $routeName }}.index'{!! $parentModule ? ', $'.str_singular($parentModule).'->id' : '' !!});
         }
     }
 
@@ -81,19 +97,24 @@ class {{ $moduleName }}Controller extends Controller
     * @param  int $id
     * @return \Illuminate\Http\Response
     */
-    public function edit(Request $request,$id){
+    public function edit(Request $request,{{ $parentModule ? ucfirst($parentModule).' $'.str_singular($parentModule).',' : '' }}$id){
     @foreach($relations as $key => $relation)
+        @if($key == str_singular($parentModule)) @continue @endif
+
     ${{ $key }} = {{ $relation->relativeModelShortName }}::all();
     @endforeach
     $data = $this->{{strtolower($moduleName)}}Service->getById($id);
         if($request->ajax())
             return $data;
         else
-            return view('admin.{{strtolower($moduleName)}}.edit')->with([
+            return view('admin.{{ strtolower($moduleName) }}.edit')->with([
                 'data' => $data,
     @foreach($relations as $key => $relation)
-            '{{ $key }}' => ${{ $key }}
+        @if($key == str_singular($parentModule)) @continue @endif
+            '{{ $key }}' => ${{ $key }},
     @endforeach
+
+        {!! $parentModule ? "'".str_singular($parentModule)."' => ".'$'.str_singular($parentModule) : '' !!}
         ]);
     }
 
@@ -104,7 +125,7 @@ class {{ $moduleName }}Controller extends Controller
     * @param  int $id
     * @return \Illuminate\Http\Response
     */
-    public function update({{$moduleName}}Request $request, $id){
+    public function update({{$moduleName}}Request $request,{{ $parentModule ? ucfirst($parentModule).' $'.str_singular($parentModule).',' : '' }} $id){
         $data = $request->input();
         $data['id'] = $id;
 
@@ -114,7 +135,7 @@ class {{ $moduleName }}Controller extends Controller
             return $data;
         }else{
             \Session::flash('status','Successfully updated');
-            return redirect()->route('{{str_plural(strtolower($moduleName))}}.edit',$data->id);
+            return redirect()->route('{{ $routeName }}.edit',[{!! $parentModule ? '$'.str_singular($parentModule).'->id,' : '' !!}$data->id]);
         }
     }
 
@@ -124,7 +145,7 @@ class {{ $moduleName }}Controller extends Controller
     * @param  int $id
     * @return \Illuminate\Http\Response
     */
-    public function destroy($id)
+    public function destroy({{ $parentModule ? ucfirst($parentModule).' $'.str_singular($parentModule).',' : '' }}$id)
     {
         return $this->{{strtolower($moduleName)}}Service->delete($id) ?
         response(['message' => 'Successfully deleted']) :

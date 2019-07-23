@@ -54,7 +54,7 @@ class MakeBuildModuleCommand extends BaseCommand
         $this->call('betterfly:route', ['moduleName' => $moduleName]);
         $this->call('betterfly:model', ['moduleName' => $moduleName]);
         $this->call('betterfly:migration', ['moduleName' => $moduleName]);
-        $this->call('betterfly:make_view', ['moduleName' => $moduleName,'--file' => ['all']]);
+        $this->call('betterfly:view', ['moduleName' => $moduleName,'--file' => ['all']]);
 
         /*if(File::exists(app_path($moduleName.'.php'))){
             File::move(app_path($moduleName.'.php'), app_path('Modules/'.$moduleName.'/'.$moduleName.'.php'));

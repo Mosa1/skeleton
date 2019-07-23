@@ -11,7 +11,7 @@ class MakeViewCommand extends BaseCommand
      *
      * @var string
      */
-    protected $signature = 'betterfly:make_view {moduleName : Module classname} {--file=*} {--dirPathType=}';
+    protected $signature = 'betterfly:view {moduleName : Module classname} {--file=*} {--dirPathType=}';
 
     /**
      * The console command description.
@@ -27,7 +27,7 @@ class MakeViewCommand extends BaseCommand
     protected $supportedFilesTypes = ['index', 'create', 'edit'];
 
     /**
-     * Route Names.
+     *  Names.
      *
      */
     protected $routeTypes = ['create' => ['type' => 'store'], 'edit' => ['type' => 'update'], 'index' => ['type' => 'index']];
@@ -86,9 +86,10 @@ class MakeViewCommand extends BaseCommand
             if (!$viewNameSpace) continue;
 
             $routeType = $this->routeTypes[$file]['type'];
-            $moduleRoute = strtolower(str_plural($this->moduleName)) . '.' . $routeType;
+            $moduleRoute = $this->getRouteName();
 
             $baseData = ['cfg' => $config, 'requestNameSpace' => $this->requestNameSpace, 'moduleName' => $this->moduleName, 'moduleRoute' => $moduleRoute, 'routeType' => $routeType];
+
             $baseBlade = $this->laravel->view->make($viewNameSpace)->with($baseData)->render();
 
             if ($file != 'index') {

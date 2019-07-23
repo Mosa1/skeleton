@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\File;
 class BaseCommand extends Command
 {
     private $plugins = ['Repository', 'Service', 'Request', 'Transformer', 'Controller', 'Model'];
-    private $supported_relations = ['belongsTo', 'belongsToMany'];
+    private $supported_relations = ['belongsTo', 'belongsToMany','hasMany'];
 
     public $progressBar;
 
@@ -154,6 +154,7 @@ class BaseCommand extends Command
         $cfg->sortable = property_exists($cfg, 'indexPlugin') && $cfg->indexPlugin[0]->pluginName == 'sortableList';
         $cfg->translatedAttributes = '';
         $cfg->tableName = property_exists($cfg, 'tableName') ? $cfg->tableName : strtolower(trim($cfg->title));
+        $cfg->parentModule = property_exists($cfg, 'parentModule') ? $cfg->parentModule : false;
 
         if (property_exists($cfg, 'relations') && $withRelation)
             $cfg->relations = $this->getRelationsByCFG($cfg);
@@ -161,7 +162,8 @@ class BaseCommand extends Command
             $cfg->relations = [];
 
         foreach ($cfg->fillable as $key => $field) {
-            if (!property_exists($cfg->fields, $field)) die($this->error('Missing Field (' . $field . ') in fields list'));
+            if (!property_exists($cfg->fields, $field)) continue;
+
             if (property_exists($cfg->fields->{$field}, 'translatable') && $cfg->fields->{$field}->translatable) {
                 $cfg->translatedAttributes .= '"' . $field . '",';
                 unset($cfg->fillable[$key]);
@@ -350,6 +352,20 @@ class BaseCommand extends Command
         if (strpos($dirPath, "/app/") !== 0) {
             exit($this->error("\n Dir should be in app, please start DirPath from: /app/*"));
         }
+    }
+
+    public function getRouteName(){
+
+        $moduleName = trim($this->argument('moduleName'));
+
+        $params['route_name'] = '';
+        $cfg = $this->getConfigFile($moduleName, true, true);
+        if (property_exists($cfg, 'parentModule'))
+            $params['route_name'] .= $cfg->parentModule;
+
+        $params['route_name'] .= $params['route_name'] == '' ? strtolower(str_plural($moduleName)) : '.'.strtolower(str_plural($moduleName));
+
+        return $params['route_name'];
     }
 
     public function createFileWithData($filePath, $data)

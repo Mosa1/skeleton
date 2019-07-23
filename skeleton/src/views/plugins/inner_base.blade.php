@@ -2,7 +2,7 @@ at_symbolextends('betterfly::admin.common.layout')
 
 at_symbolsection('content')
 @php
-    $routeStr = $routeType == 'update' ?  'route("'.$moduleRoute.'",$data->id)' : 'route("'.$moduleRoute.'")';
+    $routeStr = $routeType == 'update' ?  'route("'.$moduleRoute.'",['.($cfg->parentModule ? '$'.str_singular($cfg->parentModule).'->id,' : '').'$data->id])' : 'route("'.$moduleRoute.'.store"'.($cfg->parentModule ? ',[$'.str_singular($cfg->parentModule).'->id]': '').')';
 @endphp
 
 <main class="main">
@@ -12,11 +12,11 @@ at_symbolsection('content')
             <a href="print_start route('dashboard') print_end">Dashboard</a>
         </li>
         @if(!$cfg->editModeOnly)
-        <li class="breadcrumb-item">
-            <a href="print_start {!! 'route("'.str_plural(strtolower($moduleName)).'.index")' !!} print_end">{{ $moduleName }}</a>
-        </li>
+            <li class="breadcrumb-item">
+                <a href="print_start {!! 'route("'.$moduleRoute.'.index"'.($cfg->parentModule ? ',$'.str_singular($cfg->parentModule).'->id' : '').')' !!} print_end">{{ $moduleName }}</a>
+            </li>
         @endif
-        <li class="breadcrumb-item active">{{ str_singular($moduleName ) }}</li>
+        <li class="breadcrumb-item active">{{ $moduleName }}</li>
     </ol>
 
     at_symbolif(\Session::get('status'))
@@ -45,7 +45,7 @@ at_symbolsection('content')
                                         @endif
                                         at_symbolcsrf
                                         {plugins}
-                                            <input type="hidden" value="{{$requestNameSpace}}" name="request_name_space">
+                                        <input type="hidden" value="{{$requestNameSpace}}" name="request_name_space">
                                         <div class=" text-right">
                                             <button class="btn btn-sm btn-success btn-primary" type="submit">
                                                 <i class="fa fa-dot-circle-o"></i> Submit

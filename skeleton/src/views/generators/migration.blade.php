@@ -25,12 +25,12 @@ class Create{{ucfirst($tableName)}}Table extends Migration
                 $table->timestamps();
             @endif
 
-            {{--@foreach($config->relations as $field => $relation)--}}
-                {{--@if($relation->relationType == 'belongsTo')--}}
-                    {{--$table->unsignedInteger('{!! $field !!}')->nullable();--}}
-                    {{--$table->foreign('{!! $field !!}')->references('{!! $relation->referenceField !!}')->on('{!! $relation->relativeModelTableName !!}')->onDelete('cascade')->onUpdate('cascade');--}}
-                {{--@endif--}}
-            {{--@endforeach--}}
+            @foreach($config->relations as $field => $relation)
+                @if($relation->relationType == 'belongsTo')
+                    $table->unsignedInteger('{!! $relation->relatedPivotKey !!}')->nullable();
+                    $table->foreign('{!! $relation->relatedPivotKey !!}')->references('{!! $relation->relativeModelIncrementField !!}')->on('{!! $relation->relativeModelTableName !!}')->onDelete('cascade')->onUpdate('cascade');
+                @endif
+            @endforeach
         });
         @if($config->translatable)
             Schema::create('{{ $tableName }}_translations', function (Blueprint $table) {

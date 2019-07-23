@@ -38,6 +38,8 @@ class {{ $moduleName }} extends Model
         {
         @if($relation->relationType == 'belongsToMany')
             return $this->{!! $relation->relationType !!}('{!! $relation->relativeModel !!}','{!! $relation->tableName !!}','{!! $relation->foreignKey !!}','{!! $relation->relatedPivotKey !!}');
+        @elseif($relation->relationType == 'belongsTo' || $relation->relationType == 'hasMany' || $relation->relationType == 'hasOne')
+            return $this->{!! $relation->relationType !!}('{!! $relation->relativeModel !!}','{!! $relation->foreignKey !!}');
         @else
             return $this->{!! $relation->relationType !!}('{!! $relation->relativeModel !!}','{!! $relation->foreignKey !!}');
         @endif
@@ -61,7 +63,8 @@ class {{ $moduleName }} extends Model
         {
             return [
                 'slug' => [
-                        'source' => '{{ $config->slugSource }}'
+                    'source' => '{{ $config->slugSource }}',
+                    'onUpdate' => true
                 ]
             ];
         }
@@ -73,7 +76,8 @@ class {{ $moduleName }} extends Model
         {
             return [
                 'slug' => [
-                    'source' => '{{ $config->slugSource }}'
+                    'source' => '{{ $config->slugSource }}',
+                    'onUpdate' => true
                 ]
             ];
         }

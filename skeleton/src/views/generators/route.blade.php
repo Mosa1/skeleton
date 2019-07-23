@@ -1,10 +1,10 @@
 <?php echo '<?php' ?>
 
-Route::resource('{{$modulePlural}}', 'App\Modules\{{$moduleName}}\{{$moduleName}}Controller', [
+Route::resource('{{$route_name}}', 'App\Modules\{{$moduleName}}\{{$moduleName}}Controller', [
     'names' => [
-        'index' => '{{$modulePlural}}.index',
-        'store' => '{{$modulePlural}}.store',
-        'update' => '{{$modulePlural}}.update',
-        'destroy' => '{{$modulePlural}}.delete'
+        'index' => '{{$route_name}}.index',
+        'store' => '{{$route_name}}.store',
+        'update' => '{{$route_name}}.update',
+        'destroy' => '{{$route_name}}.delete'
     ]
 ]);

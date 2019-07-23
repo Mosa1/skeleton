@@ -50,6 +50,8 @@ class MakeControllerCommand extends BaseCommand
 
         $params['dataLoaderMethod'] = property_exists($config,'dataLoaderMethod') ? $config->dataLoaderMethod : false;
         $params['sortable'] = $config->sortable;
+        $params['routeName'] = $this->getRouteName();
+        $params['parentModule'] = $config->parentModule;
         $params['relations'] = $config->relations;
 
         $this->validateDirPath($dirPath);

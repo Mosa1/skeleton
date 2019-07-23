@@ -34,9 +34,12 @@ at_symbolsection('content')
                             <div class="card-header-actions">
                                 @if($cfg->excelExport)
                                     <form method="POST" action="print_start route('excel-export') print_end">
-                                        <input type="hidden"  name="data" value='print_start_allow_chars json_encode($data) print_end_allow_chars'>
-                                        <input type="hidden"  name="name" value='{{ property_exists($cfg->excelExport,'name') ? $cfg->excelExport->name : 'file' }}'>
-                                        <input type="hidden"  name="format" value='{{ property_exists($cfg->excelExport,'format') ? $cfg->excelExport->format : 'xlsx' }}'>
+                                        <input type="hidden" name="data"
+                                               value='print_start_allow_chars json_encode($data) print_end_allow_chars'>
+                                        <input type="hidden" name="name"
+                                               value='{{ property_exists($cfg->excelExport,'name') ? $cfg->excelExport->name : 'file' }}'>
+                                        <input type="hidden" name="format"
+                                               value='{{ property_exists($cfg->excelExport,'format') ? $cfg->excelExport->format : 'xlsx' }}'>
                                         at_symbolcsrf
                                         <button type="submit"
                                                 class="btn btn-warning btn-ladda-progress excel-export ladda-button"
@@ -52,7 +55,7 @@ at_symbolsection('content')
                         <div class="card-body">
                             @if(!property_exists($cfg->indexPlugin[0],'addBtn') || $cfg->indexPlugin[0]->addBtn)
                                 <div class="col-xl-12 text-right">
-                                    <a href="print_start route('{{ str_plural(strtolower($moduleName)) }}.create') print_end"
+                                    <a href="print_start route('{{ $moduleRoute }}.create') print_end"
                                        class="btn btn-square btn-success active mb-3"
                                        type="button"
                                        aria-pressed="true">{{ $addBtnText }}
@@ -110,12 +113,12 @@ at_symbolsection('content')
 
                                             <td class="text-center align-middle">
                                                 <a class="btn btn-info"
-                                                   href="print_start route('{{ str_plural(strtolower($moduleName)) }}.edit',$item->id) print_end">
+                                                   href="print_start route('{{ $moduleRoute }}.edit',$item->id) print_end">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
 
                                                 @if(!property_exists($cfg->indexPlugin[0],'removeBtn') || $cfg->indexPlugin[0]->removeBtn)
-                                                    <a data-url="print_start route('{{ str_plural(strtolower($moduleName)) }}.delete',$item->id) print_end"
+                                                    <a data-url="print_start route('{{ $moduleRoute }}.delete',$item->id) print_end"
                                                        class="btn btn-danger remove-item" href="javascript:;">
                                                         <i class="fa fa-trash-o"></i>
                                                     </a>
@@ -126,7 +129,9 @@ at_symbolsection('content')
                                         </tbody>
                                     </table>
                                     <div class="text-right">
-                                        <div class="d-inline-block">print_start method_exists($data,'links') ? $data->links() : '' print_end</div>
+                                        <div class="d-inline-block">print_start method_exists($data,'links') ?
+                                            $data->links() : '' print_end
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -167,6 +172,7 @@ at_symbolpush('scripts')
       }
     });
   }
+
   @endif
 
   loadScript('../vendor/betterfly/plugins/dataTable/jquery.dataTables.js', dataTableLoaded);
@@ -176,17 +182,21 @@ at_symbolpush('scripts')
 
     function bootstrapLoaded() {
       table = $('#datatable').DataTable({
-        "paging": print_start method_exists($data,'links') ? 'false,' : 'true,' print_end
-        "columnDefs": [
-                <?php foreach($cfg->indexPlugin[0]->cols as $key => $col){ ?>
-          {
-            "searchable": <?= property_exists($col, 'searchable') && $col->searchable ? 'true' : 'false' ?> ,
-            "targets": <?= $key ?>,
-            "sortable": <?= property_exists($col, 'sortable') && $col->sortable ? 'true' : 'false'  ?>
-          },
-            <?php } ?>
-        ]
-      });
+        "paging": print_start method_exists($data,'links') ? 'false,' : 'true,'
+      print_end
+      "columnDefs"
+    :
+      [
+              <?php foreach($cfg->indexPlugin[0]->cols as $key => $col){ ?>
+        {
+          "searchable": <?= property_exists($col, 'searchable') && $col->searchable ? 'true' : 'false' ?> ,
+          "targets": <?= $key ?>,
+          "sortable": <?= property_exists($col, 'sortable') && $col->sortable ? 'true' : 'false'  ?>
+        },
+          <?php } ?>
+      ]
+    })
+      ;
     }
   }
 </script>

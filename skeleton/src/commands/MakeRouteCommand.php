@@ -43,16 +43,9 @@ class MakeRouteCommand extends BaseCommand
         $dirPath = $this->getDirPath($moduleName, 'Route');
         $this->validateDirPath($dirPath);
 
-        $params = $this->getFields($moduleName, []);
+        $params = ['route_name' => $this->getRouteName()];
 
         $this->createFile($moduleName, $dirPath, 'Route', '', $params);
         $this->finishProgressBar();
-    }
-
-    private function getFields($moduleName, $params){
-
-        $params['modulePlural'] = strtolower(str_plural($moduleName));
-
-        return $params;
     }
 }
