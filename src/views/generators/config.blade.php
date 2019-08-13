@@ -13,7 +13,7 @@
             "setStatus" : true,
             "addBtn"    : { "text": "add new {{$moduleName}}" },
             "cols"      : [
-                { "name" : "Name","value" : "name"},
+                { "name" : "Name","value" : "name"}
             ]
         }
     ],
