@@ -15,24 +15,42 @@
     z-index: 500000;
 }
 
-.datatable-image{
+.copied {
+    display: inline-block;
+    position: fixed;
+    right: 15px;
+    bottom: 15px;
+    opacity: 0;
+    -webkit-transition: opacity .6s;
+    -moz-transition:  opacity .6s;
+    -ms-transition:  opacity .6s;
+    -o-transition:  opacity .6s;
+    transition:  opacity .6s;
+}
+
+.copied.visible {
+    opacity: 1;
+}
+
+.datatable-image {
     max-width: 150px;
 }
-.text-container{
+
+.text-container {
     height: 66px;
     transition: height .3s;
 }
 
-.text-container.active{
+.text-container.active {
     height: 198px;
 }
 
-.text-container.active .buttons-container{
+.text-container.active .buttons-container {
     opacity: 1;
     visibility: visible;
 }
 
-.text-container .textarea-container{
+.text-container .textarea-container {
     background: #fff;
 }
 
@@ -41,8 +59,7 @@
     height: 100%;
 }
 
-
-.text-container textarea{
+.text-container textarea {
     padding: 1.25rem;
     outline: none;
     resize: none;
@@ -50,7 +67,7 @@
     border: 0;
 }
 
-.text-container .buttons-container{
+.text-container .buttons-container {
     opacity: 0;
     visibility: hidden;
 

@@ -95,16 +95,16 @@
             </div>
         </li>
         @if(config('translatable') && config('translatable.locales'))
-        <li class="nav-item row">
-            @foreach(config('translatable.locales') as $locale)
-                @if(is_array($locale)) @continue @endif
-            <a class="nav-link mr-2" href="{{ route('admin.setLocale',$locale) }}">
-                <button class="btn btn-sm btn-pill btn-primary {{ \App::getLocale() == $locale ? "btn-success" : ''}}">
-                    <img src="{{ asset('vendor/betterfly/img/lang_'.$locale.'.png') }}">
-                </button>
-            </a>
-            @endforeach
-        </li>
+            <li class="nav-item row">
+                @foreach(config('translatable.locales') as $locale)
+                    @if(is_array($locale)) @continue @endif
+                    <a class="nav-link mr-2" href="{{ route('admin.setLocale',$locale) }}">
+                        <button class="btn btn-sm btn-pill btn-primary {{ \App::getLocale() == $locale ? "btn-success" : ''}}">
+                            <img src="{{ asset('vendor/betterfly/img/lang_'.$locale.'.png') }}">
+                        </button>
+                    </a>
+                @endforeach
+            </li>
         @endif
     </ul>
     {{--<button class="navbar-toggler aside-menu-toggler d-md-down-none" type="button" data-toggle="aside-menu-lg-show">--}}
@@ -187,9 +187,9 @@
               },
               success: function (result) {
                 if (result.message === 'Successfully deleted') {
-                  if(self.parents('li').length){
+                  if (self.parents('li').length) {
                     self.closest('li').remove();
-                  }else{
+                  } else {
                     table.row(row).remove().draw();
                   }
                 }
@@ -200,12 +200,11 @@
       });
     });
 
-    $('.checkbox-plugin').change(function(){
+    $('.checkbox-plugin').change(function () {
       var val = $(this).is(':checked') ? 1 : 0;
-      var checkbox = $('input[name="'+$(this).attr('for')+'"]');
+      var checkbox = $('input[name="' + $(this).attr('for') + '"]');
       checkbox.val(val)
     });
-
 
 
     $('.visibility').change(function () {
@@ -214,7 +213,7 @@
       $.ajax({
         url: action,
         type: 'PATCH',
-        data: {visibility: $(this).is(':checked') ? 1 : 0 },
+        data: {visibility: $(this).is(':checked') ? 1 : 0},
         headers: {
           'X-CSRF-TOKEN': csrf
         },
@@ -225,5 +224,10 @@
     });
   });
 </script>
+<div class="copied">
+    <button class="btn btn-pill btn-danger" type="button">
+        <i class="fa fa-lightbulb-o"></i>&nbsp;Copied
+    </button>
+</div>
 </body>
 </html>

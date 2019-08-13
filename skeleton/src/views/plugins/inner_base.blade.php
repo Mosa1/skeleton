@@ -2,7 +2,7 @@ at_symbolextends('betterfly::admin.common.layout')
 
 at_symbolsection('content')
 @php
-    $routeStr = $routeType == 'update' ?  'route("'.$moduleRoute.'",['.($cfg->parentModule ? '$'.str_singular($cfg->parentModule).'->id,' : '').'$data->id])' : 'route("'.$moduleRoute.'.store"'.($cfg->parentModule ? ',[$'.str_singular($cfg->parentModule).'->id]': '').')';
+    $routeStr = $routeType == 'update' ?  'route("'.$moduleRoute.'.update",['.($cfg->parentModule ? '$'.str_singular($cfg->parentModule).'->id,' : '').'$data->id])' : 'route("'.$moduleRoute.'.store"'.($cfg->parentModule ? ',[$'.str_singular($cfg->parentModule).'->id]': '').')';
 @endphp
 
 <main class="main">

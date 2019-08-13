@@ -66,7 +66,7 @@ class {{ $moduleName }}Controller extends Controller
     * @param  \Illuminate\Http\Request $request
     * @return \Illuminate\Http\Response
     */
-    public function store({{$moduleName}}Request $request,{{ $parentModule ? ucfirst($parentModule).' $'.str_singular($parentModule) : '' }}){
+    public function store({{$moduleName}}Request $request{{ $parentModule ? ','.ucfirst($parentModule).' $'.str_singular($parentModule) : '' }}){
 
         @if($parentModule)
         $request->merge(['{{ str_singular($parentModule) }}' => ${{ str_singular($parentModule) }}->id]);

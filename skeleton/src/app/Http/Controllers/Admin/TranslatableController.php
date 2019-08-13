@@ -56,6 +56,7 @@ class TranslatableController extends Controller
         $words = [];
         $path = resource_path('views');
         $files = (New Finder())->files()->in($path)->contains('@lang(');
+
         foreach ($files as $file) {
             $fileContent = file_get_contents($file->getRealpath());
             if (preg_match_all('/(?<=@lang\()(.*?)(?=\s*\))/', $fileContent, $matches)) {

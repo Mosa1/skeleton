@@ -61,6 +61,7 @@ cfgByInput = {};
     this.addValidation = function () {
 
       loadScript(['../vendor/betterfly/js/jquery.validate.min.js'], loaded);
+
       function loaded() {
         loadScript(['../vendor/betterfly/js/additional-methods.min.js']);
         var mimeTypes = cfg.mimeTypes.join(',');
@@ -93,10 +94,12 @@ cfgByInput = {};
                     $.each(response.files, function (inputId, files) {
                       var input = $('input[name="' + $('#' + inputId).attr('for') + '"]');
                       var cfg = cfgByInput[inputId];
-                      var inputValue = self.generateInputValue(input, files,cfg);
+                      var inputValue = self.generateInputValue(input, files, cfg);
                       input.val(inputValue);
                     });
                     form.submit();
+                  } else {
+                    $('<br><button class="btn btn-square btn-block btn-danger response-error">' + response.message + '</button>').insertAfter(el.parents('form'))
                   }
                 }
               });
@@ -115,7 +118,6 @@ cfgByInput = {};
     this.validateForm = function (form, handle) {
       var formData = new FormData(form);
       formData.delete('_method');
-
       $.ajax({
         url: ajaxValidation,
         type: "POST",
@@ -135,12 +137,30 @@ cfgByInput = {};
 
             handle(false);
           }
+        },
+        error: function (request, status, error) {
+          $('<br><button class="btn btn-square btn-block btn-danger response-error">' + request.responseJSON.message + '</button>').insertAfter(el.parents('form'))
+          self.bindCopyEvent('.response-error');
         }
+
       });
 
     };
+    this.bindCopyEvent = function(selector){
+      $(selector).unbind('click').dblclick(function(){
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(this).html()).select();
+        document.execCommand("copy");
+        $temp.remove();
+        $(".copied").addClass('visible');
+        setTimeout(function () {
+          $(".copied").removeClass('visible');
+        },4000)
+      })
+    };
 
-    this.generateInputValue = function (input, responseFiles,cfg) {
+    this.generateInputValue = function (input, responseFiles, cfg) {
       if (cfg.maxCount < 2)
         return responseFiles.length > 1 ? responseFiles[0] : responseFiles;
 
@@ -177,7 +197,7 @@ cfgByInput = {};
           var value = cfg.required ? 'none' : null;
           realInput.val(value);
           $(this).parent('.preview-container').remove();
-        }else{
+        } else {
           var imageSrc = $(this).parent().find('img').attr('src');
           var inputValue = JSON.parse(realInput.val());
           for (var i = 0; i < inputValue.length; i++) {

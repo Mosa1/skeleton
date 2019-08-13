@@ -363,7 +363,7 @@ class BaseCommand extends Command
         if (property_exists($cfg, 'parentModule'))
             $params['route_name'] .= $cfg->parentModule;
 
-        $params['route_name'] .= $params['route_name'] == '' ? strtolower(str_plural($moduleName)) : '.'.strtolower(str_plural($moduleName));
+        $params['route_name'] .= $params['route_name'] == '' ? strtolower($moduleName) : '.'.strtolower($moduleName);
 
         return $params['route_name'];
     }
