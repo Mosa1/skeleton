@@ -10,9 +10,8 @@
   "minimum-stability": "dev",
 
   "require": {
-    "dimsav/laravel-translatable": "^9.2",
+    "Astrotomic/laravel-translatable": "^11.2",
     "laravel/passport": "^7.0",
-    "google/cloud-translate": "^1.2",
     "ckfinder/ckfinder-laravel-package": "v3.4.5.1",
     "cviebrock/eloquent-sluggable": "^4.6",
     "kalnoy/nestedset": "^4.3",
