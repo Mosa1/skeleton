@@ -4,7 +4,7 @@ namespace {{$namespace}};
 
 @if(!$config->translatableModel)
     @if($config->translatable)
-    use Dimsav\Translatable\Translatable;
+    use Astrotomic\Translatable\Translatable;
     @else
         @if(property_exists($config,'slugSource'))
         use Cviebrock\EloquentSluggable\Sluggable;
