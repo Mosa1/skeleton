@@ -139,7 +139,8 @@ cfgByInput = {};
           }
         },
         error: function (request, status, error) {
-          $('<br><button class="btn btn-square btn-block btn-danger response-error">' + request.responseJSON.message + '</button>').insertAfter(el.parents('form'))
+          $('.error-container').remove();
+          $('<div class="error-container"><br><button class="btn btn-square btn-block btn-danger response-error">' + request.responseJSON.message + '</button></div>').insertAfter(el.parents('form'))
           self.bindCopyEvent('.response-error');
         }
 
