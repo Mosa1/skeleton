@@ -30,7 +30,6 @@
             "pluginName": "textField",
             "type": "string",
             "title": "Name",
-            "unique": true,
             "required" : true
         }
     }
