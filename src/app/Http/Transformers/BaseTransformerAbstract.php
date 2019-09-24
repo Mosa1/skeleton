@@ -22,10 +22,10 @@ abstract class BaseTransformerAbstract extends TransformerAbstract
 
         if ($translatable) {
             if (!$multiLang) {
-                $filledData = self::setDataToLocale($locale, $data, $translatableFields);
+                $filledData = self::setDataToLocale($locale, $data);
             } else if ($multiLang) {
                 foreach ($locales as $locale) {
-                    $filledData = self::setDataToLocale($locale, $data, $translatableFields);
+                    $filledData = self::setDataToLocale($locale, $data);
                 }
             }
         } else {
@@ -35,13 +35,10 @@ abstract class BaseTransformerAbstract extends TransformerAbstract
         return $filledData;
     }
 
-    public static function setDataToLocale($locale, $data, $translatableFields)
+    public static function setDataToLocale($locale, $data)
     {
         foreach ($data as $key => $value) {
-            if (in_array($key, $translatableFields))
-                $filledData[$locale][$key] = $value;
-            else
-                $filledData[$key] = $value;
+            $filledData[$key] = $value;
         }
 
         return $filledData;
