@@ -8,7 +8,9 @@ at_symbolsection('content')
 @php
     $addBtnText = property_exists($cfg->indexPlugin[0],'addBtn') && is_object($cfg->indexPlugin[0]->addBtn) && property_exists($cfg->indexPlugin[0]->addBtn,'text') ? $cfg->indexPlugin[0]->addBtn->text : 'add New';
 
-    $routeStr = 'route("'.$moduleRoute.'.create"'.($cfg->parentModule ? ',[$'.str_singular($cfg->parentModule).'->id]': '').')';
+    $createRouteStr = 'route("'.$moduleRoute.'.create"'.($cfg->parentModule ? ',[$'.str_singular($cfg->parentModule).'->id]': '').')';
+    $editRouteStr = 'route("'.$moduleRoute.'.edit"'.($cfg->parentModule ? ',[$'.str_singular($cfg->parentModule).'->id,$item->id ]': '').')';
+    $deleteRouteStr = 'route("'.$moduleRoute.'.delete"'.($cfg->parentModule ? ',[$'.str_singular($cfg->parentModule).'->id,$item->id ]': '').')';
 
 @endphp
 <main class="main">
@@ -58,7 +60,7 @@ at_symbolsection('content')
                         <div class="card-body">
                             @if(!property_exists($cfg->indexPlugin[0],'addBtn') || $cfg->indexPlugin[0]->addBtn)
                                 <div class="col-xl-12 text-right">
-                                    <a href="print_start {!! $routeStr !!} print_end"
+                                    <a href="print_start {!! $createRouteStr !!} print_end"
                                        class="btn btn-square btn-success active mb-3"
                                        type="button"
                                        aria-pressed="true">{{ $addBtnText }}
@@ -116,12 +118,12 @@ at_symbolsection('content')
 
                                             <td class="text-center align-middle">
                                                 <a class="btn btn-info"
-                                                   href="print_start route('{{ $moduleRoute }}.edit',$item->id) print_end">
+                                                   href="print_start {!! $editRouteStr !!} print_end">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
 
                                                 @if(!property_exists($cfg->indexPlugin[0],'removeBtn') || $cfg->indexPlugin[0]->removeBtn)
-                                                    <a data-url="print_start route('{{ $moduleRoute }}.delete',$item->id) print_end"
+                                                    <a data-url="print_start {!! $deleteRouteStr !!} print_end"
                                                        class="btn btn-danger remove-item" href="javascript:;">
                                                         <i class="fa fa-trash-o"></i>
                                                     </a>
