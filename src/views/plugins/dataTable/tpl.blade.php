@@ -7,6 +7,9 @@ at_symbolendpush
 at_symbolsection('content')
 @php
     $addBtnText = property_exists($cfg->indexPlugin[0],'addBtn') && is_object($cfg->indexPlugin[0]->addBtn) && property_exists($cfg->indexPlugin[0]->addBtn,'text') ? $cfg->indexPlugin[0]->addBtn->text : 'add New';
+
+    $routeStr = 'route("'.$moduleRoute.'.create"'.($cfg->parentModule ? ',[$'.str_singular($cfg->parentModule).'->id]': '').')';
+
 @endphp
 <main class="main">
 
@@ -55,7 +58,7 @@ at_symbolsection('content')
                         <div class="card-body">
                             @if(!property_exists($cfg->indexPlugin[0],'addBtn') || $cfg->indexPlugin[0]->addBtn)
                                 <div class="col-xl-12 text-right">
-                                    <a href="print_start route('{{ $moduleRoute }}.create') print_end"
+                                    <a href="print_start {!! $routeStr !!} print_end"
                                        class="btn btn-square btn-success active mb-3"
                                        type="button"
                                        aria-pressed="true">{{ $addBtnText }}

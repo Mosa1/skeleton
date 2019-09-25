@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 @foreach($relations as $relation)
 use {{ $relation->relativeModel }};
 @endforeach
+{{ $parentModule ? 'use App\Modules\'.ucfirst($parentModule).'\'.ucfirst($parentModule) : '' }}
 
 class {{ $moduleName }}Controller extends Controller
 {
