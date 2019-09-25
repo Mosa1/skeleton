@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 @foreach($relations as $relation)
 use {{ $relation->relativeModel }};
 @endforeach
-{{ $parentModule ? 'use App\Modules\'.ucfirst($parentModule).'\'.ucfirst($parentModule) : '' }}
+{{ $parentModule ? 'use App\\Modules\\'.ucfirst($parentModule).'\\'.ucfirst($parentModule).';' : '' }}
 
 class {{ $moduleName }}Controller extends Controller
 {
@@ -27,7 +27,7 @@ class {{ $moduleName }}Controller extends Controller
     {
 
         @if($parentModule)
-        $data = {{ '$'.str_singular($parentModule) }}->{{ $moduleName }};
+        $data = {{ '$'.str_singular($parentModule) }}->{{ strtolower($moduleName )}};
         @else
         $data = {!! $dataLoaderMethod ? $dataLoaderMethod."();" : '$this->'.strtolower($moduleName)."Service->getList(['paginate' => 10])".($sortable ? '->toTree();': ';') !!}
         @endif
