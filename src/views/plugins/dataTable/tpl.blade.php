@@ -9,8 +9,8 @@ at_symbolsection('content')
     $addBtnText = property_exists($cfg->indexPlugin[0],'addBtn') && is_object($cfg->indexPlugin[0]->addBtn) && property_exists($cfg->indexPlugin[0]->addBtn,'text') ? $cfg->indexPlugin[0]->addBtn->text : 'add New';
 
     $createRouteStr = 'route("'.$moduleRoute.'.create"'.($cfg->parentModule ? ',[$'.str_singular($cfg->parentModule).'->id]': '').')';
-    $editRouteStr = 'route("'.$moduleRoute.'.edit"'.($cfg->parentModule ? ',[$'.str_singular($cfg->parentModule).'->id,$item->id ]': '').')';
-    $deleteRouteStr = 'route("'.$moduleRoute.'.delete"'.($cfg->parentModule ? ',[$'.str_singular($cfg->parentModule).'->id,$item->id ]': '').')';
+    $editRouteStr = 'route("'.$moduleRoute.'.edit",['.($cfg->parentModule ? '$'.str_singular($cfg->parentModule).'->id,$item->id ': '$item->id').'])';
+    $deleteRouteStr = 'route("'.$moduleRoute.'.delete",['.($cfg->parentModule ? '$'.str_singular($cfg->parentModule).'->id,$item->id ': '$item->id').'])';
 
 @endphp
 <main class="main">
