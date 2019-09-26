@@ -117,10 +117,13 @@ at_symbolsection('content')
                                             @endif
 
                                             <td class="text-center align-middle">
+
+                                                @if(!property_exists($cfg->indexPlugin[0],'editBtn') || $cfg->indexPlugin[0]->editBtn)
                                                 <a class="btn btn-info"
                                                    href="print_start {!! $editRouteStr !!} print_end">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
+                                                @endif
 
                                                 @if(!property_exists($cfg->indexPlugin[0],'removeBtn') || $cfg->indexPlugin[0]->removeBtn)
                                                     <a data-url="print_start {!! $deleteRouteStr !!} print_end"

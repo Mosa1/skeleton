@@ -27,7 +27,7 @@ class {{ $moduleName }}Controller extends Controller
     {
 
         @if($parentModule)
-        $data = {{ '$'.str_singular($parentModule) }}->{{ strtolower($moduleName )}};
+        $data = {!! $dataLoaderMethod ? $dataLoaderMethod.'('.'$'.str_singular($parentModule).'->id)' : '$'.str_singular($parentModule).'->'.strtolower($moduleName) !!};
         @else
         $data = {!! $dataLoaderMethod ? $dataLoaderMethod."();" : '$this->'.strtolower($moduleName)."Service->getList(['paginate' => 10])".($sortable ? '->toTree();': ';') !!}
         @endif
