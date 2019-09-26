@@ -361,7 +361,7 @@ class BaseCommand extends Command
         $params['route_name'] = '';
         $cfg = $this->getConfigFile($moduleName, true, true);
         if (property_exists($cfg, 'parentModule'))
-            $params['route_name'] .= $cfg->parentModule;
+            $params['route_name'] .= strtolower($cfg->parentModule);
 
         $params['route_name'] .= $params['route_name'] == '' ? strtolower($moduleName) : '.'.strtolower($moduleName);
 
