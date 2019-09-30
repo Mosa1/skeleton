@@ -37,7 +37,7 @@
 }
 
 .text-container {
-    height: 66px;
+    height: auto;
     transition: height .3s;
 }
 
