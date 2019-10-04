@@ -121,6 +121,9 @@ class TranslatableController extends Controller
         $filePath = $this->getLanguageFilePath();
 
         foreach ($words as $key => $word) {
+        	if($word)
+        		continue;
+        	
             $response = $client->request('POST', $endPoint,
                 [
                     'query' => [
