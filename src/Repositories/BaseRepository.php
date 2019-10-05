@@ -10,7 +10,7 @@ class BaseRepository
     protected $model;
     protected $translatable;
     protected $relations;
-    protected $translatableFields;
+    protected $translatableFields = [];
 
     public function __construct($model)
     {
