@@ -158,12 +158,6 @@ class MakeViewCommand extends BaseCommand
         foreach ($fields as $fieldName => $properties) {
             if (!property_exists($properties, 'pluginName')) continue;
 
-            if ($properties->pluginName == 'multiField') {
-                require_once('../views/plugins/multiField/MultiField.php');
-                $pluginTpl = New MultiField($properties);
-                dd($pluginTpl);
-            }
-
             $fieldData = ['properties' => $properties, 'fieldName' => $fieldName, 'mode' => $mode, 'plugin_id' => $properties->pluginName . '_' . $pluginIncrement];
 
             $pluginBlade = $this->laravel->view->make('betterfly::plugins.' . $properties->pluginName . '.tpl')->with($fieldData)->render();
