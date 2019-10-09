@@ -28,7 +28,7 @@ at_symbolendphp
 
 <div class="form-group row">
     @if(!$cfg->subPlugin)
-    <label class="col-md-3 col-form-label" for="text-input">{{ $cfg->title }}
+    <label class="col-md-3 col-form-label" for="text-input">{{ $cfg->title }}</label>
     @endif
     <div class="col-md-{{ $cfg->subPlugin ? 12 : 9 }}">
         <textarea rows="5" cols="50" class="form-control" name="{{ $fieldName }}" placeholder="{{ $cfg->title }}">print_start $value print_end</textarea>
