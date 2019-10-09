@@ -20,7 +20,7 @@ class Create{{$relation->migrationClassName}}Table extends Migration
             $table->foreign('{{ $relation->foreignKey  }}')->references('{{ $relation->currentModelTableName }}')->on('{{ $relation->currentModelTableName }}')->onDelete('cascade');
 
             $table->integer('{{ $relation->relatedPivotKey  }}')->unsigned()->nullable();
-            $table->foreign('{{ $relation->relatedPivotKey  }}')->references('{{ $relation->relativeModelIncrementField }}')->on('{{ $relation->relativeModelIncrementField }}')->onDelete('cascade');
+            $table->foreign('{{ $relation->relatedPivotKey  }}')->references('{{ $relation->relativeModelIncrementField }}')->on('{{ $relation->relativeModelTableName }}')->onDelete('cascade');
         });
     }
     @endif
