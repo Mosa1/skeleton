@@ -17,10 +17,10 @@ class Create{{$relation->migrationClassName}}Table extends Migration
         Schema::create('{{ $relation->tableName }}', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('{{ $relation->foreignKey  }}')->unsigned()->nullable();
-            $table->foreign('{{ $relation->foreignKey  }}')->references('{{ $relation->relativeModelIncrementField }}')->on('{{ $relation->relativeModelTableName }}')->onDelete('cascade');
+            $table->foreign('{{ $relation->foreignKey  }}')->references('{{ $relation->currentModelTableName }}')->on('{{ $relation->currentModelTableName }}')->onDelete('cascade');
 
             $table->integer('{{ $relation->relatedPivotKey  }}')->unsigned()->nullable();
-            $table->foreign('{{ $relation->relatedPivotKey  }}')->references('{{ $relation->currentModelIncrementField }}')->on('{{ $relation->currentModelTableName }}')->onDelete('cascade');
+            $table->foreign('{{ $relation->relatedPivotKey  }}')->references('{{ $relation->relativeModelIncrementField }}')->on('{{ $relation->relativeModelIncrementField }}')->onDelete('cascade');
         });
     }
     @endif
