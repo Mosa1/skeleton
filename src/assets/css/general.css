@@ -21,6 +21,7 @@
     right: 15px;
     bottom: 15px;
     opacity: 0;
+    pointer-events: none;
     -webkit-transition: opacity .6s;
     -moz-transition:  opacity .6s;
     -ms-transition:  opacity .6s;
@@ -30,6 +31,7 @@
 
 .copied.visible {
     opacity: 1;
+    pointer-events: all;
 }
 
 .datatable-image {
