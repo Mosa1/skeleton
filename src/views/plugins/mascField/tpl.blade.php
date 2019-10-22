@@ -127,8 +127,8 @@ at_symbolendphp
 at_symbolpush('scripts')
 
 <script>
-  loadCss('../vendor/betterfly/plugins/mascPlugin/masc.css');
+  loadCss('print_start asset("vendor/betterfly/plugins/mascPlugin/masc.css") print_end');
 </script>
 
-<script src="../vendor/betterfly/plugins/mascPlugin/masc.js"></script>
+<script src="print_start asset('vendor/betterfly/plugins/mascPlugin/masc.js') print_end"></script>
 at_symbolendpush

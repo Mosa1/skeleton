@@ -24,12 +24,12 @@ at_symbolpush('scripts')
 
 
 <script>
-  loadCss('../vendor/betterfly/plugins/ckeditor/ckEditorSamples.css');
+  loadCss('print_start asset("vendor/betterfly/plugins/ckeditor/ckEditorSamples.css") print_end');
 
-  loadScript(['../vendor/betterfly/plugins/ckeditor/ckeditor.js'], load{{$plugin_id}});
+  loadScript(['print_start asset("vendor/betterfly/plugins/ckeditor/ckeditor.js") print_end'], load{{$plugin_id}});
 
   function load{{$plugin_id}}() {
-    loadScript(['../vendor/betterfly/plugins/ckeditor/adapters/jquery.js'], function () {
+    loadScript(['print_start asset("vendor/betterfly/plugins/ckeditor/adapters/jquery.js") print_end'], function () {
       $("textarea#{{ $plugin_id }}").ckeditor({
         extraPlugins: "image2",
         filebrowserBrowseUrl: "print_start route('ckfinder_browser') print_end",

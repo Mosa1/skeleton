@@ -58,8 +58,8 @@ at_symbolpush('scripts')
 
 <script>
 
-  loadCss(['../vendor/betterfly/plugins/selectPlugin/select2.min.css']);
-  loadScript(['../vendor/betterfly/plugins/selectPlugin/select2.min.js'], load{{$plugin_id}});
+  loadCss(['print_start asset("vendor/betterfly/plugins/selectPlugin/select2.min.css") print_end']);
+  loadScript(['print_start asset("vendor/betterfly/plugins/selectPlugin/select2.min.js") print_end'], load{{$plugin_id}});
 
   function load{{$plugin_id}}() {
     $("select#{{$plugin_id}}").select2();

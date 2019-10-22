@@ -155,13 +155,13 @@ at_symbolendsection
 
 at_symbolpush('scripts')
 <script>
-  loadCss('../vendor/betterfly/plugins/dataTable/dataTables.bootstrap4.min.css');
+  loadCss('print_start asset("vendor/betterfly/plugins/dataTable/dataTables.bootstrap4.min.css") print_end');
   @if($cfg->excelExport)
   loadCss('../vendor/betterfly/css/lada.css');
   loadScript(
       [
-        '../vendor/betterfly/js/spin.min.js',
-        '../vendor/betterfly/js/ladda.min.js',
+        'print_start asset("vendor/betterfly/js/spin.min.js") print_end',
+        'print_start asset("vendor/betterfly/js/ladda.min.js") print_end',
       ], ladaLoaded
   );
 
@@ -183,10 +183,10 @@ at_symbolpush('scripts')
 
   @endif
 
-  loadScript('../vendor/betterfly/plugins/dataTable/jquery.dataTables.js', dataTableLoaded);
+  loadScript('print_start asset("vendor/betterfly/plugins/dataTable/jquery.dataTables.js") print_end', dataTableLoaded);
 
   function dataTableLoaded() {
-    loadScript('../vendor/betterfly/plugins/dataTable/dataTables.bootstrap4.js', bootstrapLoaded);
+    loadScript('print_start asset("vendor/betterfly/plugins/dataTable/dataTables.bootstrap4.js") print_end', bootstrapLoaded);
 
     function bootstrapLoaded() {
       table = $('#datatable').DataTable({

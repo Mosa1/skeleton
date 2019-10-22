@@ -30,7 +30,7 @@ at_symbolendphp
 </div>
 at_symbolpush('scripts')
 <script>
-    loadScript(['../vendor/betterfly/plugins/multifield/jquery.multifield.min.js'], load{{$plugin_id}});
+    loadScript(['print_start asset("vendor/betterfly/plugins/multifield/jquery.multifield.min.js") print_end'], load{{$plugin_id}});
 
     function load{{$plugin_id}}() {
         $('#{{$plugin_id}}').multifield({

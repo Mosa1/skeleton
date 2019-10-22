@@ -26,11 +26,11 @@ at_symbolendphp
 
 at_symbolpush('scripts')
 <script>
-  loadCss(['../vendor/betterfly/plugins/dateField/jquery-ui.css', '../vendor/betterfly/plugins/dateField/jquery-ui-timepicker-addon.min.css']);
-  loadScript(['../vendor/betterfly/plugins/dateField/jquery-ui.min.js'], load{{$plugin_id}});
+  loadCss(['print_start asset("vendor/betterfly/plugins/dateField/jquery-ui.css") print_end', 'print_start asset("vendor/betterfly/plugins/dateField/jquery-ui-timepicker-addon.min.css") print_end']);
+  loadScript(['print_start asset("vendor/betterfly/plugins/dateField/jquery-ui.min.js'], load{{$plugin_id}});
 
   function load{{$plugin_id}}() {
-    loadScript(['../vendor/betterfly/plugins/dateField/jquery-ui-timepicker-addon.min.js'], function () {
+    loadScript(['print_start asset("vendor/betterfly/plugins/dateField/jquery-ui-timepicker-addon.min.js") print_end'], function () {
       $("input#{{$plugin_id}}").datetimepicker({dateFormat: 'yy-mm-dd'});
     })
   }

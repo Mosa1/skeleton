@@ -23,9 +23,9 @@ at_symbolendphp
 
 at_symbolpush('scripts')
 <script>
-  loadCss('../vendor/betterfly/plugins/mapPlugin/leaflet.css');
+  loadCss('print_start asset("vendor/betterfly/plugins/mapPlugin/leaflet.css") print_end');
 
-  loadScript(['../vendor/betterfly/plugins/mapPlugin/leaflet.js'], load{{$plugin_id}});
+  loadScript(['print_start asset("vendor/betterfly/plugins/mapPlugin/leaflet.js") print_end'], load{{$plugin_id}});
 
   function load{{$plugin_id}}() {
     var coords = JSON.parse('print_start_allow_chars $coords print_end_allow_chars');

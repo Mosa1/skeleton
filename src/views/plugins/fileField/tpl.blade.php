@@ -42,8 +42,8 @@ at_symbolendphp
 </div>
 at_symbolpush('scripts')
 <script>
-  loadCss(['../vendor/betterfly/plugins/filePlugin/filePlugin.css']);
-  loadScript(['../vendor/betterfly/plugins/filePlugin/filePlugin.js'], load{{$plugin_id}});
+  loadCss(['print_start asset("vendor/betterfly/plugins/filePlugin/filePlugin.css") print_end']);
+  loadScript(['print_start asset("vendor/betterfly/plugins/filePlugin/filePlugin.js") print_end'], load{{$plugin_id}});
 
   function load{{$plugin_id}}() {
     $('input#{{$plugin_id}}').filePlugin({

@@ -147,11 +147,11 @@ at_symbolendsection
 
 at_symbolpush('scripts')
 <script>
-  loadScript('../vendor/betterfly/js/jquery.ui-min.js', sortableListLoaded);
+  loadScript('print_start asset("vendor/betterfly/js/jquery.ui-min.js") print_end', sortableListLoaded);
 
   function sortableListLoaded() {
 
-    loadScript('../vendor/betterfly/plugins/sortableList/sortableList.js', function () {
+    loadScript('print_start asset("vendor/betterfly/plugins/sortableList/sortableList.js") print_end', function () {
 
       var list = $("ol.sortable").nestedSortable({
         forcePlaceholderSize: true,
