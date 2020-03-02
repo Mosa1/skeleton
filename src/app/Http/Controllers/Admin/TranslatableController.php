@@ -13,6 +13,7 @@ class TranslatableController extends Controller
     protected $currnetLanguageFilePath;
     protected $defaultLanguage;
     protected $supportedLanguages;
+    protected $arrayOfPatterns = ['/(?<=@lang\()(.*?)(?=\s*\))/','/(?<=$t\()(.*?)(?=\s*\))/'];
 
 
     public function __construct()
@@ -59,10 +60,12 @@ class TranslatableController extends Controller
 
         foreach ($files as $file) {
             $fileContent = file_get_contents($file->getRealpath());
-            if (preg_match_all('/(?<=@lang\()(.*?)(?=\s*\))/', $fileContent, $matches)) {
-                foreach ($matches[0] as $match) {
-                    $match = str_replace("'", '', str_replace('"', '', $match));
-                    $words[$match] = $match;
+            foreach($this->arrayOfPatterns as $pattern){
+                if (preg_match_all($pattern, $fileContent, $matches)) {
+                    foreach ($matches[0] as $match) {
+                        $match = str_replace("'", '', str_replace('"', '', $match));
+                        $words[$match] = $match;
+                    }
                 }
             }
         }
