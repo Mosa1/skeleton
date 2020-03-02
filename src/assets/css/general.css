@@ -44,7 +44,7 @@
 }
 
 .text-container.active {
-    height: 198px;
+    height: auto;
 }
 
 .text-container.active .buttons-container {
