@@ -13,7 +13,7 @@ class TranslatableController extends Controller
     protected $currnetLanguageFilePath;
     protected $defaultLanguage;
     protected $supportedLanguages;
-    protected $arrayOfPatterns = ['/(?<=@lang\()(.*?)(?=\s*\))/','/(?<=$t\()(.*?)(?=\s*\))/'];
+    protected $arrayOfPatterns = ['/(?<=@lang\()(.*?)(?=\s*\))/','/(?<=\$t\()(.*?)(?=\s*\))/'];
 
 
     public function __construct()
@@ -55,8 +55,8 @@ class TranslatableController extends Controller
     public function getTranslatableWords()
     {
         $words = [];
-        $path = resource_path('views');
-        $files = (New Finder())->files()->in($path)->contains('@lang(');
+        $paths = [resource_path('views'),resource_path('vue')];
+        $files = (New Finder())->files()->in($paths)->contains(['@lang(','$t(']);
 
         foreach ($files as $file) {
             $fileContent = file_get_contents($file->getRealpath());
@@ -126,7 +126,7 @@ class TranslatableController extends Controller
         foreach ($words as $key => $word) {
         	if($word)
         		continue;
-        	
+
             $response = $client->request('POST', $endPoint,
                 [
                     'query' => [
