@@ -29,18 +29,15 @@ class LocalizeApiRoutes
    */
   public function handle($request, Closure $next)
   {
-
     // read the language from the request header
     $sessionLocale = \Session('locale');
     $acceptLanguage = $request->getPreferredLanguage();
-    $useRequestedLang = in_array($request->getPreferredLanguage(), $this->app->config->get('translatable.locales'));
+    $useRequestedLang = $request->header('locale') ? $request->header('locale') : (in_array($acceptLanguage, $this->app->config->get('translatable.locales') ? $acceptLanguage : false));
 
     if($useRequestedLang){
-      $locale = $request->getPreferredLanguage();
+      $locale = $useRequestedLang;
     }else if($sessionLocale !== null){
       $locale = \Session('locale');
-    }else if($acceptLanguage !== null){
-      $locale = $this->decodeAcceptLanguage($acceptLanguage);
     } else{
       $locale = $this->app->config->get('translatable.fallback_locale');
     }
