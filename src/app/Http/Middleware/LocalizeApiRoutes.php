@@ -32,7 +32,7 @@ class LocalizeApiRoutes
     // read the language from the request header
     $sessionLocale = \Session('locale');
     $acceptLanguage = $request->getPreferredLanguage();
-    $useRequestedLang = $request->header('locale') ? $request->header('locale') : (in_array($acceptLanguage, $this->app->config->get('translatable.locales') ? $acceptLanguage : false));
+    $useRequestedLang = $request->header('locale') ? $request->header('locale') : (in_array($acceptLanguage, $this->app->config->get('translatable.locales')) ? $acceptLanguage : false));
 
     if($useRequestedLang){
       $locale = $useRequestedLang;
