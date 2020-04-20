@@ -55,7 +55,12 @@ class TranslatableController extends Controller
     public function getTranslatableWords()
     {
         $words = [];
-        $paths = [resource_path('views'),resource_path('vue')];
+        $paths = [resource_path('views')];
+        
+        if(File::exists($path)){
+            $paths[] = resource_path('vue');
+        }
+        
         $files = (New Finder())->files()->in($paths)->contains(['@lang(','$t(']);
 
         foreach ($files as $file) {
