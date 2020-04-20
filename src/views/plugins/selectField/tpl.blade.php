@@ -12,6 +12,7 @@ at_symbolendphp
     $defaultCfg = [
         'title'=>'Select Option',
         'multiple' => false,
+        'tags' => false,
         'required' => false,
         'options'  => [],
         'dataLoaderMethod' => false
@@ -62,7 +63,9 @@ at_symbolpush('scripts')
   loadScript(['print_start asset("vendor/betterfly/plugins/selectPlugin/select2.min.js") print_end'], load{{$plugin_id}});
 
   function load{{$plugin_id}}() {
-    $("select#{{$plugin_id}}").select2();
+    $("select#{{$plugin_id}}").select2({
+      tags: {{ $cfg->tags ? 'true' : 'false' }}
+    });
   }
 
 </script>
