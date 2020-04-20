@@ -57,7 +57,7 @@ class TranslatableController extends Controller
         $words = [];
         $paths = [resource_path('views')];
         
-        if(File::exists($path)){
+        if(File::isDirectory(resource_path('vue'))){
             $paths[] = resource_path('vue');
         }
         
