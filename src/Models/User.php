@@ -6,11 +6,10 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use BetterFly\Skeleton\Traits\EntrustUserTrait;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable, EntrustUserTrait;
+    use HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.
