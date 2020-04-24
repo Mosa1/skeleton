@@ -14,9 +14,9 @@ class UserTransformer extends BaseTransformerAbstract
             'token' => $user->createToken('MyApp')->accessToken
         ];
 
-        if(Auth::user() && Auth::user()->hasRole('admin')){
-            $data['password'] = $user['password'];
-        }
+//         if(Auth::user() && Auth::user()->hasRole('admin')){
+//             $data['password'] = $user['password'];
+//         }
 
         return $data;
     }
