@@ -92,14 +92,21 @@
                                                         <div class="alert alert-danger" role="alert">{{ $errors->first('password') }}</div>
                                                     @endif
                                                 </div>
-                                            </div>@php
-                                                if(isset($data)){
-                                                    $value = $data->type;
-                                                    $value = key_exists('type',old()) ? old('type') : $value;
-                                                } else{
-                                                    $value = old('type');
-                                                }
-                                            @endphp
+                                            </div>
+                                            
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label" for="password-input">Confirm Password</label>
+                                                <div class="col-md-9">
+                                                    <input class="form-control" type="password" name="c_password" placeholder="Confirm Password">
+                                                    @if($errors->get('c_password'))
+                                                        <br>
+                                                        <div class="alert alert-danger" role="alert">{{ $errors->first('c_password') }}</div>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <input class="form-control" type="hidden" name="is_super" value="1" placeholder="Super Admin">
+
 
 
                                             <input type="hidden" value="\App\Modules\Users\UsersRequest" name="request_name_space">
