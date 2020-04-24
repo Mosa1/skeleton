@@ -96,7 +96,7 @@
         loadScript('../vendor/betterfly/plugins/dataTable/dataTables.bootstrap4.js', bootstrapLoaded);
 
         function bootstrapLoaded() {
-          var table = $('#datatable').DataTable({
+          table = $('#datatable').DataTable({
             "columnDefs": [
               {
                 "searchable": true ,
