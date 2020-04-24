@@ -94,8 +94,8 @@ class UserController extends Controller
 
     }
 
-    public function register(UserRequest $request)
-    {
+    public function store(UserRequest $request)
+    {    	
         // Will return only validated data
         $validated = $request->validated();
 
@@ -103,10 +103,16 @@ class UserController extends Controller
         $user = $this->userService->register($validated);
 
         // Transforming for API JSON
-        $json = $this->userTransformer->transform($user);
 
-        return response()->json(['success' => $json], $this->SUCCESS_STATUS);
+            if($request->ajax()){
+		        $json = $this->userTransformer->transform($user);
+		        return response()->json(['success' => $json], $this->SUCCESS_STATUS);
+            }else{
+                return redirect()->intended(route('users.index'));
+            }
+
     }
+    
     /**
      * details api
      *
