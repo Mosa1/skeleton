@@ -202,7 +202,7 @@ cfgByInput = {};
           var imageSrc = $(this).parent().find('img').attr('src');
           var inputValue = JSON.parse(realInput.val());
           for (var i = 0; i < inputValue.length; i++) {
-            if (inputValue[i] === imageSrc)
+            if (imageSrc.indexOf(inputValue[i]) > -1 )
               inputValue.splice(i, 1);
           }
 
