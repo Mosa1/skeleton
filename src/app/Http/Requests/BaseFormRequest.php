@@ -2,19 +2,14 @@
 
 namespace BetterFly\Skeleton\App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Waavi\Sanitizer\Laravel\SanitizesInput;
-
 abstract class BaseFormRequest extends FormRequest
 {
-    use SanitizesInput;
     /**
      * For more sanitizer rule check https://github.com/Waavi/Sanitizer
      */
     public function validateResolved()
     {
         {
-            $this->sanitize();
             parent::validateResolved();
         }
     }
