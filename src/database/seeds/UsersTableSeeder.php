@@ -5,6 +5,7 @@ namespace BetterFly\Skeleton\Database\Seeds;
 use Illuminate\Database\Seeder;
 use BetterFly\Skeleton\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class UsersTableSeeder extends Seeder
 {
