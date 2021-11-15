@@ -43,7 +43,6 @@ class DatabaseReset extends BaseCommand
     {
         Artisan::call('migrate:fresh');
         Artisan::call('db:seed', ['--class' => 'BetterFly\\Skeleton\\Database\\Seeds\\DatabaseSeeder']);
-        Artisan::call('passport:install');
 
         $this->info('Database Reset Successfuly Completed');
     }
