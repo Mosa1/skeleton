@@ -50,6 +50,12 @@ class SkeletonServiceProvider extends ServiceProvider
 
 
 
+        $router->aliasMiddleware('role', '\Spatie\Permission\Middlewares\RoleMiddleware');
+        $router->aliasMiddleware('permission', '\Spatie\Permission\Middlewares\PermissionMiddleware');
+        $router->aliasMiddleware('role_or_permission', '\Spatie\Permission\Middlewares\RoleOrPermissionMiddleware');
+
+
+
         $router->prependMiddlewareToGroup('api', 'Illuminate\Session\Middleware\StartSession');
         $router->prependMiddlewareToGroup('api', '\App\Http\Middleware\EncryptCookies');
         $router->pushMiddlewareToGroup('api', '\BetterFly\Skeleton\App\Http\Middleware\LocalizeApiRoutes');
@@ -85,7 +91,8 @@ class SkeletonServiceProvider extends ServiceProvider
     {
         $this->app->register(
             'BetterFly\Skeleton\Providers\RouteServiceProvider',
-            'Intervention\Image\ImageServiceProvider'
+            'Intervention\Image\ImageServiceProvider',
+            'Spatie\Permission\PermissionServiceProvider'
         );
 
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();

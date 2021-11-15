@@ -43,6 +43,10 @@ class ConfigureCommand extends BaseCommand
         Artisan::call('vendor:publish', ['--provider' => 'BetterFly\Skeleton\SkeletonServiceProvider', '--force' => true, '--tag' => 'config']);
         $this->finishProgressBar();
 
+        $this->createProgressbar(['message' => 'Running vendor:publish --provider=Spatie\Permission\PermissionServiceProvider']);
+        Artisan::call('vendor:publish', ['--provider' => 'Spatie\Permission\PermissionServiceProvider']);
+        $this->finishProgressBar();
+
         $this->createProgressbar(['message' => 'Running vendor:publish --tag=translatable']);
         Artisan::call('vendor:publish', ['--tag' => 'translatable']);
         $this->finishProgressBar();
