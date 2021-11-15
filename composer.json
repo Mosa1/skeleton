@@ -13,7 +13,7 @@
     "astrotomic/laravel-translatable": "^11.2",
     "laravel/passport": "^10.0",
     "ckfinder/ckfinder-laravel-package": "dev-master",
-    "cviebrock/eloquent-sluggable": "^7.0",
+    "cviebrock/eloquent-sluggable": "^8.0",
     "kalnoy/nestedset": "v5.x-dev",
     "league/fractal": "^0.17.0",
     "waavi/sanitizer": "~1.0",
