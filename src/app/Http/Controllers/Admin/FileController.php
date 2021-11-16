@@ -76,7 +76,7 @@ class FileController extends Controller
 
     public function validateMimes($file, $mimes)
     {
-        $fileMimeType = strtolower($file->getClientMimeType());
+        $fileMimeType = strtolower($file->getClientOriginalExtension());
         
         if (!in_array($fileMimeType, $mimes))
             return ['success' => false, 'message' => 'This file type is not allowed'];
