@@ -20,8 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="19d7c3cd-ffc6-4797-bcd3-b69e055aa950" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Database/Seeds/DatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Database/seeds/UsersTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Database/Seeds/UsersTableSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SkeletonServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SkeletonServiceProvider.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +61,7 @@
       <workItem from="1636991180048" duration="5285000" />
       <workItem from="1637086081295" duration="1290000" />
       <workItem from="1637675149122" duration="2093000" />
-      <workItem from="1637704501342" duration="2941000" />
+      <workItem from="1637704501342" duration="3071000" />
     </task>
     <servers />
   </component>
