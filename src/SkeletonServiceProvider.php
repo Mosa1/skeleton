@@ -42,7 +42,7 @@ class SkeletonServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/views', 'betterfly');
         include __DIR__ . '/routes.php';
 
-        $this->loadMigrationsFrom(__DIR__ . '/Database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/Database/Migrations');
 
         $router->pushMiddlewareToGroup('web', '\BetterFly\Skeleton\App\Http\Middleware\LocalizeWebRoutes');
         $router->pushMiddlewareToGroup('web', '\BetterFly\Skeleton\App\Http\Middleware\Localization');
