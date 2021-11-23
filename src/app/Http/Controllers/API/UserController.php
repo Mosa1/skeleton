@@ -112,6 +112,17 @@ class UserController extends Controller
             }
 
     }
+    /**
+     * delete user
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(User $user)
+    {
+        if(User::destroy($user->id)){
+            return response()->json(['success' => 'true','message' => 'Successfully deleted']);
+        }
+    }
     
     /**
      * details api

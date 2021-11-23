@@ -21,10 +21,8 @@
   <component name="ChangeListManager">
     <list default="true" id="19d7c3cd-ffc6-4797-bcd3-b69e055aa950" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Http/Requests/UserRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Http/Requests/UserRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/admin/users/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/admin/users/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Http/Controllers/API/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Http/Controllers/API/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +63,7 @@
       <workItem from="1636991180048" duration="5285000" />
       <workItem from="1637086081295" duration="1290000" />
       <workItem from="1637675149122" duration="2093000" />
-      <workItem from="1637704501342" duration="946000" />
+      <workItem from="1637704501342" duration="1480000" />
     </task>
     <servers />
   </component>
@@ -89,9 +87,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="667" y="253" width="585" height="534" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1636996022029" />
-    <state x="616" y="173" width="670" height="676" key="search.everywhere.popup" timestamp="1636992802795">
+    <state x="616" y="173" width="672" height="676" key="search.everywhere.popup" timestamp="1637705985268">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="616" y="173" width="670" height="676" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1636992802795" />
+    <state x="616" y="173" width="672" height="676" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1637705985268" />
   </component>
 </project>
