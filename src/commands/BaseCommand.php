@@ -100,7 +100,7 @@ class BaseCommand extends Command
                 return base_path($dirPath) . '/' . strtolower($moduleName) . '.route.php';
                 break;
             case "Migration":
-                return base_path("/database/migrations") . "/" . date('Y_m_d_His') . "_create_" . strtolower($moduleName) . "_table.php";
+                return base_path("/Database/migrations") . "/" . date('Y_m_d_His') . "_create_" . strtolower($moduleName) . "_table.php";
                 break;
             case "Model":
                 return base_path($dirPath) . '/' . ucfirst($moduleName) . '.php';
