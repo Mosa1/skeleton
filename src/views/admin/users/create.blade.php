@@ -105,9 +105,12 @@
                                                 </div>
                                             </div>
 
-                                            <input class="form-control" type="hidden" name="is_super" value="1" placeholder="Super Admin">
-
-
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label" for="super">Super ?</label>
+                                                <div class="col-md-9 ">
+                                                    <input type="checkbox" class="switch" value="1" name="is_super">
+                                                </div>
+                                            </div>
 
                                             <input type="hidden" value="\App\Modules\Users\UsersRequest" name="request_name_space">
                                             <div class=" text-right">

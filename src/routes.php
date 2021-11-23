@@ -23,14 +23,14 @@ Route::group(['middleware' => ['auth:api', 'auth'], 'prefix' => 'api'], function
     Route::post('details', 'BetterFly\Skeleton\App\Http\Controllers\API\UserController@details');
 
     // Route to create a new role
-    Route::post('role', 'BetterFly\Skeleton\App\Http\Controllers\API\UserRoleController@createRole');
-    // Route to create a new permission
-    Route::post('permission', 'BetterFly\Skeleton\App\Http\Controllers\API\UserRoleController@createPermission');
-    // Route to assign role to user
-    Route::post('assign-role', 'BetterFly\Skeleton\App\Http\Controllers\API\UserRoleController@assignRole');
-    // Route to attache permission to a role
-    Route::post('attach-permission', 'BetterFly\Skeleton\App\Http\Controllers\API\UserRoleController@attachPermission');
-    Route::post('update-standard-roles', 'BetterFly\Skeleton\App\Http\Controllers\API\UserRoleController@updateStandardRoles');
+//    Route::post('role', 'BetterFly\Skeleton\App\Http\Controllers\API\UserRoleController@createRole');
+//    // Route to create a new permission
+//    Route::post('permission', 'BetterFly\Skeleton\App\Http\Controllers\API\UserRoleController@createPermission');
+//    // Route to assign role to user
+//    Route::post('assign-role', 'BetterFly\Skeleton\App\Http\Controllers\API\UserRoleController@assignRole');
+//    // Route to attache permission to a role
+//    Route::post('attach-permission', 'BetterFly\Skeleton\App\Http\Controllers\API\UserRoleController@attachPermission');
+//    Route::post('update-standard-roles', 'BetterFly\Skeleton\App\Http\Controllers\API\UserRoleController@updateStandardRoles');
 
 });
 

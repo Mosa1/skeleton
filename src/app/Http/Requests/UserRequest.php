@@ -63,6 +63,8 @@ class UserRequest extends BaseFormRequest
 
         if($this->is(UserRequest::REQUEST_REGISTER))
             return UserRequest::REQUEST_REGISTER;
+
+        return $this->method();
     }
 
     private function getRule()
@@ -92,20 +94,21 @@ class UserRequest extends BaseFormRequest
             case 'POST':
                 {
                     return [
-                        'user.name.first' => 'required',
-                        'user.name.last'  => 'required',
-                        'user.email'      => 'required|email|unique:users,email',
-                        'user.password'   => 'required|confirmed',
+                        'name' => 'required',
+                        'email' => 'required|email|unique:users,email',
+                        'password' => 'required|same:c_password',
+                        'is_super' => 'int',
                     ];
                 }
             case 'PUT':
             case 'PATCH':
                 {
                     return [
-                        'user.name.first' => 'required',
-                        'user.name.last'  => 'required',
+                        'name' => 'required',
+                        'email' => 'required|email|unique:users,email',
                         //'user.email'      => 'required|email|unique:users,email,'.$user->id,
-                        'user.password'   => 'required|confirmed',
+                        'password' => 'required|same:c_password',
+                        'is_super' => 'int',
                     ];
                 }
             default:break;
