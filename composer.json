@@ -23,7 +23,7 @@
   },
   "autoload": {
     "classmap": [
-      "src/database/migrations"
+      "src/Database/Migrations"
     ],
     "psr-4": {
       "BetterFly\\Skeleton\\": "src/"
