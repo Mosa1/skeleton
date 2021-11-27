@@ -9,7 +9,7 @@ at_symbolendphp
 
 <div class="form-group row">
     <label class="col-md-3 col-form-label" for="number-input">{{ $properties->title }}</label>
-    <div class="col-md-9">
+    <div class="col-md-2">
         <input class="form-control" value="print_start $value print_end" type="color" name="{{ $fieldName }}" placeholder="{{ $properties->title }}">
         at_symbolif($errors->get('{{ $fieldName }}'))
             <br>
