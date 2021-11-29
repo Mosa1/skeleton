@@ -16,7 +16,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="keyword" content="">
-    <title>Betterfly</title>
+    <title>CMS</title>
     <base href="{{ URL::to('/') }}/">
     <!-- Icons-->
     <link href="vendor/betterfly/css/simple-line-icons.css" rel="stylesheet">
