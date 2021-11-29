@@ -5,11 +5,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <meta name="description" content="Betterfly">
+    <meta name="description" content="CMS">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="keyword" content="">
-    <title>Betterfly Admin</title>
+    <title>CMS</title>
     <base href="{{ URL::to('/') }}/">
     <!-- Icons-->
     <link href="{{ asset('vendor/betterfly/css/fontawesome.min.css') }}" rel="stylesheet">
@@ -145,11 +145,7 @@
 </div>
 <footer class="app-footer">
     <div>
-        <span>&copy; 2018 .</span>
-    </div>
-    <div class="ml-auto">
-        <span>Powered by</span>
-        <a target="_blank" href="https://betterfly.ge">Betterfly</a>
+        <span>&copy; {{ date('Y') }} .</span>
     </div>
 </footer>
 <script src="{{ asset('vendor/betterfly/js/jquery-3.3.1.min.js') }}"></script>
