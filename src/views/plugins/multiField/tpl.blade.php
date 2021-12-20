@@ -3,7 +3,7 @@ if(isset($data)){
 $value = json_decode($data->{{$fieldName}});
 $value = key_exists('{{$fieldName}}',old()) ? json_decode(old('{{$fieldName}}')) : $value;
 } else{
-$value = json_decode(old('{{ $fieldName }}'));
+$value = old('{{$fieldName}}') ? json_decode(old('{{$fieldName}}')) : json_decode('{"0":{"0":""}}');
 }
 at_symbolendphp
 
