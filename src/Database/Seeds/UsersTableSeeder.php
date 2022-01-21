@@ -24,8 +24,7 @@ class UsersTableSeeder extends Seeder
                 'name' => 'Admin',
                 'email' => $email,
                 'password' => bcrypt($password),
-                'remember_token' => Str::random(60),
-                'is_super' => 1
+                'remember_token' => Str::random(60)
             ]);
         }
     }
