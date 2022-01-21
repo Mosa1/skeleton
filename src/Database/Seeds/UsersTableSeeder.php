@@ -16,8 +16,8 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $email = env("SUPERUSER_EMAIL", "admin@betterfly.ge");
-        $password = env("SUPERUSER_PASS", "betterflyPass");
+        $email = env("SUPERUSER_EMAIL", "admin@test.com");
+        $password = env("SUPERUSER_PASS", "123123");
 
         if (User::where('email', '=', $email)->count() == 0) {
             DB::table('users')->insert([
