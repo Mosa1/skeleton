@@ -131,7 +131,7 @@ class MakeMigrationCommand extends BaseCommand
         $dbFields = [];
         $translatableDbFields = [];
         foreach ($config->fields as $fieldName => $field) {
-            if (property_exists($field, 'primaryKey') && $field->primaryKey || key_exists('relationType',$field)) {
+            if (property_exists($field, 'primaryKey') && $field->primaryKey || key_exists($field,'relationType')) {
                 continue;
             }
 

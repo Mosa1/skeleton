@@ -18,7 +18,8 @@
     "firebase/php-jwt": "dev-main",
     "intervention/image": "^3.0@alpha",
     "maatwebsite/excel": "3.1.x-dev",
-    "astrotomic/laravel-translatable": "dev-main"
+    "astrotomic/laravel-translatable": "dev-main",
+    "ckfinder/ckfinder-laravel-package": "dev-master"
   },
   "autoload": {
     "classmap": [
