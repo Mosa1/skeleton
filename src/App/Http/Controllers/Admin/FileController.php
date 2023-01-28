@@ -5,7 +5,7 @@ namespace BetterFly\Skeleton\App\Http\Controllers\Admin;
 use BetterFly\Skeleton\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Image;
+use Intervention\Image\Facades\Image;
 
 class FileController extends Controller
 {
