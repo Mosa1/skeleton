@@ -96,6 +96,7 @@ class SkeletonServiceProvider extends ServiceProvider
 
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
         $loader->alias('Excel', 'Maatwebsite\Excel\Facades\Excel');
+        $loader->alias('Image', 'Intervention\Image\Facades\Image::class');
 
         $this->mergeConfigFrom(
             __DIR__ . '/config/config.php', 'skeleton'

@@ -116,7 +116,7 @@ at_symbolsection('content')
                                                       <i class="fa fa-edit"></i>
                                                     </a>
                                                 </div>';
-                                                if($item->children->count()){
+                                                if($item->children && $item->children->count()){
                                                     $childTpl = '<ol>';
                                                     $childTpl .= $traverse($item->children);
                                                     $childTpl .= '</ol>';

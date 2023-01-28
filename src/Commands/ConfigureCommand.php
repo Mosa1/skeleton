@@ -52,6 +52,10 @@ class ConfigureCommand extends BaseCommand
         $this->finishProgressBar();
 
 
+        $this->createProgressbar(['message' => 'Running vendor:publish --tag=Intervention\Image']);
+        Artisan::call('vendor:publish', ['--provider' => 'Intervention\Image\ImageServiceProviderLaravelRecent']);
+        $this->finishProgressBar();
+
         $this->createProgressbar(['message' => 'Running storage:link']);
         Artisan::call('storage:link');
         $this->finishProgressBar();
