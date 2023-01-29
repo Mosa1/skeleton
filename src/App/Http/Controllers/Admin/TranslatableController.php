@@ -13,7 +13,7 @@ class TranslatableController extends Controller
     protected $currnetLanguageFilePath;
     protected $defaultLanguage;
     protected $supportedLanguages;
-    protected $arrayOfPatterns = ['/(?<=@lang\()(.*?)(?=\s*\))/','/(?<=\$t\()(.*?)(?=\s*\))/'];
+    protected $arrayOfPatterns = ['/(?<=@lang\()(.*?)(?=\s*\))/','/(?<=\$t\()(.*?)(?=\s*\))/','/(?<=__\()(.*?)(?=\s*\))/'];
 
 
     public function __construct()
@@ -61,7 +61,7 @@ class TranslatableController extends Controller
             $paths[] = resource_path('vue');
         }
         
-        $files = (New Finder())->files()->in($paths)->contains(['@lang(','$t(']);
+        $files = (New Finder())->files()->in($paths)->contains(['@lang(','$t(','__(']);
 
         foreach ($files as $file) {
             $fileContent = file_get_contents($file->getRealpath());
