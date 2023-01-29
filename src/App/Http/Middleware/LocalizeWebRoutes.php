@@ -35,7 +35,7 @@ class LocalizeWebRoutes
      */
     public function handle($request, Closure $next)
     {
-        if(!$this->locales) return $next($request);
+        if(!$this->locales || $request->getMethod() == 'POST') return $next($request);
 
         // Make sure current locale exists.
         $locale = $request->segment(1);
