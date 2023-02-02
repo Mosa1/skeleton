@@ -132,7 +132,7 @@
                 <li class="nav-item nav-dropdown">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('translatable.index') }}" target="_top">
-                        <i class="nav-icon icon-star"></i> Texts</a>
+                        <i class="nav-icon icon-star"></i> Translations</a>
                 </li>
             </ul>
         </nav>
