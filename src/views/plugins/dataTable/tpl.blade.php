@@ -138,7 +138,7 @@ at_symbolsection('content')
                                     </table>
                                     <div class="text-right">
                                         <div class="d-inline-block">print_start method_exists($data,'links') ?
-                                            $data->links() : '' print_end
+                                            $data->links('pagination::bootstrap-4') : '' print_end
                                         </div>
                                     </div>
                                 </div>
