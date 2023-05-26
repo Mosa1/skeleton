@@ -10,7 +10,7 @@
 
   "require": {
     "laravel/helpers": "^1.6",
-    "cviebrock/eloquent-sluggable": "dev-master",
+    "cviebrock/eloquent-sluggable": "^9.0",
     "spatie/laravel-permission": "^5.0@dev",
     "kalnoy/nestedset": "v6.x-dev",
     "league/fractal": "1.0.x-dev",
