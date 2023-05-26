@@ -7,7 +7,6 @@
       "email": "gio.mosashvili1@gmail.com"
     }
   ],
-  "minimum-stability": "dev",
 
   "require": {
     "laravel/helpers": "^1.6",
